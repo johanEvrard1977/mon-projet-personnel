@@ -1,0 +1,20 @@
+Mon application permettra aux utilisateurs du jeu x-wing de préparer leur partie.
+En effet cela prend beaucoup de temps avant de commencer une partie afin de pouvoir former ses escadrons selon le camp auquel on appartient.
+l'utilisateur non enregistré pourra visualiser les diffèrents pilotes et leurs détails, les différents vaisseaux et leurs détails, les différentes cartes d'améliorations possibles
+et leurs détails ainsi que les actions et leurs détails. ils pourront s'inscrire afin de pouvoir former leurs escadrons en y indiquant quels sont les pilotes qu'ils possèdent, 
+les vaisseaux et leurs diffèrentes cartes d'amélioration.
+l'appplication calculera automatiquement les diffèrents escadrons qu'il est possible de créer selon les indications encodées au préalable par l'utilisateur.
+il est possible de jouer une partie avec un nombre de points prédéfini afin que chaque participant puisse avoir une chance de gagner.
+toutes combinaisons possibles devront être envisagées et proposées.
+l'utilisateur enregistré pourra enregistré les diffèrentes combinaisons(escadrons) qu'il a déjà réalisées auparavant et ce pour gagner encore plus de temps pour les parties à venir.
+
+
+les escadrons sont formés de plusieurs pilotes ainsi que de plusieurs vaisseaux. ils appartiennent tous à une collection qui elle même appartient
+à un seul utilisateur. Un utilisateur peut possèder plusiseurs collections. Un escadron possède un nom, un certain nombre de points, une description et peut être visible ou non.
+Les pilotes qui forment un escadron ne peuvent pas se retrouver dans 2 escadrons différents en même temps. ni dans deux camps différents(logiqu).
+ils ne peuvent piloter qu'un seul type de vaisseaux chacun, appartenir qu'à un seul camp est peut être unique.
+ils possèdent un nom, une valeur de pilotage, des commentaire et a un coût.
+Les vaisseaux quant à eux ont un nom, une valeur d'agilité, une valeur d'arme principale, une valeur de bouclier, des points de structure, de l'énergie, 
+une taille et une capacité. ils ne peuvent être pilotés par plusieurs pilotes. Ils peuvent intégrer des escadrons diffèrents.
+chaque pilotes, vaisseaux possèdent des améliorations et peuvent effectuer certaines actions.
+Chaque escadron, selon leur composition, possèdent aussi des améliorations.

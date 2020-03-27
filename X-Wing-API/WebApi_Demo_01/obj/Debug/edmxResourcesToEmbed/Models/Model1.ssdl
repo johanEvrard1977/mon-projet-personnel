@@ -1,0 +1,580 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="projetPersoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="action">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="amelioration">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="XIDTypeAmelioration" Type="int" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cout" Type="int" Nullable="false" />
+    <Property Name="UnSeulExemplaireParVaisseau" Type="int" Nullable="false" />
+    <Property Name="XIDCamp" Type="int" Nullable="false" />
+    <Property Name="XIDVaisseau" Type="int" Nullable="false" />
+    <Property Name="TailleMinAutorisee" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TailleMaxAutorisee" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="PersonnageUniqueConcerne" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="camp">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="collection">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="XIDUsers" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'projetPerso.dbo.detailactionvaisseau' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+  <EntityType Name="detailactionvaisseau">
+    <Key>
+      <PropertyRef Name="XIDAction" />
+      <PropertyRef Name="XIDVaisseau" />
+    </Key>
+    <Property Name="XIDAction" Type="int" Nullable="false" />
+    <Property Name="XIDVaisseau" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'projetPerso.dbo.detailameliorationcollection' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+  <EntityType Name="detailameliorationcollection">
+    <Key>
+      <PropertyRef Name="XIDAmelioration" />
+      <PropertyRef Name="XIDCollection" />
+    </Key>
+    <Property Name="XIDAmelioration" Type="int" Nullable="false" />
+    <Property Name="XIDCollection" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'projetPerso.dbo.detailescadronamelioration' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+  <EntityType Name="detailescadronamelioration">
+    <Key>
+      <PropertyRef Name="XIDEscadron" />
+      <PropertyRef Name="XIDAmelioration" />
+    </Key>
+    <Property Name="XIDEscadron" Type="int" Nullable="false" />
+    <Property Name="XIDAmelioration" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'projetPerso.dbo.detailescadronvaisseau' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+  <EntityType Name="detailescadronvaisseau">
+    <Key>
+      <PropertyRef Name="XIDEscadron" />
+      <PropertyRef Name="XIDVaisseau" />
+    </Key>
+    <Property Name="XIDEscadron" Type="int" Nullable="false" />
+    <Property Name="XIDVaisseau" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'projetPerso.dbo.detailpilotecollection' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+  <EntityType Name="detailpilotecollection">
+    <Key>
+      <PropertyRef Name="XIDPilote" />
+      <PropertyRef Name="XIDCollection" />
+    </Key>
+    <Property Name="XIDPilote" Type="int" Nullable="false" />
+    <Property Name="XIDCollection" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'projetPerso.dbo.detailpilotetypeamelioration' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+  <EntityType Name="detailpilotetypeamelioration">
+    <Key>
+      <PropertyRef Name="XIDPilote" />
+      <PropertyRef Name="XIDTypeAmelioration" />
+    </Key>
+    <Property Name="XIDPilote" Type="int" Nullable="false" />
+    <Property Name="XIDTypeAmelioration" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'projetPerso.dbo.detailvaisseaucollection' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+  <EntityType Name="detailvaisseaucollection">
+    <Key>
+      <PropertyRef Name="XIDVaisseau" />
+      <PropertyRef Name="XIDCollection" />
+    </Key>
+    <Property Name="XIDVaisseau" Type="int" Nullable="false" />
+    <Property Name="XIDCollection" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="escadron">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="XIDCollection" Type="int" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EstVisible" Type="int" Nullable="false" />
+    <Property Name="Points" Type="int" Nullable="false" />
+    <Property Name="Description" Type="int" Nullable="false" />
+    <Property Name="XIDUser" Type="int" Nullable="false" />
+    <Property Name="XIDCamp" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="pilote">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="XIDVaisseau" Type="int" Nullable="false" />
+    <Property Name="XIDCamp" Type="int" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EstUnique" Type="int" Nullable="false" />
+    <Property Name="Cout" Type="int" Nullable="false" />
+    <Property Name="ValPilotage" Type="int" Nullable="false" />
+    <Property Name="Commentaire" Type="nvarchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="typeamelioration">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'projetPerso.dbo.UserCollection' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+  <EntityType Name="UserCollection">
+    <Key>
+      <PropertyRef Name="XIDUsers" />
+      <PropertyRef Name="XIDCollection" />
+    </Key>
+    <Property Name="XIDUsers" Type="int" Nullable="false" />
+    <Property Name="XIDCollection" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Prenom" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="mail" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Rue" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="numéro" Type="int" Nullable="false" />
+    <Property Name="CP" Type="int" Nullable="false" />
+    <Property Name="Ville" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Pays" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="Password" Type="varbinary" MaxLength="32" Nullable="false" />
+    <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vaisseau">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ValAgilite" Type="int" Nullable="false" />
+    <Property Name="ValArmePrincipale" Type="int" Nullable="false" />
+    <Property Name="ValBouclier" Type="int" Nullable="false" />
+    <Property Name="PtsStructure" Type="int" Nullable="false" />
+    <Property Name="ValEnergie" Type="int" Nullable="false" />
+    <Property Name="Taille" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Capacite" Type="nvarchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Action">
+    <End Role="action" Type="Self.action" Multiplicity="1" />
+    <End Role="detailactionvaisseau" Type="Self.detailactionvaisseau" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="action">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailactionvaisseau">
+        <PropertyRef Name="XIDAction" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_amelioration">
+    <End Role="amelioration" Type="Self.amelioration" Multiplicity="1" />
+    <End Role="detailescadronamelioration" Type="Self.detailescadronamelioration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="amelioration">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailescadronamelioration">
+        <PropertyRef Name="XIDAmelioration" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ameliorations">
+    <End Role="amelioration" Type="Self.amelioration" Multiplicity="1" />
+    <End Role="detailameliorationcollection" Type="Self.detailameliorationcollection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="amelioration">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailameliorationcollection">
+        <PropertyRef Name="XIDAmelioration" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_c">
+    <End Role="camp" Type="Self.camp" Multiplicity="1" />
+    <End Role="escadron" Type="Self.escadron" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="camp">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="escadron">
+        <PropertyRef Name="XIDCamp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_camp">
+    <End Role="camp" Type="Self.camp" Multiplicity="1" />
+    <End Role="amelioration" Type="Self.amelioration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="camp">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="amelioration">
+        <PropertyRef Name="XIDCamp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_co">
+    <End Role="collection" Type="Self.collection" Multiplicity="1" />
+    <End Role="UserCollection" Type="Self.UserCollection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="collection">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserCollection">
+        <PropertyRef Name="XIDCollection" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_collec">
+    <End Role="collection" Type="Self.collection" Multiplicity="1" />
+    <End Role="escadron" Type="Self.escadron" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="collection">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="escadron">
+        <PropertyRef Name="XIDCollection" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_collectio">
+    <End Role="collection" Type="Self.collection" Multiplicity="1" />
+    <End Role="detailpilotecollection" Type="Self.detailpilotecollection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="collection">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailpilotecollection">
+        <PropertyRef Name="XIDCollection" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_collections">
+    <End Role="collection" Type="Self.collection" Multiplicity="1" />
+    <End Role="detailameliorationcollection" Type="Self.detailameliorationcollection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="collection">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailameliorationcollection">
+        <PropertyRef Name="XIDCollection" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_escad">
+    <End Role="escadron" Type="Self.escadron" Multiplicity="1" />
+    <End Role="detailescadronvaisseau" Type="Self.detailescadronvaisseau" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="escadron">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailescadronvaisseau">
+        <PropertyRef Name="XIDEscadron" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_escadron">
+    <End Role="escadron" Type="Self.escadron" Multiplicity="1" />
+    <End Role="detailescadronamelioration" Type="Self.detailescadronamelioration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="escadron">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailescadronamelioration">
+        <PropertyRef Name="XIDEscadron" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_pi">
+    <End Role="pilote" Type="Self.pilote" Multiplicity="1" />
+    <End Role="detailpilotecollection" Type="Self.detailpilotecollection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pilote">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailpilotecollection">
+        <PropertyRef Name="XIDPilote" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_pilo">
+    <End Role="pilote" Type="Self.pilote" Multiplicity="1" />
+    <End Role="detailpilotetypeamelioration" Type="Self.detailpilotetypeamelioration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pilote">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailpilotetypeamelioration">
+        <PropertyRef Name="XIDPilote" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_typeAmel">
+    <End Role="typeamelioration" Type="Self.typeamelioration" Multiplicity="1" />
+    <End Role="detailpilotetypeamelioration" Type="Self.detailpilotetypeamelioration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="typeamelioration">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailpilotetypeamelioration">
+        <PropertyRef Name="XIDTypeAmelioration" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_typeamelioration">
+    <End Role="typeamelioration" Type="Self.typeamelioration" Multiplicity="1" />
+    <End Role="amelioration" Type="Self.amelioration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="typeamelioration">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="amelioration">
+        <PropertyRef Name="XIDTypeAmelioration" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vaisse">
+    <End Role="vaisseau" Type="Self.vaisseau" Multiplicity="1" />
+    <End Role="detailescadronvaisseau" Type="Self.detailescadronvaisseau" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vaisseau">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailescadronvaisseau">
+        <PropertyRef Name="XIDVaisseau" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vaisseau">
+    <End Role="vaisseau" Type="Self.vaisseau" Multiplicity="1" />
+    <End Role="detailactionvaisseau" Type="Self.detailactionvaisseau" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vaisseau">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailactionvaisseau">
+        <PropertyRef Name="XIDVaisseau" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vaisseaux">
+    <End Role="vaisseau" Type="Self.vaisseau" Multiplicity="1" />
+    <End Role="amelioration" Type="Self.amelioration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vaisseau">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="amelioration">
+        <PropertyRef Name="XIDVaisseau" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_xidcollection">
+    <End Role="collection" Type="Self.collection" Multiplicity="1" />
+    <End Role="detailvaisseaucollection" Type="Self.detailvaisseaucollection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="collection">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailvaisseaucollection">
+        <PropertyRef Name="XIDCollection" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_xidvaisseau">
+    <End Role="vaisseau" Type="Self.vaisseau" Multiplicity="1" />
+    <End Role="detailvaisseaucollection" Type="Self.detailvaisseaucollection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vaisseau">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="detailvaisseaucollection">
+        <PropertyRef Name="XIDVaisseau" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="XIDCam">
+    <End Role="camp" Type="Self.camp" Multiplicity="1" />
+    <End Role="pilote" Type="Self.pilote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="camp">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="pilote">
+        <PropertyRef Name="XIDCamp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="projetPersoModelStoreContainer">
+    <EntitySet Name="action" EntityType="Self.action" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="amelioration" EntityType="Self.amelioration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="camp" EntityType="Self.camp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="collection" EntityType="Self.collection" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="escadron" EntityType="Self.escadron" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pilote" EntityType="Self.pilote" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="typeamelioration" EntityType="Self.typeamelioration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vaisseau" EntityType="Self.vaisseau" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="detailactionvaisseau" EntityType="Self.detailactionvaisseau" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [detailactionvaisseau].[XIDAction] AS [XIDAction], 
+    [detailactionvaisseau].[XIDVaisseau] AS [XIDVaisseau]
+    FROM [dbo].[detailactionvaisseau] AS [detailactionvaisseau]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="detailameliorationcollection" EntityType="Self.detailameliorationcollection" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [detailameliorationcollection].[XIDAmelioration] AS [XIDAmelioration], 
+    [detailameliorationcollection].[XIDCollection] AS [XIDCollection]
+    FROM [dbo].[detailameliorationcollection] AS [detailameliorationcollection]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="detailescadronamelioration" EntityType="Self.detailescadronamelioration" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [detailescadronamelioration].[XIDEscadron] AS [XIDEscadron], 
+    [detailescadronamelioration].[XIDAmelioration] AS [XIDAmelioration]
+    FROM [dbo].[detailescadronamelioration] AS [detailescadronamelioration]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="detailescadronvaisseau" EntityType="Self.detailescadronvaisseau" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [detailescadronvaisseau].[XIDEscadron] AS [XIDEscadron], 
+    [detailescadronvaisseau].[XIDVaisseau] AS [XIDVaisseau]
+    FROM [dbo].[detailescadronvaisseau] AS [detailescadronvaisseau]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="detailpilotecollection" EntityType="Self.detailpilotecollection" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [detailpilotecollection].[XIDPilote] AS [XIDPilote], 
+    [detailpilotecollection].[XIDCollection] AS [XIDCollection]
+    FROM [dbo].[detailpilotecollection] AS [detailpilotecollection]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="detailpilotetypeamelioration" EntityType="Self.detailpilotetypeamelioration" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [detailpilotetypeamelioration].[XIDPilote] AS [XIDPilote], 
+    [detailpilotetypeamelioration].[XIDTypeAmelioration] AS [XIDTypeAmelioration]
+    FROM [dbo].[detailpilotetypeamelioration] AS [detailpilotetypeamelioration]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="detailvaisseaucollection" EntityType="Self.detailvaisseaucollection" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [detailvaisseaucollection].[XIDVaisseau] AS [XIDVaisseau], 
+    [detailvaisseaucollection].[XIDCollection] AS [XIDCollection]
+    FROM [dbo].[detailvaisseaucollection] AS [detailvaisseaucollection]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="UserCollection" EntityType="Self.UserCollection" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [UserCollection].[XIDUsers] AS [XIDUsers], 
+    [UserCollection].[XIDCollection] AS [XIDCollection]
+    FROM [dbo].[UserCollection] AS [UserCollection]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Action" Association="Self.FK_Action">
+      <End Role="action" EntitySet="action" />
+      <End Role="detailactionvaisseau" EntitySet="detailactionvaisseau" />
+    </AssociationSet>
+    <AssociationSet Name="FK_amelioration" Association="Self.FK_amelioration">
+      <End Role="amelioration" EntitySet="amelioration" />
+      <End Role="detailescadronamelioration" EntitySet="detailescadronamelioration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ameliorations" Association="Self.FK_ameliorations">
+      <End Role="amelioration" EntitySet="amelioration" />
+      <End Role="detailameliorationcollection" EntitySet="detailameliorationcollection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_c" Association="Self.FK_c">
+      <End Role="camp" EntitySet="camp" />
+      <End Role="escadron" EntitySet="escadron" />
+    </AssociationSet>
+    <AssociationSet Name="FK_camp" Association="Self.FK_camp">
+      <End Role="camp" EntitySet="camp" />
+      <End Role="amelioration" EntitySet="amelioration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_co" Association="Self.FK_co">
+      <End Role="collection" EntitySet="collection" />
+      <End Role="UserCollection" EntitySet="UserCollection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_collec" Association="Self.FK_collec">
+      <End Role="collection" EntitySet="collection" />
+      <End Role="escadron" EntitySet="escadron" />
+    </AssociationSet>
+    <AssociationSet Name="FK_collectio" Association="Self.FK_collectio">
+      <End Role="collection" EntitySet="collection" />
+      <End Role="detailpilotecollection" EntitySet="detailpilotecollection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_collections" Association="Self.FK_collections">
+      <End Role="collection" EntitySet="collection" />
+      <End Role="detailameliorationcollection" EntitySet="detailameliorationcollection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_escad" Association="Self.FK_escad">
+      <End Role="escadron" EntitySet="escadron" />
+      <End Role="detailescadronvaisseau" EntitySet="detailescadronvaisseau" />
+    </AssociationSet>
+    <AssociationSet Name="FK_escadron" Association="Self.FK_escadron">
+      <End Role="escadron" EntitySet="escadron" />
+      <End Role="detailescadronamelioration" EntitySet="detailescadronamelioration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_pi" Association="Self.FK_pi">
+      <End Role="pilote" EntitySet="pilote" />
+      <End Role="detailpilotecollection" EntitySet="detailpilotecollection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_pilo" Association="Self.FK_pilo">
+      <End Role="pilote" EntitySet="pilote" />
+      <End Role="detailpilotetypeamelioration" EntitySet="detailpilotetypeamelioration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_typeAmel" Association="Self.FK_typeAmel">
+      <End Role="typeamelioration" EntitySet="typeamelioration" />
+      <End Role="detailpilotetypeamelioration" EntitySet="detailpilotetypeamelioration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_typeamelioration" Association="Self.FK_typeamelioration">
+      <End Role="typeamelioration" EntitySet="typeamelioration" />
+      <End Role="amelioration" EntitySet="amelioration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vaisse" Association="Self.FK_vaisse">
+      <End Role="vaisseau" EntitySet="vaisseau" />
+      <End Role="detailescadronvaisseau" EntitySet="detailescadronvaisseau" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vaisseau" Association="Self.FK_vaisseau">
+      <End Role="vaisseau" EntitySet="vaisseau" />
+      <End Role="detailactionvaisseau" EntitySet="detailactionvaisseau" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vaisseaux" Association="Self.FK_vaisseaux">
+      <End Role="vaisseau" EntitySet="vaisseau" />
+      <End Role="amelioration" EntitySet="amelioration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_xidcollection" Association="Self.FK_xidcollection">
+      <End Role="collection" EntitySet="collection" />
+      <End Role="detailvaisseaucollection" EntitySet="detailvaisseaucollection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_xidvaisseau" Association="Self.FK_xidvaisseau">
+      <End Role="vaisseau" EntitySet="vaisseau" />
+      <End Role="detailvaisseaucollection" EntitySet="detailvaisseaucollection" />
+    </AssociationSet>
+    <AssociationSet Name="XIDCam" Association="Self.XIDCam">
+      <End Role="camp" EntitySet="camp" />
+      <End Role="pilote" EntitySet="pilote" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

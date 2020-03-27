@@ -1,0 +1,15 @@
+.banniere{
+    height: 80px;
+    width: 100%;
+    text-align: center;
+    background-color: black;
+    letter-spacing: 13px;
+}
+.banniere h1{
+    color: red;
+    font-size: 50px;
+    font-weight: bolder;
+    vertical-align: middle;
+    text-align: center;
+}
+  

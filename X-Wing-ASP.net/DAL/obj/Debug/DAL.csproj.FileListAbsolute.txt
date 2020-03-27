@@ -1,0 +1,16 @@
+C:\Users\johan\Documents\Visual Studio 2015\Projects\WebAPI\WebApi_Demo_01\DAL\bin\Debug\DAL.dll
+C:\Users\johan\Documents\Visual Studio 2015\Projects\WebAPI\WebApi_Demo_01\DAL\bin\Debug\DAL.pdb
+C:\Users\johan\Documents\Visual Studio 2015\Projects\WebAPI\WebApi_Demo_01\DAL\obj\Debug\DAL.dll
+C:\Users\johan\Documents\Visual Studio 2015\Projects\WebAPI\WebApi_Demo_01\DAL\obj\Debug\DAL.pdb
+C:\Users\johan\Desktop\Projetpersonnel\X-Wing-API\DAL\bin\Debug\DAL.dll
+C:\Users\johan\Desktop\Projetpersonnel\X-Wing-API\DAL\bin\Debug\DAL.pdb
+C:\Users\johan\Desktop\Projetpersonnel\X-Wing-API\DAL\obj\Debug\DAL.dll
+C:\Users\johan\Desktop\Projetpersonnel\X-Wing-API\DAL\obj\Debug\DAL.pdb
+C:\Users\johan\Desktop\Projetpersonnel\X-Wing-API\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\johan\Documents\Visual Studio 2015\Projects\X-Wing-ASP.net\DAL\bin\Debug\DAL.dll
+C:\Users\johan\Documents\Visual Studio 2015\Projects\X-Wing-ASP.net\DAL\bin\Debug\DAL.pdb
+C:\Users\johan\Documents\Visual Studio 2015\Projects\X-Wing-ASP.net\DAL\bin\Debug\Newtonsoft.Json.dll
+C:\Users\johan\Documents\Visual Studio 2015\Projects\X-Wing-ASP.net\DAL\bin\Debug\Newtonsoft.Json.xml
+C:\Users\johan\Documents\Visual Studio 2015\Projects\X-Wing-ASP.net\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\johan\Documents\Visual Studio 2015\Projects\X-Wing-ASP.net\DAL\obj\Debug\DAL.dll
+C:\Users\johan\Documents\Visual Studio 2015\Projects\X-Wing-ASP.net\DAL\obj\Debug\DAL.pdb

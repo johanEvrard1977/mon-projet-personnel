@@ -1,0 +1,14 @@
+.menu {
+    height: 80px;
+    width: 100%;
+    padding-left: 650px;
+    padding-top: 20px;
+    font-size: 25px;
+    text-align: center;
+    background-color: black;
+}
+.menu a{
+    padding-right: 80px;
+    color: red;
+}
+  

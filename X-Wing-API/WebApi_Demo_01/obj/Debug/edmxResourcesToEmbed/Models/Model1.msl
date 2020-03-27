@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="projetPersoModelStoreContainer" CdmEntityContainer="projetPersoEntities3">
+    <EntitySetMapping Name="action">
+      <EntityTypeMapping TypeName="projetPersoModel.action">
+        <MappingFragment StoreEntitySet="action">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="amelioration">
+      <EntityTypeMapping TypeName="projetPersoModel.amelioration">
+        <MappingFragment StoreEntitySet="amelioration">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="XIDTypeAmelioration" ColumnName="XIDTypeAmelioration" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Cout" ColumnName="Cout" />
+          <ScalarProperty Name="UnSeulExemplaireParVaisseau" ColumnName="UnSeulExemplaireParVaisseau" />
+          <ScalarProperty Name="XIDCamp" ColumnName="XIDCamp" />
+          <ScalarProperty Name="XIDVaisseau" ColumnName="XIDVaisseau" />
+          <ScalarProperty Name="TailleMinAutorisee" ColumnName="TailleMinAutorisee" />
+          <ScalarProperty Name="TailleMaxAutorisee" ColumnName="TailleMaxAutorisee" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PersonnageUniqueConcerne" ColumnName="PersonnageUniqueConcerne" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="camp">
+      <EntityTypeMapping TypeName="projetPersoModel.camp">
+        <MappingFragment StoreEntitySet="camp">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="collection">
+      <EntityTypeMapping TypeName="projetPersoModel.collection">
+        <MappingFragment StoreEntitySet="collection">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="XIDUsers" ColumnName="XIDUsers" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="escadron">
+      <EntityTypeMapping TypeName="projetPersoModel.escadron">
+        <MappingFragment StoreEntitySet="escadron">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="XIDCollection" ColumnName="XIDCollection" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="EstVisible" ColumnName="EstVisible" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="XIDUser" ColumnName="XIDUser" />
+          <ScalarProperty Name="XIDCamp" ColumnName="XIDCamp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pilote">
+      <EntityTypeMapping TypeName="projetPersoModel.pilote">
+        <MappingFragment StoreEntitySet="pilote">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="XIDVaisseau" ColumnName="XIDVaisseau" />
+          <ScalarProperty Name="XIDCamp" ColumnName="XIDCamp" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="EstUnique" ColumnName="EstUnique" />
+          <ScalarProperty Name="Cout" ColumnName="Cout" />
+          <ScalarProperty Name="ValPilotage" ColumnName="ValPilotage" />
+          <ScalarProperty Name="Commentaire" ColumnName="Commentaire" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="typeamelioration">
+      <EntityTypeMapping TypeName="projetPersoModel.typeamelioration">
+        <MappingFragment StoreEntitySet="typeamelioration">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="projetPersoModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="mail" ColumnName="mail" />
+          <ScalarProperty Name="Rue" ColumnName="Rue" />
+          <ScalarProperty Name="numéro" ColumnName="numéro" />
+          <ScalarProperty Name="CP" ColumnName="CP" />
+          <ScalarProperty Name="Ville" ColumnName="Ville" />
+          <ScalarProperty Name="Pays" ColumnName="Pays" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vaisseau">
+      <EntityTypeMapping TypeName="projetPersoModel.vaisseau">
+        <MappingFragment StoreEntitySet="vaisseau">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="ValAgilite" ColumnName="ValAgilite" />
+          <ScalarProperty Name="ValArmePrincipale" ColumnName="ValArmePrincipale" />
+          <ScalarProperty Name="ValBouclier" ColumnName="ValBouclier" />
+          <ScalarProperty Name="PtsStructure" ColumnName="PtsStructure" />
+          <ScalarProperty Name="ValEnergie" ColumnName="ValEnergie" />
+          <ScalarProperty Name="Taille" ColumnName="Taille" />
+          <ScalarProperty Name="Capacite" ColumnName="Capacite" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserCollection">
+      <EntityTypeMapping TypeName="projetPersoModel.UserCollection">
+        <MappingFragment StoreEntitySet="UserCollection">
+          <ScalarProperty Name="XIDUsers" ColumnName="XIDUsers" />
+          <ScalarProperty Name="XIDCollection" ColumnName="XIDCollection" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="detailactionvaisseau" TypeName="projetPersoModel.detailactionvaisseau" StoreEntitySet="detailactionvaisseau">
+      <EndProperty Name="action">
+        <ScalarProperty Name="ID" ColumnName="XIDAction" />
+      </EndProperty>
+      <EndProperty Name="vaisseau">
+        <ScalarProperty Name="ID" ColumnName="XIDVaisseau" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="detailameliorationcollection" TypeName="projetPersoModel.detailameliorationcollection" StoreEntitySet="detailameliorationcollection">
+      <EndProperty Name="amelioration">
+        <ScalarProperty Name="ID" ColumnName="XIDAmelioration" />
+      </EndProperty>
+      <EndProperty Name="collection">
+        <ScalarProperty Name="ID" ColumnName="XIDCollection" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="detailescadronamelioration" TypeName="projetPersoModel.detailescadronamelioration" StoreEntitySet="detailescadronamelioration">
+      <EndProperty Name="amelioration">
+        <ScalarProperty Name="ID" ColumnName="XIDAmelioration" />
+      </EndProperty>
+      <EndProperty Name="escadron">
+        <ScalarProperty Name="ID" ColumnName="XIDEscadron" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="detailescadronvaisseau" TypeName="projetPersoModel.detailescadronvaisseau" StoreEntitySet="detailescadronvaisseau">
+      <EndProperty Name="escadron">
+        <ScalarProperty Name="ID" ColumnName="XIDEscadron" />
+      </EndProperty>
+      <EndProperty Name="vaisseau">
+        <ScalarProperty Name="ID" ColumnName="XIDVaisseau" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="detailpilotecollection" TypeName="projetPersoModel.detailpilotecollection" StoreEntitySet="detailpilotecollection">
+      <EndProperty Name="collection">
+        <ScalarProperty Name="ID" ColumnName="XIDCollection" />
+      </EndProperty>
+      <EndProperty Name="pilote">
+        <ScalarProperty Name="ID" ColumnName="XIDPilote" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="detailpilotetypeamelioration" TypeName="projetPersoModel.detailpilotetypeamelioration" StoreEntitySet="detailpilotetypeamelioration">
+      <EndProperty Name="pilote">
+        <ScalarProperty Name="ID" ColumnName="XIDPilote" />
+      </EndProperty>
+      <EndProperty Name="typeamelioration">
+        <ScalarProperty Name="ID" ColumnName="XIDTypeAmelioration" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="detailvaisseaucollection" TypeName="projetPersoModel.detailvaisseaucollection" StoreEntitySet="detailvaisseaucollection">
+      <EndProperty Name="collection">
+        <ScalarProperty Name="ID" ColumnName="XIDCollection" />
+      </EndProperty>
+      <EndProperty Name="vaisseau">
+        <ScalarProperty Name="ID" ColumnName="XIDVaisseau" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
