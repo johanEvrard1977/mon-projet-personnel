@@ -1,4 +1,5 @@
 ﻿using DAL.Repository;
+using DAL.ViewModels;
 using DalXwing.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace X_Wing_ASP.net.Controllers
         {
             EscadronRepo AR = new EscadronRepo();
             // GET: api/Action
-            IEnumerable<Escadron> p = AR.GetAll();
+            IEnumerable<View> p = AR.GetAll();
 
             return View(p);
         }
@@ -42,9 +43,7 @@ namespace X_Wing_ASP.net.Controllers
             try
             {
                 EscadronRepo AR = new EscadronRepo();
-                if (ModelState.IsValid)
-                {
-                    AR.Create(new Escadron() {
+                AR.Create(new Escadron() {
                         Id = collection.Id,
                         Nom = collection.Nom,
                         Amelioration = collection.Amelioration,
@@ -54,7 +53,6 @@ namespace X_Wing_ASP.net.Controllers
                         Points = collection.Points,
                         Vaisseau = collection.Vaisseau,
                         Visible = collection.Visible});
-                }
                 return RedirectToAction("Index");
             }
             catch
@@ -119,7 +117,18 @@ namespace X_Wing_ASP.net.Controllers
                 EscadronRepo AR = new EscadronRepo();
                 if (ModelState.IsValid)
                 {
-                    AR.Delete(id);
+                    AR.Delete(id, new Escadron()
+                    {
+                        Id = collection.Id,
+                        Nom = collection.Nom,
+                        Amelioration = collection.Amelioration,
+                        Camp = collection.Camp,
+                        Description = collection.Description,
+                        Pilote = collection.Pilote,
+                        Points = collection.Points,
+                        Vaisseau = collection.Vaisseau,
+                        Visible = collection.Visible
+                    });
                 }
                 return RedirectToAction("Index");
             }

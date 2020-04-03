@@ -1,11 +1,9 @@
-﻿using DalXwing.Models;
-using System;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace DAL.Repository
 {
@@ -13,6 +11,7 @@ namespace DAL.Repository
     {
 
         private string connect = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=projetPerso;Integrated Security=True;Pooling=False";
+
         public void Create(Camp T)
         {
             using (SqlConnection conn = new SqlConnection(connect))
@@ -39,7 +38,7 @@ namespace DAL.Repository
 
         }
 
-        public IEnumerable<Camp> GetAll()
+        public IEnumerable<ViewCamp> GetAll()
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -49,7 +48,7 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Camp
+                    yield return new ViewCamp
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["id"]
@@ -70,7 +69,7 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SELECT camp.ID, camp.Nom"
                     + " FROM camp"
-                    + " WHERE camp.id = @p1";
+                    + " WHERE camp.ID = @p1";
                 cmd.Parameters.AddWithValue("p1", id);
 
                 SqlDataReader r = cmd.ExecuteReader();
@@ -85,8 +84,10 @@ namespace DAL.Repository
             return u;
         }
 
-        public IEnumerable<Camp> GetLinkVaisseau(int id)
+        public IEnumerable<ViewCamp> GetLinkVaisseau(int id)
         {
+            VaisseauRepo VR = new VaisseauRepo();
+            PiloteRepo PR = new PiloteRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
@@ -97,17 +98,19 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Camp
+                    yield return new ViewCamp
                     {
-                        Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"]
-                    };
+                        Id = (int)r["ID"],
+                        Nom = r["Nom"].ToString()
+                };
                 }
             }
         }
 
-        public IEnumerable<Camp> GetLinkEscadron(int id)
+        public IEnumerable<ViewCamp> GetLinkEscadron(int id)
         {
+            VaisseauRepo VR = new VaisseauRepo();
+            PiloteRepo PR = new PiloteRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
@@ -118,31 +121,33 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Camp
+                    yield return new ViewCamp
                     {
-                        Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"]
+                        Id = (int)r["ID"],
+                        Nom = r["Nom"].ToString()
                     };
                 }
             }
         }
 
-        public IEnumerable<Camp> GetLinkPilote(int id)
+        public IEnumerable<ViewCamp> GetLinkPilote(int id)
         {
+            VaisseauRepo VR = new VaisseauRepo();
+            PiloteRepo PR = new PiloteRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM camp join pilote on pilote.XIDCamp = pilote.ID"
-                    + " join vaisseau on vaisseau.ID = pilote.XIDVaisseau where pilote.ID = @p1";
+                cmd.CommandText = "SELECT * FROM camp join pilote on pilote.XIDCamp = camp.ID"
+                    + " where pilote.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Camp
+                    yield return new ViewCamp
                     {
-                        Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"]
+                        Id = (int)r["ID"],
+                        Nom = r["Nom"].ToString()
                     };
                 }
             }
@@ -160,7 +165,7 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SELECT camp.ID, camp.Nom"
                     + " FROM camp"
-                    + " WHERE camp.id = @p1";
+                    + " WHERE camp.Nom = @p1";
                 cmd.Parameters.AddWithValue("p1", name);
 
                 SqlDataReader r = cmd.ExecuteReader();
@@ -185,10 +190,15 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SP_Update_Camp";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", T.Id);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        IEnumerable<Camp> IRepository<int, Camp>.GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DalXwing.Models.Pilote>
+﻿@model IEnumerable<DAL.ViewModels.View>
 
 @{
     ViewBag.Title = "Index";
@@ -14,18 +14,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Nom)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Unique)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cout)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ValeurPilotage)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Commentaires)
-        </th>
         <th></th>
     </tr>
 
@@ -33,18 +21,6 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Nom)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Unique)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cout)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ValeurPilotage)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Commentaires)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

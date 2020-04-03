@@ -1,0 +1,15 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nom</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pilote of pilotes">
+        <th scope="row">{{ pilote.Id }}</th>
+        <td>{{pilote.Nom}}</td>
+        <td><button class="edit" [title]="pilote.Nom + ' details'" [routerLink]="['/pilote', pilote.Id ]">edit</button>
+      </tr>
+    </tbody>
+  </table>

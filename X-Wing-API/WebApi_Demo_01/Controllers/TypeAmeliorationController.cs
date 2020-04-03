@@ -9,23 +9,23 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApi_Demo_01.Helper;
 using WebApi_Demo_01.Models;
+using WebApi_Demo_01.ViewModels;
 
 namespace WebApi_Demo_01.Controllers
 {
     [BasicAuthenticator(realm: "MIKE8")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("api/TypeAmelioration")]
     public class TypeAmeliorationController : ApiController
     {
         TypeAmeliorationRepo typeAmelioration = new TypeAmeliorationRepo();
         // GET: api/typeAmeliorations
-        public IEnumerable<typeAmeliorations> Get()
+        public IEnumerable<ViewModelType> Get()
         {
-            List<typeAmeliorations> l = new List<typeAmeliorations>();
+            List<ViewModelType> l = new List<ViewModelType>();
 
             foreach (var item in typeAmelioration.GetAll())
             {
-                l.Add(Mapper.Mapper.MapToEntity(item));
+                l.Add(Mapper.Mapper.MapToEntityToView(Mapper.Mapper.MapToEntity(item)));
             }
 
             return l;

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DalXwing.Models.Vaisseaux>
+﻿@model IEnumerable<DAL.ViewModels.View>
 
 @{
     ViewBag.Title = "Index";
@@ -14,27 +14,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Nom)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ValeurAgilite)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ValeurArmePrincipale)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Bouclier)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Structure)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Energie)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Taille)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Capacite)
-        </th>
         <th></th>
     </tr>
 
@@ -42,27 +21,6 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Nom)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ValeurAgilite)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ValeurArmePrincipale)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Bouclier)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Structure)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Energie)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Taille)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Capacite)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

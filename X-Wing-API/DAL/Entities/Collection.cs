@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using DAL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,11 @@ namespace DalXwing.Models
     {
         public int Id { get; set; }
         public string Nom { get; set; }
-        public IEnumerable<Pilote> Pilote { get; set; }
-        public IEnumerable<Vaisseaux> Vaisseau { get; set; }
-        public IEnumerable<Escadron> Escadron { get; set; }
-        public IEnumerable<Amelioration> Amelioration { get; set; }
-        public IEnumerable<User> Users { get; set; }
+        public IEnumerable<ViewPilote> Pilote { get; set; }
+        public IEnumerable<ViewVaisseau> Vaisseau { get; set; }
+        public IEnumerable<ViewEscadron> Escadron { get; set; }
+        public IEnumerable<ViewAmelioration> Amelioration { get; set; }
+        public IEnumerable<ViewUser> Users { get; set; }
+        public int XIDUser { get; set; }
     }
 }

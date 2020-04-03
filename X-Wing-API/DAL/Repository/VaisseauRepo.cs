@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,16 +20,17 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SP_Add_Vaisseaux";
+                cmd.CommandText = "SP_Add_Vaisseau";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
-                cmd.Parameters.AddWithValue("@VA", T.ValeurAgilite);
-                cmd.Parameters.AddWithValue("@VAP", T.ValeurArmePrincipale);
-                cmd.Parameters.AddWithValue("@Bouclier", T.Bouclier);
-                cmd.Parameters.AddWithValue("@Structure", T.Structure);
-                cmd.Parameters.AddWithValue("@Energie", T.Energie);
-                cmd.Parameters.AddWithValue("@Taile", T.Taille);
+                cmd.Parameters.AddWithValue("@valAgilite", T.ValeurAgilite);
+                cmd.Parameters.AddWithValue("@valArmePrincipale", T.ValeurArmePrincipale);
+                cmd.Parameters.AddWithValue("@ValBouclier", T.Bouclier);
+                cmd.Parameters.AddWithValue("@PtsStructure", T.Structure);
+                cmd.Parameters.AddWithValue("@ValEnergie", T.Energie);
+                cmd.Parameters.AddWithValue("@Taille", T.Taille);
                 cmd.Parameters.AddWithValue("@Capacite", T.Capacite);
+                cmd.Parameters.AddWithValue("@Action", T.XIDAction);
                 cmd.ExecuteScalar();
             }
         }
@@ -39,6 +41,9 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "DELETE FROM detailactionvaisseau WHERE XIDVaisseau = @param2";
+                cmd.Parameters.AddWithValue("@param2", id);
+                cmd.ExecuteNonQuery();
                 cmd.CommandText = "DELETE FROM vaisseau WHERE id = @param";
                 cmd.Parameters.AddWithValue("@param", id);
                 cmd.ExecuteNonQuery();
@@ -46,7 +51,7 @@ namespace DAL.Repository
 
         }
 
-        public IEnumerable<Vaisseaux> GetAll()
+        public IEnumerable<ViewVaisseau> GetAll()
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -56,23 +61,16 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Vaisseaux
+                    yield return new ViewVaisseau
                     {
                         Nom = r["Nom"].ToString(),
-                        ValeurAgilite = (int)r["ValAgilite"],
-                        ValeurArmePrincipale = (int)r["ValArmePrincipale"],
-                        Bouclier = (int)r["ValBouclier"],
-                        Structure = (int)r["PtsStructure"],
-                        Energie = (int)r["ValEnergie"],
-                        Taille = r["Taille"].ToString(),
-                        Capacite = r["Capacite"].ToString(),
                         Id = (int)r["id"]
                     };
                 }
             }
          }
 
-        public IEnumerable<Vaisseaux> GetLinkAction(int id)
+        public IEnumerable<ViewVaisseau> GetLinkAction(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -84,23 +82,38 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Vaisseaux
+                    yield return new ViewVaisseau
                     {
                         Nom = r["Nom"].ToString(),
-                        ValeurAgilite = (int)r["ValAgilite"],
-                        ValeurArmePrincipale = (int)r["ValArmePrincipale"],
-                        Bouclier = (int)r["ValBouclier"],
-                        Structure = (int)r["PtsStructure"],
-                        Energie = (int)r["ValEnergie"],
-                        Taille = r["Taille"].ToString(),
-                        Capacite = r["Capacite"].ToString(),
                         Id = (int)r["ID"]
                     };
                 }
             }
          }
 
-        public IEnumerable<Vaisseaux> GetLinkPilote(int id)
+        public IEnumerable<ViewVaisseau> GetLinkCollection(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(connect))
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM vaisseau join detailvaisseaucollection on detailvaisseaucollection.XIDVaisseau = vaisseau.ID"
+                    + "  where detailvaisseaucollection.XIDVaisseau = @p1";
+                cmd.Parameters.AddWithValue("@p1", id);
+                SqlDataReader r = cmd.ExecuteReader();
+                while (r.Read())
+                {
+                    yield return new ViewVaisseau
+                    {
+                        Nom = r["Nom"].ToString(),
+                        Id = (int)r["ID"]
+                    };
+                }
+            }
+        }
+
+
+        public IEnumerable<ViewVaisseau> GetLinkPilote(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -112,23 +125,16 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Vaisseaux
+                    yield return new ViewVaisseau
                     {
                         Nom = r["Nom"].ToString(),
-                        ValeurAgilite = (int)r["ValAgilite"],
-                        ValeurArmePrincipale = (int)r["ValArmePrincipale"],
-                        Bouclier = (int)r["ValBouclier"],
-                        Structure = (int)r["PtsStructure"],
-                        Energie = (int)r["ValEnergie"],
-                        Taille = r["Taille"].ToString(),
-                        Capacite = r["Capacite"].ToString(),
                         Id = (int)r["ID"]
                     };
                 }
             }
         }
 
-        public IEnumerable<Vaisseaux> GetLinkEscadron(int id)
+        public IEnumerable<ViewVaisseau> GetLinkEscadron(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -142,7 +148,7 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Vaisseaux
+                    yield return new ViewVaisseau
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["ID"]
@@ -151,7 +157,7 @@ namespace DAL.Repository
             }
         }
 
-        public IEnumerable<Vaisseaux> GetLinkCamp(int id)
+        public IEnumerable<ViewVaisseau> GetLinkCamp(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -163,16 +169,9 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Vaisseaux
+                    yield return new ViewVaisseau
                     {
                         Nom = r["Nom"].ToString(),
-                        ValeurAgilite = (int)r["ValAgilite"],
-                        ValeurArmePrincipale = (int)r["ValArmePrincipale"],
-                        Bouclier = (int)r["ValBouclier"],
-                        Structure = (int)r["PtsStructure"],
-                        Energie = (int)r["ValEnergie"],
-                        Taille = r["Taille"].ToString(),
-                        Capacite = r["Capacite"].ToString(),
                         Id = (int)r["ID"]
                     };
                 }
@@ -189,9 +188,9 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT vaisseau.ID, vaisseau.Nom"
+                cmd.CommandText = "SELECT *"
                     + " FROM vaisseau"
-                    + " WHERE vaisseau.id = @p1";
+                    + " WHERE vaisseau.Nom = @p1";
                 cmd.Parameters.AddWithValue("p1", name);
 
                 SqlDataReader r = cmd.ExecuteReader();
@@ -202,6 +201,13 @@ namespace DAL.Repository
                     u.Action = AR.GetLinkVaisseau((int)r["ID"]);
                     u.Pilote = PR.GetLinkVaisseau((int)r["ID"]);
                     u.Camp = CR.GetLinkVaisseau((int)r["ID"]);
+                    u.Bouclier = (int)r["ValBouclier"];
+                    u.ValeurAgilite = (int)r["ValAgilite"];
+                    u.ValeurArmePrincipale = (int)r["ValArmePrincipale"];
+                    u.Structure = (int)r["PtsStructure"];
+                    u.Energie = (int)r["ValEnergie"];
+                    u.Taille = r["Taille"].ToString();
+                    u.Capacite = r["Capacite"].ToString();
                 }
             }
             return u;
@@ -218,7 +224,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT vaisseau.ID, vaisseau.Nom"
+                cmd.CommandText = "SELECT *"
                     + " FROM vaisseau"
                     + " WHERE vaisseau.id = @p1";
                 cmd.Parameters.AddWithValue("p1", id);
@@ -231,6 +237,13 @@ namespace DAL.Repository
                     u.Action = AR.GetLinkVaisseau((int)r["ID"]);
                     u.Pilote = PR.GetLinkVaisseau((int)r["ID"]);
                     u.Camp = CR.GetLinkVaisseau((int)r["ID"]);
+                    u.Bouclier = (int)r["ValBouclier"];
+                    u.ValeurAgilite = (int)r["ValAgilite"];
+                    u.ValeurArmePrincipale = (int)r["ValArmePrincipale"];
+                    u.Structure = (int)r["PtsStructure"];
+                    u.Energie = (int)r["ValEnergie"];
+                    u.Taille = r["Taille"].ToString();
+                    u.Capacite = r["Capacite"].ToString() ;
                 }
             }
             return u;
@@ -242,19 +255,25 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SP_Update_Vaisseaux";
+                cmd.CommandText = "SP_Update_Vaisseau";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", T.Id);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
-                cmd.Parameters.AddWithValue("@VA", T.ValeurAgilite);
-                cmd.Parameters.AddWithValue("@VAP", T.ValeurArmePrincipale);
-                cmd.Parameters.AddWithValue("@Bouclier", T.Bouclier);
-                cmd.Parameters.AddWithValue("@Structure", T.Structure);
-                cmd.Parameters.AddWithValue("@Energie", T.Energie);
-                cmd.Parameters.AddWithValue("@Taile", T.Taille);
+                cmd.Parameters.AddWithValue("@valAgilite", T.ValeurAgilite);
+                cmd.Parameters.AddWithValue("@valArmePrincipale", T.ValeurArmePrincipale);
+                cmd.Parameters.AddWithValue("@ValBouclier", T.Bouclier);
+                cmd.Parameters.AddWithValue("@PtsStructure", T.Structure);
+                cmd.Parameters.AddWithValue("@ValEnergie", T.Energie);
+                cmd.Parameters.AddWithValue("@Taille", T.Taille);
                 cmd.Parameters.AddWithValue("@Capacite", T.Capacite);
+                cmd.Parameters.AddWithValue("@Action", T.XIDAction);
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        IEnumerable<Vaisseaux> IRepository<int, Vaisseaux>.GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

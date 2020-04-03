@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -33,35 +34,32 @@ namespace DAL.Repository
             string json = JsonConvert.SerializeObject(T);
 
             HttpContent httpContent = new StringContent(json);
-
-            HttpResponseMessage responseMessage = _httpClient.PostAsync("Vaisseaux", httpContent).Result;
+            httpContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
+            HttpResponseMessage responseMessage = _httpClient.PostAsync("Vaisseau", httpContent).Result;
             return responseMessage.IsSuccessStatusCode;
 
         }
 
-        public void Delete(int id)
+        public void Delete(int id, Vaisseaux T)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                _httpClient.BaseAddress = new Uri(BaseUri);
-                _httpClient.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = new Uri(BaseUri);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                    "Basic", Convert.ToBase64String(
-                ASCIIEncoding.ASCII.GetBytes(
-                   $"{firstName}:{pass}")));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Basic", Convert.ToBase64String(
+            ASCIIEncoding.ASCII.GetBytes(
+               $"{firstName}:{pass}")));
+            string json = JsonConvert.SerializeObject(T);
 
-                //la requête
-                using (HttpResponseMessage response = client.DeleteAsync($"{BaseUri}Vaisseaux/" + id).Result)
-                {
-                    response.EnsureSuccessStatusCode();
-                }
-            }
+            HttpContent httpContent = new StringContent(json);
+            httpContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
+            HttpResponseMessage responseMessage = _httpClient.DeleteAsync("Vaisseau/" + id).Result;
 
         }
 
-        public IEnumerable<Vaisseaux> GetAll()
+        public IEnumerable<View> GetAll()
         {
 
 
@@ -75,14 +73,14 @@ namespace DAL.Repository
                    $"{firstName}:{pass}")));
 
                 //la requête
-                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Vaisseaux").Result)
+                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Vaisseau").Result)
                 {
                     response.EnsureSuccessStatusCode();
                     using (HttpContent content = response.Content)
                     {
                         // la réponse, il ne resterai plus qu'à désérialiser
                         string result = content.ReadAsStringAsync().Result;
-                        return JsonConvert.DeserializeObject<Vaisseaux[]>(result);
+                        return JsonConvert.DeserializeObject<View[]>(result);
                     }
                 }
             }
@@ -102,7 +100,7 @@ namespace DAL.Repository
                    $"{firstName}:{pass}")));
 
                 //la requête
-                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Vaisseaux/" + name).Result)
+                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Vaisseau/" + name).Result)
                 {
                     response.EnsureSuccessStatusCode();
                     using (HttpContent content = response.Content)
@@ -127,7 +125,7 @@ namespace DAL.Repository
                    $"{firstName}:{pass}")));
 
                 //la requête
-                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Vaisseaux/" + id).Result)
+                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Vaisseau/" + id).Result)
                 {
                     response.EnsureSuccessStatusCode();
                     using (HttpContent content = response.Content)
@@ -155,9 +153,14 @@ namespace DAL.Repository
             string json = JsonConvert.SerializeObject(T);
 
             HttpContent httpContent = new StringContent(json);
-
-            HttpResponseMessage responseMessage = _httpClient.PutAsync("Vaisseaux/" + id, httpContent).Result;
+            httpContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
+            HttpResponseMessage responseMessage = _httpClient.PutAsync("Vaisseau/" + id, httpContent).Result;
             return responseMessage.IsSuccessStatusCode;
+        }
+        
+        IEnumerable<Vaisseaux> IRepository<int, Vaisseaux>.GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

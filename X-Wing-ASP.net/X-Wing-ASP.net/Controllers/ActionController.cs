@@ -32,19 +32,22 @@ namespace X_Wing_ASP.net.Controllers
         // GET: Action/Create
         public ActionResult Create()
         {
+            VaisseauRepo VR = new VaisseauRepo();
+
+            ViewBag.vaisseaux = new SelectList(VR.GetAll(), "Id", "Nom", "selectedValue");
             return View();
         }
 
         // POST: Action/Create
         [HttpPost]
-        public ActionResult Create(Actions collection)
+        public ActionResult Create(FormCollection collection)
         {
             try
             {
                 ActionRepo AR = new ActionRepo();
                 if (ModelState.IsValid)
                 {
-                    AR.Create(new Actions() { Id = collection.Id, Nom = collection.Nom, Vaisseau = collection.Vaisseau });
+                    AR.Create(new Actions() { Nom = collection["Nom"], XIDVaisseau = int.Parse(collection["vaisseaux"]) });
                 }
                 return RedirectToAction("Index");
             }
@@ -57,6 +60,9 @@ namespace X_Wing_ASP.net.Controllers
         // GET: Action/Edit/5
         public ActionResult Edit(int id)
         {
+            VaisseauRepo VR = new VaisseauRepo();
+
+            ViewBag.vaisseaux = new SelectList(VR.GetAll(), "Id", "Nom", "selectedValue");
             ActionRepo AR = new ActionRepo();
             Actions a = new Actions();
             a = AR.GetOne(id);
@@ -65,14 +71,14 @@ namespace X_Wing_ASP.net.Controllers
 
         // POST: Action/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Actions collection)
+        public ActionResult Edit(int id, FormCollection collection)
         {
             try
             {
                 ActionRepo AR = new ActionRepo();
                 if (ModelState.IsValid)
                 {
-                    AR.Update(id,new Actions() { Id = collection.Id, Nom = collection.Nom });
+                    AR.Update(id, new Actions() { Nom = collection["Nom"], XIDVaisseau = int.Parse(collection["vaisseaux"]) });
                 }
                 return RedirectToAction("Index");
             }
@@ -98,10 +104,8 @@ namespace X_Wing_ASP.net.Controllers
             try
             {
                 ActionRepo AR = new ActionRepo();
-                if (ModelState.IsValid)
-                {
-                    AR.Delete(id);
-                }
+                AR.Delete(id, new Actions() { Id = collection.Id, Nom = collection.Nom });
+                
                 return RedirectToAction("Index");
             }
             catch

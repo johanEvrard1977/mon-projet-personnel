@@ -103,7 +103,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\actions.cs" />
+    <Compile Include="Models\ameliorations.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\camps.cs" />
+    <Compile Include="Models\collections.cs" />
     <Compile Include="Controllers\AmeliorationController.cs" />
     <Compile Include="Controllers\CampController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
@@ -113,25 +117,30 @@
     <Compile Include="Controllers\TypeAmeliorationController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VaisseauController.cs" />
+    <Compile Include="Models\escadrons.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\BasicAuthenticator.cs" />
     <Compile Include="Mapper\Mapper.cs" />
-    <Compile Include="Models\actions.cs" />
     <Compile Include="Models\adresses.cs" />
-    <Compile Include="Models\ameliorations.cs" />
-    <Compile Include="Models\camps.cs" />
-    <Compile Include="Models\collections.cs" />
     <Compile Include="Models\commons\Elements.cs" />
-    <Compile Include="Models\escadrons.cs" />
-    <Compile Include="Models\pilotes.cs" />
     <Compile Include="Models\ResultWithChallenge.cs" />
     <Compile Include="Models\typeAmeliorations.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\vaisseaux.cs" />
+    <Compile Include="Models\pilotes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="ViewModels\ViewModelAction.cs" />
+    <Compile Include="ViewModels\ViewModelAmelioration.cs" />
+    <Compile Include="ViewModels\ViewModelCamp.cs" />
+    <Compile Include="ViewModels\ViewModelCollection.cs" />
+    <Compile Include="ViewModels\ViewModelEscadron.cs" />
+    <Compile Include="ViewModels\ViewModelPilote.cs" />
+    <Compile Include="ViewModels\ViewModelType.cs" />
+    <Compile Include="ViewModels\ViewModelVaisseau.cs" />
+    <Compile Include="ViewModels\ViewUserModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -9,23 +9,23 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApi_Demo_01.Helper;
 using WebApi_Demo_01.Models;
+using WebApi_Demo_01.ViewModels;
 
 namespace WebApi_Demo_01.Controllers
 {
     [BasicAuthenticator(realm: "MIKE8")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("api/Pilote")]
     public class PiloteController : ApiController
     {
         PiloteRepo pilote = new PiloteRepo();
         // GET: api/pilote
-        public IEnumerable<pilotes> Get()
+        public IEnumerable<ViewModelPilote> Get()
         {
-            List<pilotes> l = new List<pilotes>();
+            List<ViewModelPilote> l = new List<ViewModelPilote>();
 
             foreach (var item in pilote.GetAll())
             {
-                l.Add(Mapper.Mapper.MapToEntity(item));
+                l.Add(Mapper.Mapper.MapToEntityToViewModel(item));
             }
 
             return l;

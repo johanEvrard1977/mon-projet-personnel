@@ -9,23 +9,23 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApi_Demo_01.Helper;
 using WebApi_Demo_01.Models;
+using WebApi_Demo_01.ViewModels;
 
 namespace WebApi_Demo_01.Controllers
 {
     [BasicAuthenticator(realm: "MIKE8")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("api/Camp")]
     public class CampController : ApiController
     {
         CampRepo camp = new CampRepo();
         // GET: api/Camp
-        public IEnumerable<camps> Get()
+        public IEnumerable<ViewModelCamp> Get()
         {
-            List<camps> l = new List<camps>();
+            List<ViewModelCamp> l = new List<ViewModelCamp>();
 
             foreach (var item in camp.GetAll())
             {
-                l.Add(Mapper.Mapper.MapToEntity(item));
+                l.Add(Mapper.Mapper.MapToEntityToViewModel(item));
             }
 
             return l;
@@ -37,7 +37,7 @@ namespace WebApi_Demo_01.Controllers
         {
             return Mapper.Mapper.MapToEntity(camp.GetOne(id));
         }
-        //get api/Camp/name
+        //get api/Camp/GetByName/name
         [Route("api/Camp/GetByName/{name}")]
         [HttpGet]
         public camps GetByName(string name)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace DalXwing.Models
     {
         public int Id { get; set; }
         public string Nom { get; set; }
-        public IEnumerable<Amelioration> Amelioration { get; set; }
+        public IEnumerable<ViewAmelioration> Amelioration { get; set; }
+        public int XIDPilote { get; set; }
     }
 }

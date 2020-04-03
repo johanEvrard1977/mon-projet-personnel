@@ -71,6 +71,15 @@
     <Compile Include="Repository\TypeAmeliorationRepo.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Repository\VaisseauRepo.cs" />
+    <Compile Include="ViewModels\ViewAction.cs" />
+    <Compile Include="ViewModels\ViewAmelioration.cs" />
+    <Compile Include="ViewModels\ViewCamp.cs" />
+    <Compile Include="ViewModels\ViewCollection.cs" />
+    <Compile Include="ViewModels\ViewEscadron.cs" />
+    <Compile Include="ViewModels\ViewPilote.cs" />
+    <Compile Include="ViewModels\ViewType.cs" />
+    <Compile Include="ViewModels\ViewUser.cs" />
+    <Compile Include="ViewModels\ViewVaisseau.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

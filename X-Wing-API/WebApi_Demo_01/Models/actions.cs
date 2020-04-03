@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace WebApiXwing.Models
 {
     public class actions : Elements
     {
-        public  IEnumerable<Vaisseaux> vaisseau { get; set; }
+        public  IEnumerable<ViewVaisseau> vaisseau { get; set; }
+        public int XIDVaisseau { get; set; }
     }
 }

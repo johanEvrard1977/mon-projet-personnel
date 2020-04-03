@@ -12,6 +12,6 @@ namespace DAL.Repository
         T GetOne(TKey id);
         bool Create(T entity);
         bool Update(TKey id, T entity);
-        void Delete(TKey id);
+        void Delete(TKey id, T T);
     }
 }

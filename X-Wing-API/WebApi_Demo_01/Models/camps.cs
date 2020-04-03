@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace WebApi_Demo_01.Models
 {
     public class camps : Elements
     {
-        public IEnumerable<Pilote> Pilote { get; set; }
-        public IEnumerable<Vaisseaux> Vaisseau { get; set; }
+        public IEnumerable<ViewPilote> Pilote { get; set; }
+        public IEnumerable<ViewVaisseau> Vaisseau { get; set; }
     }
 }

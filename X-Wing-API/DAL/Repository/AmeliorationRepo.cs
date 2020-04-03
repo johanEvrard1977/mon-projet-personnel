@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,7 +22,14 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SP_Add_Amelioration";
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@XIDType", T.XIDType);
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
+                cmd.Parameters.AddWithValue("@Cout", T.Cout);
+                cmd.Parameters.AddWithValue("@seul", T.UnParVaisseau);
+                cmd.Parameters.AddWithValue("@min", T.TailleMax);
+                cmd.Parameters.AddWithValue("@max", T.TailleMin);
+                cmd.Parameters.AddWithValue("@Desc", T.Description);
+                cmd.Parameters.AddWithValue("@UniqueConcerne", T.Unique);
                 cmd.ExecuteScalar();
             }
         }
@@ -39,7 +47,7 @@ namespace DAL.Repository
 
         }
 
-        public IEnumerable<Amelioration> GetAll()
+        public IEnumerable<ViewAmelioration> GetAll()
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -49,16 +57,10 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Amelioration
+                    yield return new ViewAmelioration
                     {
                         Id = (int)r["ID"],
-                        Nom = r["amelioration"].ToString(),
-                        Cout = (int)r["Cout"],
-                        UnParVaisseau = (bool)r["UnSeulExemplaireParVaisseau"],
-                        Unique = (bool)r["PersonnageUniqueConcerne"],
-                        TailleMin = (int)r["TailleMinAutorisee"],
-                        TailleMax = (int)r["TailleMaxAutorisee"],
-                        Description = r["Description"].ToString()
+                        Nom = r["Nom"].ToString()
                 };
                 }
             }
@@ -73,11 +75,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT amelioration.ID, amelioration.Cout as Cout , Description, UnSeulExemplaireParVaisseau, TailleMinAutorisee, TailleMaxAutorisee"
-                    + " PersonnageUniqueConcerne, pilote.ID as pId, typeamelioration.ID as tId, amelioration.Nom as 'amelioration'"
-                    + " FROM amelioration join typeamelioration on XIDTypeAmelioration = amelioration.ID"
-                    + " join detailpilotetypeamelioration on detailpilotetypeamelioration.XIDTypeAmelioration = amelioration.ID"
-                    + " join pilote on detailpilotetypeamelioration.XIDPilote = pilote.ID where amelioration.ID = @p1";
+                cmd.CommandText = "SELECT * from amelioration where amelioration.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
 
@@ -85,15 +83,16 @@ namespace DAL.Repository
                 {
                     r.Read();
                     u.Id = (int)r["ID"];
-                    u.Nom = r["amelioration"].ToString();
+                    u.Nom = r["Nom"].ToString();
                     u.Cout = (int)r["Cout"];
                     u.UnParVaisseau = (bool) r["UnSeulExemplaireParVaisseau"];
                     u.Unique = (bool)r["PersonnageUniqueConcerne"];
-                    u.TailleMin = (int)r["TailleMinAutorisee"];
-                    u.TailleMax = (int)r["TailleMaxAutorisee"];
+                    u.TailleMin = r["TailleMinAutorisee"].ToString();
+                    u.TailleMax = r["TailleMaxAutorisee"].ToString();
                     u.Description = r["Description"].ToString();
-                    u.Type = TR.GetLinkAmelioration((int)r["tId"]);
-                    u.Pilote = PR.GetLinkAmelioration((int)r["pId"]);
+                    u.XIDType = (int)r["XIDTypeAmelioration"];
+                    u.Type = TR.GetLinkAmelioration((int)r["ID"]);
+                    u.Pilote = PR.GetLinkAmelioration((int)r["ID"]);
                 }
             }
             return u;
@@ -108,11 +107,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT amelioration.ID, Cout, Description, UnSeulExemplaireParVaisseau, TailleMinAutorisee, TailleMaxAutorisee"
-                    + "PersonnageUniqueConcerne, pilote.ID as pId, typeamelioration.ID as tId amelioration.Nom as 'amelioration', vaisseau.Nom as 'vaisseau'"
-                    + " FROM amelioration join typeamelioration on XIDTypeAmelioration = amelioration.ID"
-                    + " join detailpilotetypeamelioration on detailpilotetypeamelioration.XIDAmelioration = amelioration.ID"
-                    + " join pilote on detailpilotetypeamelioration.XIDPilote = pilote.ID where amelioration.Nom = @p1";
+                cmd.CommandText = "SELECT * from amelioration where amelioration.Nom = @p1";
                 cmd.Parameters.AddWithValue("@p1", name);
                 SqlDataReader r = cmd.ExecuteReader();
 
@@ -120,21 +115,21 @@ namespace DAL.Repository
                 {
                     r.Read();
                     u.Id = (int)r["ID"];
-                    u.Nom = r["amelioration"].ToString();
+                    u.Nom = r["Nom"].ToString();
                     u.Cout = (int)r["Cout"];
                     u.UnParVaisseau = (bool)r["UnSeulExemplaireParVaisseau"];
                     u.Unique = (bool)r["PersonnageUniqueConcerne"];
-                    u.TailleMin = (int)r["TailleMinAutorisee"];
-                    u.TailleMax = (int)r["TailleMaxAutorisee"];
+                    u.TailleMin = r["TailleMinAutorisee"].ToString();
+                    u.TailleMax = r["TailleMaxAutorisee"].ToString();
                     u.Description = r["Description"].ToString();
-                    u.Type = TR.GetLinkAmelioration((int)r["tId"]);
-                    u.Pilote = PR.GetLinkAmelioration((int)r["pId"]);
+                    u.Type = TR.GetLinkAmelioration((int)r["ID"]);
+                    u.Pilote = PR.GetLinkAmelioration((int)r["ID"]);
                 }
             }
             return u;
         }
 
-        public IEnumerable<Amelioration> GetLinkEscadron(int id)
+        public IEnumerable<ViewAmelioration> GetLinkEscadron(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -148,7 +143,30 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Amelioration
+                    yield return new ViewAmelioration
+                    {
+                        Nom = r["Nom"].ToString(),
+                        Id = (int)r["ID"]
+                    };
+                }
+            }
+        }
+
+        public IEnumerable<ViewAmelioration> GetLinkCollection(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(connect))
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM amelioration join detailameliorationcollection"
+                    + " on detailameliorationcollection.XIDAmelioration = amelioration.ID join collection"
+                    + " on collection.ID = detailameliorationcollection.XIDCollection"
+                    + " where collection.ID = @p1";
+                cmd.Parameters.AddWithValue("@p1", id);
+                SqlDataReader r = cmd.ExecuteReader();
+                while (r.Read())
+                {
+                    yield return new ViewAmelioration
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["ID"]
@@ -158,7 +176,7 @@ namespace DAL.Repository
         }
 
 
-        public IEnumerable<Amelioration> GetLinkPilote(int id)
+        public IEnumerable<ViewAmelioration> GetLinkPilote(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -172,22 +190,16 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Amelioration
+                    yield return new ViewAmelioration
                     {
                         Nom = r["Nom"].ToString(),
-                        Cout = (int)r["Cout"],
-                        Description= r["Description"].ToString(),
-                        Unique = (bool)r["Unique"],
-                        UnParVaisseau = (bool)r["UnSeulExemplaireParVaisseau"],
-                        TailleMax = (int)r["TailleMax"],
-                        TailleMin = (int)r["TailleMin"],
                         Id = (int)r["ID"]
                     };
                 }
             }
         }
 
-        public IEnumerable<Amelioration> GetByLinkType(int id)
+        public IEnumerable<ViewAmelioration> GetByLinkType(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -200,15 +212,9 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Amelioration
+                    yield return new ViewAmelioration
                     {
                         Nom = r["Nom"].ToString(),
-                        Cout = (int)r["Cout"],
-                        Description = r["Description"].ToString(),
-                        Unique = (bool)r["Unique"],
-                        UnParVaisseau = (bool)r["UnSeulExemplaireParVaisseau"],
-                        TailleMax = (int)r["TailleMax"],
-                        TailleMin = (int)r["TailleMin"],
                         Id = (int)r["ID"]
                     };
                 }
@@ -224,10 +230,22 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SP_Update_amelioration";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", T.Id);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
+                cmd.Parameters.AddWithValue("@XIDType", T.XIDType);
+                cmd.Parameters.AddWithValue("@UniqueConcerne", T.Unique);
+                cmd.Parameters.AddWithValue("@seul", T.UnParVaisseau);
+                cmd.Parameters.AddWithValue("@max", T.TailleMax);
+                cmd.Parameters.AddWithValue("@min", T.TailleMin);
+                cmd.Parameters.AddWithValue("@Cout", T.Cout);
+                cmd.Parameters.AddWithValue("@desc", T.Description);
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        IEnumerable<Amelioration> IRepository<int, Amelioration>.GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

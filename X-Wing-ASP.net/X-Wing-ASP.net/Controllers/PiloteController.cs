@@ -1,9 +1,8 @@
 ﻿using DAL.Repository;
+using DAL.ViewModels;
 using DalXwing.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace X_Wing_ASP.net.Controllers
@@ -15,7 +14,7 @@ namespace X_Wing_ASP.net.Controllers
         {
             PiloteRepo AR = new PiloteRepo();
             // GET: api/Pilote
-            IEnumerable<Pilote> p = AR.GetAll();
+            IEnumerable<View> p = AR.GetAll();
 
             return View(p);
         }
@@ -28,39 +27,57 @@ namespace X_Wing_ASP.net.Controllers
             a = AR.GetOne(id);
             return View(a);
         }
-
+        
         // GET: Pilote/Create
         public ActionResult Create()
         {
+            
+            CampRepo CR = new CampRepo();
+            ViewBag.camp = new SelectList(CR.GetAll(), "Id", "Nom", "selectedValue");
+
+            VaisseauRepo VR = new VaisseauRepo();
+            
+            ViewBag.vaisseaux = new SelectList(VR.GetAll(), "Id", "Nom", "selectedValue");
+
+            TypeAmeliorationRepo TAR = new TypeAmeliorationRepo();
+
+            ViewBag.type = new SelectList(TAR.GetAll(), "Id", "Nom", "selectedValue");
             return View();
         }
 
         // POST: Pilote/Create
         [HttpPost]
-        public ActionResult Create(Pilote collection)
+        public ActionResult Create(FormCollection collection)
         {
             try
             {
                 PiloteRepo AR = new PiloteRepo();
-                if (ModelState.IsValid)
-                {
+                //if (ModelState.IsValid)
+                //{
                     AR.Create(new Pilote() {
-                        Id = collection.Id,
-                        Nom = collection.Nom,
-                        Amelioration = collection.Amelioration,
-                        Camp = collection.Camp,
-                        Commentaires = collection.Commentaires,
-                        Cout = collection.Cout,
-                        Type = collection.Type,
-                        Unique = collection.Unique,
-                        Vaisseaux = collection.Vaisseaux,
-                        ValeurPilotage = collection.ValeurPilotage
-                        });
-                }
+                        Nom = collection["Nom"],
+                        ValeurPilotage = int.Parse(collection["ValeurPilotage"]),
+                        Commentaires = collection["Commentaires"],
+                        Cout = int.Parse(collection["Cout"]),
+                        Unique = bool.Parse(collection["Unique"]),
+                        XIDCamp = int.Parse(collection["camps"]),
+                        XIDVaisseau = int.Parse(collection["vaisseaux"]),
+                        XIDType = int.Parse(collection["type"])
+                    });
                 return RedirectToAction("Index");
             }
             catch
             {
+                CampRepo CR = new CampRepo();
+                ViewBag.camp = new SelectList(CR.GetAll(), "Id", "Nom", "selectedValue");
+
+                VaisseauRepo VR = new VaisseauRepo();
+
+                ViewBag.vaisseaux = new SelectList(VR.GetAll(), "Id", "Nom", "selectedValue");
+
+                TypeAmeliorationRepo TAR = new TypeAmeliorationRepo();
+
+                ViewBag.type = new SelectList(TAR.GetAll(), "Id", "Nom", "selectedValue");
                 return View();
             }
         }
@@ -68,6 +85,15 @@ namespace X_Wing_ASP.net.Controllers
         // GET: Pilote/Edit/5
         public ActionResult Edit(int id)
         {
+            CampRepo CR = new CampRepo();
+            ViewBag.camp = new SelectList(CR.GetAll(), "Id", "Nom", "selectedValue");
+
+            VaisseauRepo VR = new VaisseauRepo();
+            ViewBag.vaisseaux = new SelectList(VR.GetAll(), "Id", "Nom", "selectedValue");
+
+            TypeAmeliorationRepo TAR = new TypeAmeliorationRepo();
+            ViewBag.type = new SelectList(TAR.GetAll(), "Id", "Nom", "selectedValue");
+
             PiloteRepo AR = new PiloteRepo();
             Pilote a = new Pilote();
             a = AR.GetOne(id);
@@ -76,7 +102,7 @@ namespace X_Wing_ASP.net.Controllers
 
         // POST: Pilote/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Pilote collection)
+        public ActionResult Edit(int id, FormCollection collection)
         {
             try
             {
@@ -84,16 +110,14 @@ namespace X_Wing_ASP.net.Controllers
                 if (ModelState.IsValid)
                 {
                     AR.Update(id, new Pilote() {
-                        Id = collection.Id,
-                        Nom = collection.Nom,
-                        Amelioration = collection.Amelioration,
-                        Camp = collection.Camp,
-                        Commentaires = collection.Commentaires,
-                        Cout = collection.Cout,
-                        Type = collection.Type,
-                        Unique = collection.Unique,
-                        Vaisseaux = collection.Vaisseaux,
-                        ValeurPilotage = collection.ValeurPilotage
+                        Nom = collection["Nom"],
+                        ValeurPilotage = int.Parse(collection["ValeurPilotage"]),
+                        Commentaires = collection["Commentaires"],
+                        Cout = int.Parse(collection["Cout"]),
+                        Unique = bool.Parse(collection["Unique"]),
+                        XIDCamp = int.Parse(collection["camps"]),
+                        XIDVaisseau = int.Parse(collection["vaisseaux"]),
+                        XIDType = int.Parse(collection["type"]),
                     });
                 }
                 return RedirectToAction("Index");
@@ -120,15 +144,25 @@ namespace X_Wing_ASP.net.Controllers
             try
             {
                 PiloteRepo AR = new PiloteRepo();
-                if (ModelState.IsValid)
-                {
-                    AR.Delete(id);
-                }
+                AR.Delete(id, new Pilote()
+                    {
+                        Id = collection.Id,
+                        Nom = collection.Nom,
+                        ValeurPilotage = collection.ValeurPilotage,
+                        Commentaires = collection.Commentaires,
+                        Cout = collection.Cout,
+                        Unique = collection.Unique,
+                        XIDCamp = collection.XIDCamp,
+                        XIDVaisseau = collection.XIDVaisseau
+                    });
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                PiloteRepo AR = new PiloteRepo();
+                Pilote a = new Pilote();
+                a = AR.GetOne(id);
+                return View(a);
             }
         }
     }

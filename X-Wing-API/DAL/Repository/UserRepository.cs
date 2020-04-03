@@ -55,7 +55,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "DELETE FROM Users WHERE id = @param";
+                cmd.CommandText = "DELETE FROM Users WHERE UserId = @param";
                 cmd.Parameters.AddWithValue("@param", id);
                 cmd.ExecuteNonQuery();
             }
@@ -67,14 +67,14 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM action";
+                cmd.CommandText = "SELECT * FROM Users";
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
                     yield return new User
                     {
                         Nom = r["Nom"].ToString(),
-                        ID = (int)r["id"]
+                        ID = (int)r["UserId"]
                     };
                 }
             }
@@ -96,7 +96,7 @@ namespace DAL.Repository
                     yield return new User
                     {
                         Nom = r["Nom"].ToString(),
-                        ID = (int)r["ID"],
+                        ID = (int)r["UserId"],
                         Prenom = r["Prenom"].ToString(),
                         Role = r["Role"].ToString()
                     };
@@ -112,8 +112,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT Users.UserId, Users.Nom, Prenom, UserName, Role, collection.ID as cId FROM Users"
-                    + " join collection on Users.UserId = collection.XIDUsers where Users.UserId = @p1";
+                cmd.CommandText = "SELECT * from Users where Users.Nom = @p1";
                 cmd.Parameters.AddWithValue("@p1", name);
                 SqlDataReader r = cmd.ExecuteReader();
 
@@ -123,8 +122,8 @@ namespace DAL.Repository
                     u.Nom = r["Nom"].ToString();
                     u.Prenom = r["Prenom"].ToString();
                     u.ID = (int)r["UserId"];
-                    u.UserName = r["Nom"].ToString();
-                    u.Role = r["Nom"].ToString();
+                    u.UserName = r["UserName"].ToString();
+                    u.Role = r["Role"].ToString();
                     u.Password = "******";
                     u.Collection = CR.GetByLinkUser((int)r["UserId"]);
                 }
@@ -141,8 +140,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT Users.UserId, Users.Nom, Prenom, UserName, Role, collection.ID as cId FROM Users"
-                    + " join collection on Users.UserId = collection.XIDUsers where Users.UserId = @p1";
+                cmd.CommandText = "SELECT * from Users where Users.UserId = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
 
@@ -152,8 +150,8 @@ namespace DAL.Repository
                     u.Nom = r["Nom"].ToString();
                     u.Prenom = r["Prenom"].ToString();
                     u.ID = (int)r["UserId"];
-                    u.UserName = r["Nom"].ToString();
-                    u.Role = r["Nom"].ToString();
+                    u.UserName = r["UserName"].ToString();
+                    u.Role = r["Role"].ToString();
                     u.Password = "******";
                     u.Collection = CR.GetByLinkUser((int)r["UserId"]);
                 }
@@ -169,7 +167,7 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SP_Update_Action";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", T.ID);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
                 cmd.ExecuteNonQuery();
             }

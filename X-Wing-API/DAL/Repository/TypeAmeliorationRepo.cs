@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,9 +20,10 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SP_Add_TypeAmelioration";
+                cmd.CommandText = "SP_Add_Type";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
+                cmd.Parameters.AddWithValue("@pilote", T.XIDPilote);
                 cmd.ExecuteScalar();
             }
         }
@@ -60,7 +62,7 @@ namespace DAL.Repository
         }
 
        
-        public IEnumerable<TypeAmelioration> GetLinkAmelioration(int id)
+        public IEnumerable<ViewType> GetLinkAmelioration(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -73,7 +75,7 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new TypeAmelioration
+                    yield return new ViewType
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["ID"]
@@ -91,8 +93,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT typeamelioration.ID, typeamelioration.Nom, amelioration.ID as aId FROM typeamelioration"
-                    + " join amelioration on XIDTypeAmelioration = typeamelioration.ID where typeamelioration.ID = @p1";
+                cmd.CommandText = "SELECT * from typeamelioration where typeamelioration.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", name);
                 SqlDataReader r = cmd.ExecuteReader();
 
@@ -101,7 +102,7 @@ namespace DAL.Repository
                     r.Read();
                     u.Nom = r["Nom"].ToString();
                     u.Id = (int)r["ID"];
-                    u.Amelioration = AR.GetByLinkType((int)r["aId"]);
+                    u.Amelioration = AR.GetByLinkType((int)r["ID"]);
                 }
             }
             return u;
@@ -115,8 +116,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT typeamelioration.ID, typeamelioration.Nom, amelioration.ID as aId FROM typeamelioration"
-                    + " join amelioration on XIDTypeAmelioration = typeamelioration.ID where typeamelioration.ID = @p1";
+                cmd.CommandText = "SELECT * from typeamelioration where typeamelioration.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
 
@@ -139,8 +139,9 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SP_Update_Action";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", T.Id);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
+                cmd.Parameters.AddWithValue("@pilote", T.XIDPilote);
                 cmd.ExecuteNonQuery();
             }
         }

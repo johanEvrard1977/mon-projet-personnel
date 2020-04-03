@@ -10,8 +10,9 @@ namespace DalXwing.Models
     public class Actions
     {
         public int Id { get; set; }
-       // [Required(ErrorMessage = "Veuillez entrer un nom"), MinLength(3), MaxLength(50)]
+        [Required(ErrorMessage = "Veuillez entrer un nom"), MinLength(3), MaxLength(50)]
         public string Nom { get; set; }
         public IEnumerable<Vaisseaux> Vaisseau { get; set; }
+        public int XIDVaisseau { get; set; }
     }
 }

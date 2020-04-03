@@ -36,14 +36,14 @@ namespace X_Wing_ASP.net.Controllers
 
         // POST: Camp/Create
         [HttpPost]
-        public ActionResult Create(Camp collection)
+        public ActionResult Create(FormCollection collection)
         {
             try
             {
                 CampRepo AR = new CampRepo();
                 if (ModelState.IsValid)
                 {
-                    AR.Create(new Camp() { Id = collection.Id, Nom = collection.Nom, Pilote = collection.Pilote, Vaisseau = collection.Vaisseau });
+                    AR.Create(new Camp() { Nom = collection["Nom"] });
                 }
                 return RedirectToAction("Index");
             }
@@ -71,7 +71,7 @@ namespace X_Wing_ASP.net.Controllers
                 CampRepo AR = new CampRepo();
                 if (ModelState.IsValid)
                 {
-                    AR.Update(id, new Camp() { Id = collection.Id, Nom = collection.Nom });
+                    AR.Update(id, new Camp { Id = collection.Id, Nom = collection.Nom });
                 }
                 return RedirectToAction("Index");
             }
@@ -97,15 +97,16 @@ namespace X_Wing_ASP.net.Controllers
             try
             {
                 CampRepo AR = new CampRepo();
-                if (ModelState.IsValid)
-                {
-                    AR.Delete(id);
-                }
+                AR.Delete(id, new Camp { Id = collection.Id, Nom = collection.Nom });
+                
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                CampRepo AR = new CampRepo();
+                Camp a = new Camp();
+                a = AR.GetOne(id);
+                return View(a);
             }
         }
     }

@@ -114,10 +114,16 @@ namespace X_Wing_ASP.net.Controllers
             try
             {
                 CollectionRepo AR = new CollectionRepo();
-                if (ModelState.IsValid)
-                {
-                    AR.Delete(id);
-                }
+                AR.Delete(id, new Collection()
+                    {
+                        Id = collection.Id,
+                        Nom = collection.Nom,
+                        Amelioration = collection.Amelioration,
+                        Escadron = collection.Escadron,
+                        Pilote = collection.Pilote,
+                        Users = collection.Users,
+                        Vaisseau = collection.Vaisseau
+                    });
                 return RedirectToAction("Index");
             }
             catch

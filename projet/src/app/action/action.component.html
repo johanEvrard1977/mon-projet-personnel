@@ -1,0 +1,15 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nom</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let action of actions">
+        <th scope="row">{{ action.Id }}</th>
+        <td>{{action.Nom}}</td>
+        <td><button class="edit" [title]="action.Nom + ' details'" [routerLink]="['/action', action.Id ]">edit</button>
+      </tr>
+    </tbody>
+  </table>

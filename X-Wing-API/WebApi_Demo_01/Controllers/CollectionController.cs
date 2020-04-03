@@ -9,23 +9,23 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApi_Demo_01.Helper;
 using WebApi_Demo_01.Models;
+using WebApi_Demo_01.ViewModels;
 
 namespace WebApi_Demo_01.Controllers
 {
     [BasicAuthenticator(realm: "MIKE8")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("api/Collection")]
     public class CollectionController : ApiController
     {
         CollectionRepo collection = new CollectionRepo();
         // GET: api/Collection
-        public IEnumerable<collections> Get()
+        public IEnumerable<ViewModelCollection> Get()
         {
-            List<collections> l = new List<collections>();
+            List<ViewModelCollection> l = new List<ViewModelCollection>();
 
             foreach (var item in collection.GetAll())
             {
-                l.Add(Mapper.Mapper.MapToEntity(item));
+                l.Add(Mapper.Mapper.MapToEntityToViewModel(item));
             }
 
             return l;

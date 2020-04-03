@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace WebApi_Demo_01.Models
 {
     public class typeAmeliorations : Elements
     {
-        public IEnumerable<Amelioration> Amelioration { get; set; }
+        public IEnumerable<ViewAmelioration> Amelioration { get; set; }
+        public int XIDPilote { get; set; }
     }
 }

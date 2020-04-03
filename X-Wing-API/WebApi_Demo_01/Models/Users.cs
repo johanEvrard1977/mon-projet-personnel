@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,6 @@ namespace WebApi_Demo_01.Models
         public string Password { get; set; }
         public string Mail { get; set; }
         public string Role { get; set; }
-        public IEnumerable<Collection> Collection { get; set; }
+        public IEnumerable<ViewCollection> Collection { get; set; }
     }
 }

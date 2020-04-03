@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,12 @@ namespace DalXwing.Models
         public int Cout { get; set; }
         public int ValeurPilotage { get; set; }
         public string Commentaires { get; set; }
-        public IEnumerable<Vaisseaux> Vaisseaux { get; set; }
-        public IEnumerable<Camp> Camp { get; set; }
-        public IEnumerable<TypeAmelioration> Type { get; set; }
-        public IEnumerable<Amelioration> Amelioration { get; set; }
+        public IEnumerable<ViewVaisseau> Vaisseaux { get; set; }
+        public IEnumerable<ViewCamp> Camp { get; set; }
+        public IEnumerable<ViewType> Type { get; set; }
+        public IEnumerable<ViewAmelioration> Amelioration { get; set; }
+        public int XIDCamp { get; set; }
+        public int XIDVaisseau { get; set; }
+        public int XIDType { get; set; }
     }
 }

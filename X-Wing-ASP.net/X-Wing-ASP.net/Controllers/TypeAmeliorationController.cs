@@ -32,19 +32,25 @@ namespace X_Wing_ASP.net.Controllers
         // GET: TypeAmelioration/Create
         public ActionResult Create()
         {
+            PiloteRepo PR = new PiloteRepo();
+
+            ViewBag.pilote = new SelectList(PR.GetAll(), "Id", "Nom", "selectedValue");
             return View();
         }
 
         // POST: TypeAmelioration/Create
         [HttpPost]
-        public ActionResult Create(TypeAmelioration collection)
+        public ActionResult Create(FormCollection collection)
         {
             try
             {
                 TypeAmeliorationRepo AR = new TypeAmeliorationRepo();
                 if (ModelState.IsValid)
                 {
-                    AR.Create(new TypeAmelioration() { Id = collection.Id, Nom = collection.Nom, Amelioration = collection.Amelioration });
+                    AR.Create(new TypeAmelioration() {
+                        Pil = int.Parse(collection["pilote"]),
+                        Nom = collection["Nom"]
+                    });
                 }
                 return RedirectToAction("Index");
             }
@@ -98,10 +104,7 @@ namespace X_Wing_ASP.net.Controllers
             try
             {
                 TypeAmeliorationRepo AR = new TypeAmeliorationRepo();
-                if (ModelState.IsValid)
-                {
-                    AR.Delete(id);
-                }
+                AR.Delete(id, new TypeAmelioration() { Id = collection.Id, Nom = collection.Nom });
                 return RedirectToAction("Index");
             }
             catch

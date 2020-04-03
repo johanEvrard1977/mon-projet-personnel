@@ -9,23 +9,23 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApi_Demo_01.Helper;
 using WebApi_Demo_01.Models;
+using WebApi_Demo_01.ViewModels;
 
 namespace WebApi_Demo_01.Controllers
 {
     [BasicAuthenticator(realm: "MIKE8")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("api/Escadron")]
     public class EscadronController : ApiController
     {
         EscadronRepo escadron = new EscadronRepo();
         // GET: api/escadron
-        public IEnumerable<escadrons> Get()
+        public IEnumerable<ViewModelEscadron> Get()
         {
-            List<escadrons> l = new List<escadrons>();
+            List<ViewModelEscadron> l = new List<ViewModelEscadron>();
 
             foreach (var item in escadron.GetAll())
             {
-                l.Add(Mapper.Mapper.MapToEntity(item));
+                l.Add(Mapper.Mapper.MapToEntityToViewModel(item));
             }
 
             return l;

@@ -3,17 +3,18 @@
     <a [routerLink]="['./']">
       Accueil
     </a>
-    <a [routerLink]="['./']">
+    <a [routerLink]="['./pilote']">
       Pilotes
     </a>
-    <a [routerLink]="['./']">
+    <a [routerLink]="['./vaisseau']">
       Vaisseaux
     </a>
-    <a [routerLink]="['./']">
+    <a [routerLink]="['./amelioration']">
       Améliorations
     </a>
-    <a [routerLink]="['./']">
+    <a [routerLink]="['./action']">
       Actions
     </a>
+    <a *ngIf="currentUser" (click)="logout()">Logout</a>
   </nav>
 </div> 

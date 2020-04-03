@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,6 +26,9 @@ namespace DAL.Repository
                 cmd.Parameters.AddWithValue("@Visible", T.Visible);
                 cmd.Parameters.AddWithValue("@Points", T.Points);
                 cmd.Parameters.AddWithValue("@Description", T.Description);
+                cmd.Parameters.AddWithValue("@XIDCollection", T.XIDColllection);
+                cmd.Parameters.AddWithValue("@User", T.XIDUser);
+                cmd.Parameters.AddWithValue("@Camp", T.XIDCamp);
                 cmd.ExecuteScalar();
             }
         }
@@ -42,7 +46,7 @@ namespace DAL.Repository
 
         }
 
-        public IEnumerable<Escadron> GetAll()
+        public IEnumerable<ViewEscadron> GetAll()
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -52,12 +56,9 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Escadron
+                    yield return new ViewEscadron
                     {
                         Nom = r["Nom"].ToString(),
-                        Visible = (bool) r["visile"],
-                        Points = (int)r["points"],
-                        Description = r["decription"].ToString(),
                         Id = (int)r["id"]
                     };
                 }
@@ -72,14 +73,12 @@ namespace DAL.Repository
             AmeliorationRepo AR = new AmeliorationRepo();
             PiloteRepo PR = new PiloteRepo();
             VaisseauRepo VR = new VaisseauRepo();
+            CollectionRepo CoR = new CollectionRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT escadron.ID, EstVisible, escadron.Description as Edes, Points, escadron.Nom, vaisseau.ID as vId,"
-                    + " pilote.ID as pId, amelioration.ID as aId, camp.ID as cId FROM escadron join camp on escadron.XIDCamp = escadron.ID"
-                    + " join pilote on camp.ID = pilote.XIDCamp join vaisseau on vaisseau.ID = pilote.XIDVaisseau"
-                    + " join amelioration on amelioration.XIDVaisseau = vaisseau.ID where escadron.ID = @p1";
+                cmd.CommandText = "SELECT * FROM escadron where escadron.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", name);
                 SqlDataReader r = cmd.ExecuteReader();
 
@@ -90,17 +89,18 @@ namespace DAL.Repository
                     u.Id = (int)r["id"];
                     u.Visible = (bool)r["EstVisible"];
                     u.Points = (int)r["Points"];
-                    u.Description = r["Edes"].ToString();
-                    u.Camp = CR.GetLinkEscadron((int)r["cId"]);
-                    u.Vaisseau = VR.GetLinkEscadron((int)r["vId"]);
-                    u.Pilote = PR.GetLinkEscadron((int)r["pId"]);
-                    u.Amelioration = AR.GetLinkEscadron((int)r["aId"]);
+                    u.Description = r["Description"].ToString();
+                    u.Camp = CR.GetLinkEscadron((int)r["ID"]);
+                    u.Vaisseau = VR.GetLinkEscadron((int)r["ID"]);
+                    u.Pilote = PR.GetLinkEscadron((int)r["ID"]);
+                    u.Amelioration = AR.GetLinkEscadron((int)r["ID"]);
+                    u.Collection = CoR.GetLinkEscadron((int)r["ID"]);
                 }
             }
             return u;
         }
 
-        public IEnumerable<Escadron> GetLinkCamp(int id)
+        public IEnumerable<ViewEscadron> GetLinkCamp(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -112,7 +112,7 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Escadron
+                    yield return new ViewEscadron
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["ID"]
@@ -121,7 +121,7 @@ namespace DAL.Repository
             }
         }
 
-        public IEnumerable<Escadron> GetLinkPilote(int id)
+        public IEnumerable<ViewEscadron> GetLinkPilote(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -133,7 +133,7 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Escadron
+                    yield return new ViewEscadron
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["ID"]
@@ -142,7 +142,7 @@ namespace DAL.Repository
             }
         }
 
-        public IEnumerable<Escadron> GetLinkVaisseau(int id)
+        public IEnumerable<ViewEscadron> GetLinkVaisseau(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -155,7 +155,27 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Escadron
+                    yield return new ViewEscadron
+                    {
+                        Nom = r["Nom"].ToString(),
+                        Id = (int)r["ID"]
+                    };
+                }
+            }
+        }
+
+        public IEnumerable<ViewEscadron> GetLinkCollection(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(connect))
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM escadron join collection on collection.ID = escadron.XIDCollection where collection.ID = @p1";
+                cmd.Parameters.AddWithValue("@p1", id);
+                SqlDataReader r = cmd.ExecuteReader();
+                while (r.Read())
+                {
+                    yield return new ViewEscadron
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["ID"]
@@ -172,14 +192,12 @@ namespace DAL.Repository
             AmeliorationRepo AR = new AmeliorationRepo();
             PiloteRepo PR = new PiloteRepo();
             VaisseauRepo VR = new VaisseauRepo();
+            CollectionRepo CoR = new CollectionRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT escadron.ID, EstVisible, escadron.Description as Edes, Points, escadron.Nom, vaisseau.ID as vId,"
-                    + " pilote.ID as pId, amelioration.ID as aId, camp.ID as cId FROM escadron join camp on escadron.XIDCamp = escadron.ID"
-                    + " join pilote on camp.ID = pilote.XIDCamp join vaisseau on vaisseau.ID = pilote.XIDVaisseau"
-                    + " join amelioration on amelioration.XIDVaisseau = vaisseau.ID where escadron.ID = @p1";
+                cmd.CommandText = "SELECT * FROM escadron where escadron.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
 
@@ -190,11 +208,12 @@ namespace DAL.Repository
                     u.Id = (int)r["id"];
                     u.Visible = (bool)r["EstVisible"];
                     u.Points = (int)r["Points"];
-                    u.Description = r["Edes"].ToString();
-                    u.Camp = CR.GetLinkEscadron((int)r["cId"]);
-                    u.Vaisseau = VR.GetLinkEscadron((int)r["vId"]);
-                    u.Pilote = PR.GetLinkEscadron((int)r["pId"]);
-                    u.Amelioration = AR.GetLinkEscadron((int)r["aId"]);
+                    u.Description = r["Description"].ToString();
+                    u.Camp = CR.GetLinkEscadron((int)r["ID"]);
+                    u.Vaisseau = VR.GetLinkEscadron((int)r["ID"]);
+                    u.Pilote = PR.GetLinkEscadron((int)r["ID"]);
+                    u.Amelioration = AR.GetLinkEscadron((int)r["ID"]);
+                    u.Collection = CoR.GetLinkEscadron((int)r["ID"]);
                 }
             }
             return u;
@@ -208,13 +227,21 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SP_Update_Escadron";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", T.Id);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
                 cmd.Parameters.AddWithValue("@Visible", T.Visible);
                 cmd.Parameters.AddWithValue("@Points", T.Points);
                 cmd.Parameters.AddWithValue("@Description", T.Description);
+                cmd.Parameters.AddWithValue("@XIDCollection", T.XIDColllection);
+                cmd.Parameters.AddWithValue("@User", T.XIDUser);
+                cmd.Parameters.AddWithValue("@Camp", T.XIDCamp);
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        IEnumerable<Escadron> IRepository<int, Escadron>.GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

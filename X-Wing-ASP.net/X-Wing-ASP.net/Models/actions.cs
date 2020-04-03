@@ -11,5 +11,6 @@ namespace WebApiXwing.Models
     public class actions : Elements
     {
         public  IEnumerable<Vaisseaux> vaisseau { get; set; }
+        public int XIDVaisseau { get; set; }
     }
 }

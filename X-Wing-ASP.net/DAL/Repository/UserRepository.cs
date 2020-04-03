@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using DAL.ViewModels;
 using DalXwing.Models;
 using Newtonsoft.Json;
 using System;
@@ -40,29 +41,25 @@ namespace DAL.Repository
 
         }
 
-        public void Delete(int id)
+        public void Delete(int id, User T)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                _httpClient.BaseAddress = new Uri(BaseUri);
-                _httpClient.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = new Uri(BaseUri);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                    "Basic", Convert.ToBase64String(
-                ASCIIEncoding.ASCII.GetBytes(
-                   $"{firstName}:{pass}")));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Basic", Convert.ToBase64String(
+            ASCIIEncoding.ASCII.GetBytes(
+               $"{firstName}:{pass}")));
+            string json = JsonConvert.SerializeObject(T);
 
-                //la requête
-                using (HttpResponseMessage response = client.DeleteAsync($"{BaseUri}User/" + id).Result)
-                {
-                    response.EnsureSuccessStatusCode();
-                }
-            }
-
+            HttpContent httpContent = new StringContent(json);
+            httpContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
+            HttpResponseMessage responseMessage = _httpClient.DeleteAsync("User/" + id).Result;
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<View> GetAll()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -81,7 +78,7 @@ namespace DAL.Repository
                     {
                         // la réponse, il ne resterai plus qu'à désérialiser
                         string result = content.ReadAsStringAsync().Result;
-                        return JsonConvert.DeserializeObject<User[]>(result);
+                        return JsonConvert.DeserializeObject<View[]>(result);
                     }
                 }
             }
@@ -154,9 +151,14 @@ namespace DAL.Repository
             string json = JsonConvert.SerializeObject(T);
 
             HttpContent httpContent = new StringContent(json);
-
+            httpContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
             HttpResponseMessage responseMessage = _httpClient.PutAsync("User/" + id, httpContent).Result;
             return responseMessage.IsSuccessStatusCode;
+        }
+
+        IEnumerable<User> IRepository<int, User>.GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

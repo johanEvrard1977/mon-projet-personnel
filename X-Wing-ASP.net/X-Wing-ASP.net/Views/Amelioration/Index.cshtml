@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DalXwing.Models.Amelioration>
+﻿@model IEnumerable<DAL.ViewModels.View>
 
 @{
     ViewBag.Title = "Index";
@@ -14,24 +14,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Nom)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cout)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Unique)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TailleMin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TailleMax)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UnParVaisseau)
-        </th>
         <th></th>
     </tr>
 
@@ -39,24 +21,6 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Nom)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cout)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Unique)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TailleMin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TailleMax)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UnParVaisseau)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

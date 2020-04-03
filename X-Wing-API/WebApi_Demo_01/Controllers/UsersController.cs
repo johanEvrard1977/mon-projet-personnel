@@ -9,40 +9,48 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApi_Demo_01.Helper;
 using WebApi_Demo_01.Models;
+using WebApi_Demo_01.ViewModels;
 
 namespace WebApi_Demo_01.Controllers
 {
     [BasicAuthenticator(realm: "MIKE8")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("api/User")]
     public class UsersController : ApiController
     {
         UserRepository user = new UserRepository();
         // GET: api/Users
-        public IEnumerable<Users> Get()
+        public IEnumerable<ViewUserModel> Get()
         {
-            List<Users> l = new List<Users>();
+            List<ViewUserModel> l = new List<ViewUserModel>();
 
             foreach (var item in user.GetAll())
             {
-                l.Add(Mapper.Mapper.MapToEntity(item));
+                l.Add(Mapper.Mapper.MapToEntityToView(Mapper.Mapper.MapToEntity(item)));
             }
 
             return l;
         }
 
-        // GET: api/User/5
+        // GET: api/Users/5
         [HttpGet]
         public Users Get(int id)
         {
             return Mapper.Mapper.MapToEntity(user.GetOne(id));
         }
-        //get api/User/name
-        [Route("api/User/GetByName/{name}")]
+        //get api/Users/GetByName/name
+        [Route("api/Users/GetByName/{name}")]
         [HttpGet]
         public Users GetByName(string name)
         {
             return Mapper.Mapper.MapToEntity(user.GetByName(name));
+        }
+
+        //check api/Users/Check/username/password
+        [Route("api/Users/Check/{username}/{password}")]
+        [HttpGet]
+        public bool Check(string username, string password)
+        {
+            return user.Check(username, password); 
         }
 
         // POST: api/User

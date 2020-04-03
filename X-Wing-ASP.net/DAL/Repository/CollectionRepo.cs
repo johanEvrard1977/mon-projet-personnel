@@ -42,24 +42,26 @@ namespace DAL.Repository
 
         public void Delete(int id)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                _httpClient.BaseAddress = new Uri(BaseUri);
-                _httpClient.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            throw new NotImplementedException();
+        }
 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                    "Basic", Convert.ToBase64String(
-                ASCIIEncoding.ASCII.GetBytes(
-                   $"{firstName}:{pass}")));
+        public void Delete(int id, Collection T) 
+        {
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = new Uri(BaseUri);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //la requête
-                using (HttpResponseMessage response = client.DeleteAsync($"{BaseUri}Collection/" + id).Result)
-                {
-                    response.EnsureSuccessStatusCode();
-                }
-            }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Basic", Convert.ToBase64String(
+            ASCIIEncoding.ASCII.GetBytes(
+               $"{firstName}:{pass}")));
+            string json = JsonConvert.SerializeObject(T);
 
+            HttpContent httpContent = new StringContent(json);
+            httpContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
+
+            HttpResponseMessage responseMessage = _httpClient.DeleteAsync("Collection/" + id).Result;
         }
 
         public IEnumerable<Collection> GetAll()

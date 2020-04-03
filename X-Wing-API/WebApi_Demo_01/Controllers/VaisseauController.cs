@@ -9,23 +9,23 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApi_Demo_01.Helper;
 using WebApi_Demo_01.Models;
+using WebApi_Demo_01.ViewModels;
 
 namespace WebApi_Demo_01.Controllers
 {
     [BasicAuthenticator(realm: "MIKE8")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("api/Vaisseau")]
     public class VaisseauController : ApiController
     {
         VaisseauRepo vaisseau = new VaisseauRepo();
         // GET: api/vaisseau
-        public IEnumerable<vaisseaux> Get()
+        public IEnumerable<ViewModelVaisseau> Get()
         {
-            List<vaisseaux> l = new List<vaisseaux>();
+            List<ViewModelVaisseau> l = new List<ViewModelVaisseau>();
 
             foreach (var item in vaisseau.GetAll())
             {
-                l.Add(Mapper.Mapper.MapToEntity(item));
+                l.Add(Mapper.Mapper.MapToEntityToViewModel(item));
             }
 
             return l;

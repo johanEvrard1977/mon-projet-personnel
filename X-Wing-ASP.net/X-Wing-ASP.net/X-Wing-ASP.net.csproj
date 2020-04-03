@@ -336,7 +336,6 @@
     <Content Include="Views\Escadron\Delete.cshtml" />
     <Content Include="Views\Pilote\Index.cshtml" />
     <Content Include="Views\Pilote\Details.cshtml" />
-    <Content Include="Views\Pilote\Create.cshtml" />
     <Content Include="Views\Pilote\Edit.cshtml" />
     <Content Include="Views\Pilote\Delete.cshtml" />
     <Content Include="Views\TypeAmelioration\Index.cshtml" />
@@ -355,6 +354,7 @@
     <Content Include="Views\Vaisseaux\Edit.cshtml" />
     <Content Include="Views\Vaisseaux\Delete.cshtml" />
     <Content Include="Views\Action\Edit.cshtml" />
+    <Content Include="Views\Pilote\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

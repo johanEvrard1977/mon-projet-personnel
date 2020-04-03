@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using WebApi_Demo_01.Models.commons;
 
 namespace WebApi_Demo_01.Models
@@ -17,5 +18,8 @@ namespace WebApi_Demo_01.Models
         public IEnumerable<Camp> Camp { get; set; }
         public IEnumerable<TypeAmelioration> Type { get; set; }
         public IEnumerable<Amelioration> Amelioration { get; set; }
+        public int camp { get; set; }
+        public int vaisseau { get; set; }
+        public int XIDType { get; set; }
     }
 }

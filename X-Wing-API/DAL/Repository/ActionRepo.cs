@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,6 +23,7 @@ namespace DAL.Repository
                 cmd.CommandText = "SP_Add_Action";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
+                cmd.Parameters.AddWithValue("@Vaisseau", T.XIDVaisseau);
                 cmd.ExecuteScalar();
             }
         }
@@ -32,13 +34,17 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "DELETE FROM detailactionvaisseau WHERE XIDAction = @param2";
+                cmd.Parameters.AddWithValue("@param2", id);
+                cmd.ExecuteNonQuery();
                 cmd.CommandText = "DELETE FROM action WHERE id = @param";
                 cmd.Parameters.AddWithValue("@param", id);
                 cmd.ExecuteNonQuery();
+                
             }
         }
 
-        public IEnumerable<Actions> GetAll()
+        public IEnumerable<ViewAction> GetAll()
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -48,7 +54,7 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Actions
+                    yield return new ViewAction
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["id"]
@@ -106,7 +112,7 @@ namespace DAL.Repository
             return u;
         }
 
-        public IEnumerable<Actions> GetLinkVaisseau(int id)
+        public IEnumerable<ViewAction> GetLinkVaisseau(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -118,7 +124,7 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Actions
+                    yield return new ViewAction
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["ID"]
@@ -135,10 +141,16 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SP_Update_Action";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", T.Id);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
+                cmd.Parameters.AddWithValue("@Vaisseau", T.XIDVaisseau);
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        IEnumerable<Actions> IRepository<int, Actions>.GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,6 +23,7 @@ namespace DAL.Repository
                 cmd.CommandText = "SP_Add_Collection";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
+                cmd.Parameters.AddWithValue("@userId", T.XIDUser);
                 cmd.ExecuteScalar();
             }
         }
@@ -39,7 +41,7 @@ namespace DAL.Repository
 
         }
 
-        public IEnumerable<Collection> GetAll()
+        public IEnumerable<ViewCollection> GetAll()
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -49,7 +51,7 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Collection
+                    yield return new ViewCollection
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["id"]
@@ -81,12 +83,16 @@ namespace DAL.Repository
                 {
                     u.Id = (int)r["ID"];
                     u.Nom = r["Nom"].ToString();
+                    u.Pilote = PR.GetLinkCollection((int)r["ID"]);
+                    u.Vaisseau = VR.GetLinkCollection((int)r["ID"]);
+                    u.Amelioration = AR.GetLinkCollection((int)r["ID"]);
+                    u.Escadron = ER.GetLinkCollection((int)r["ID"]);
                 }
             }
             return u;
         }
 
-        public IEnumerable<Collection> GetByLinkUser(int id)
+        public IEnumerable<ViewCollection> GetByLinkUser(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -99,7 +105,7 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Collection
+                    yield return new ViewCollection
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["ID"]
@@ -108,7 +114,7 @@ namespace DAL.Repository
             }
         }
 
-        public IEnumerable<Collection> GetByLinkEscadron(int id)
+        public IEnumerable<ViewCollection> GetLinkEscadron(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -121,7 +127,7 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Collection
+                    yield return new ViewCollection
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["ID"]
@@ -142,7 +148,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT collection.ID, collection.Nom"
+                cmd.CommandText = "SELECT *"
                     + " FROM collection"
                     + " WHERE collection.id = @p1";
                 cmd.Parameters.AddWithValue("p1", id);
@@ -152,6 +158,10 @@ namespace DAL.Repository
                 {
                     u.Id = (int)r["ID"];
                     u.Nom = r["Nom"].ToString();
+                    u.Pilote = PR.GetLinkCollection((int)r["ID"]);
+                    u.Vaisseau = VR.GetLinkCollection((int)r["ID"]);
+                    u.Amelioration = AR.GetLinkCollection((int)r["ID"]);
+                    u.Escadron = ER.GetLinkCollection((int)r["ID"]);
                 }
             }
             return u;
@@ -165,10 +175,16 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SP_Update_Collection";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", T.Id);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
+                cmd.Parameters.AddWithValue("@user", T.XIDUser);
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        IEnumerable<Collection> IRepository<int, Collection>.GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

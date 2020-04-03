@@ -12,17 +12,17 @@ namespace DalXwing.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "Veuillez entrer un nom"), MinLength(3), MaxLength(50)]
         public string Nom { get; set; }
-        [Required(ErrorMessage = "Veuillez entrer une valeur pour le cout"), MinLength(3), MaxLength(50)]
+        [Range(0, 20, ErrorMessage = "Please enter correct value")]
         public int Cout { get; set; }
         public bool Unique { get; set; }
-        [Required(ErrorMessage = "Veuillez entrer une taille minimum")]
-        public int TailleMin { get; set; }
-        [Required(ErrorMessage = "Veuillez entrer une taille maximum")]
-        public int TailleMax { get; set; }
+        [Required(ErrorMessage = "Veuillez entrer une taille minimum"), MinLength(3), MaxLength(50)]
+        public string TailleMin { get; set; }
+        [Required(ErrorMessage = "Veuillez entrer une taille maximum"), MinLength(3), MaxLength(50)]
+        public string TailleMax { get; set; }
         [Required(ErrorMessage = "Veuillez entrer une description"), MinLength(3), MaxLength(50)]
         public string Description { get; set; }
         public bool UnParVaisseau { get; set; }
         public IEnumerable<TypeAmelioration> Type { get; set; }
-        public IEnumerable<Pilote> Pilote { get; set; }
+        public int XIDType { get; set; }
     }
 }

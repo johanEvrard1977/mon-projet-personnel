@@ -8,24 +8,25 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApi_Demo_01.Helper;
+using WebApi_Demo_01.ViewModels;
 using WebApiXwing.Models;
 
 namespace WebApi_Demo_01.Controllers
 {
-    //[BasicAuthenticator(realm: "MIKE8")]
+    [BasicAuthenticator(realm: "MIKE8")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ActionController : ApiController
     {
         ActionRepo action = new ActionRepo();
         // GET: api/Action
         [HttpGet]
-        public IEnumerable<actions> Get()
+        public IEnumerable<ViewModelAction> Get()
         {
-            List<actions> l = new List<actions>();
+            List<ViewModelAction> l = new List<ViewModelAction>();
 
             foreach (var item in action.GetAll())
             {
-                l.Add(Mapper.Mapper.MapToEntity(item));
+                l.Add(Mapper.Mapper.MapToEntityToViewModel(item));
             }
 
             return l;
@@ -37,7 +38,7 @@ namespace WebApi_Demo_01.Controllers
         {
             return Mapper.Mapper.MapToEntity(action.GetOne(id));
         }
-        //get api/Action/name
+        //get api/Action/GetByName/name
         [Route("api/Action/GetByName/{name}")]
         [HttpGet]
         public actions GetByName(string name)

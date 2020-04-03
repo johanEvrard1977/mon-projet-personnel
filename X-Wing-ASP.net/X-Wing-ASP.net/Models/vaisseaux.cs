@@ -19,6 +19,7 @@ namespace WebApi_Demo_01.Models
         public string Capacite { get; set; }
         public IEnumerable<Pilote> Pilote { get; set; }
         public IEnumerable<Actions> Action { get; set; }
-        public IEnumerable<Camp> Camp { get; set; }
+        public IEnumerable<Camp> camps { get; set; }
+        public int XIDAction { get; set; }
     }
 }

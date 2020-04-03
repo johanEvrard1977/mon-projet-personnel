@@ -1,4 +1,5 @@
 ﻿using DAL.Repository;
+using DAL.ViewModels;
 using DalXwing.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace X_Wing_ASP.net.Controllers
         {
             VaisseauRepo AR = new VaisseauRepo();
             // GET: api/Action
-            IEnumerable<Vaisseaux> p = AR.GetAll();
+            IEnumerable<View> p = AR.GetAll();
 
             return View(p);
         }
@@ -32,12 +33,15 @@ namespace X_Wing_ASP.net.Controllers
         // GET: Vaisseau/Create
         public ActionResult Create()
         {
+            ActionRepo AR = new ActionRepo();
+
+            ViewBag.action = new SelectList(AR.GetAll(), "Id", "Nom", "selectedValue");
             return View();
         }
 
         // POST: Vaisseau/Create
         [HttpPost]
-        public ActionResult Create(Vaisseaux collection)
+        public ActionResult Create(FormCollection collection)
         {
             try
             {
@@ -46,18 +50,15 @@ namespace X_Wing_ASP.net.Controllers
                 {
                     AR.Create(new Vaisseaux()
                     {
-                        Id = collection.Id,
-                        Nom = collection.Nom,
-                        Bouclier = collection.Bouclier,
-                        Capacite = collection.Capacite,
-                        Action = collection.Action,
-                        Camp = collection.Camp,
-                        Energie = collection.Energie,
-                        Pilote = collection.Pilote,
-                        Structure = collection.Structure,
-                        Taille = collection.Taille,
-                        ValeurAgilite = collection.ValeurAgilite,
-                        ValeurArmePrincipale = collection.ValeurArmePrincipale
+                        XIDAction = int.Parse(collection["action"]),
+                        Nom = collection["Nom"],
+                        Bouclier = int.Parse(collection["Bouclier"]),
+                        Capacite = collection["Capacite"],
+                        Energie = int.Parse(collection["Energie"]),
+                        Structure = int.Parse(collection["Structure"]),
+                        Taille = collection["Taille"],
+                        ValeurAgilite = int.Parse(collection["ValeurAgilite"]),
+                        ValeurArmePrincipale = int.Parse(collection["ValeurArmePrincipale"])
                     });
                 }
                 return RedirectToAction("Index");
@@ -71,15 +72,18 @@ namespace X_Wing_ASP.net.Controllers
         // GET: Vaisseau/Edit/5
         public ActionResult Edit(int id)
         {
-            VaisseauRepo AR = new VaisseauRepo();
+            ActionRepo AR = new ActionRepo();
+
+            ViewBag.action = new SelectList(AR.GetAll(), "Id", "Nom", "selectedValue");
+            VaisseauRepo VR = new VaisseauRepo();
             Vaisseaux a = new Vaisseaux();
-            a = AR.GetOne(id);
+            a = VR.GetOne(id);
             return View(a);
         }
 
         // POST: Vaisseau/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Vaisseaux collection)
+        public ActionResult Edit(int id, FormCollection collection)
         {
             try
             {
@@ -88,18 +92,15 @@ namespace X_Wing_ASP.net.Controllers
                 {
                     AR.Update(id, new Vaisseaux()
                     {
-                        Id = collection.Id,
-                        Nom = collection.Nom,
-                        Bouclier = collection.Bouclier,
-                        Capacite = collection.Capacite,
-                        Action = collection.Action,
-                        Camp = collection.Camp,
-                        Energie = collection.Energie,
-                        Pilote = collection.Pilote,
-                        Structure = collection.Structure,
-                        Taille = collection.Taille,
-                        ValeurAgilite = collection.ValeurAgilite,
-                        ValeurArmePrincipale = collection.ValeurArmePrincipale
+                        Nom = collection["Nom"],
+                        Bouclier = int.Parse(collection["Bouclier"]),
+                        Capacite = collection["Capacite"],
+                        Energie = int.Parse(collection["Energie"]),
+                        Structure = int.Parse(collection["Structure"]),
+                        Taille = collection["Taille"],
+                        ValeurAgilite = int.Parse(collection["ValeurAgilite"]),
+                        ValeurArmePrincipale = int.Parse(collection["ValeurArmePrincipale"]),
+                        XIDAction = int.Parse(collection["action"])
                     });
                 }
                 return RedirectToAction("Index");
@@ -126,10 +127,19 @@ namespace X_Wing_ASP.net.Controllers
             try
             {
                 VaisseauRepo AR = new VaisseauRepo();
-                if (ModelState.IsValid)
-                {
-                    AR.Delete(id);
-                }
+                
+                    AR.Delete(id, new Vaisseaux()
+                    {
+                        Id = collection.Id,
+                        Nom = collection.Nom,
+                        Bouclier = collection.Bouclier,
+                        Capacite = collection.Capacite,
+                        Energie = collection.Energie,
+                        Structure = collection.Structure,
+                        Taille = collection.Taille,
+                        ValeurAgilite = collection.ValeurAgilite,
+                        ValeurArmePrincipale = collection.ValeurArmePrincipale
+                    });
                 return RedirectToAction("Index");
             }
             catch

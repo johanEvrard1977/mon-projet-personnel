@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,8 +25,11 @@ namespace DAL.Repository
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
                 cmd.Parameters.AddWithValue("@Unique", T.Unique);
                 cmd.Parameters.AddWithValue("@Cout", T.Cout);
-                cmd.Parameters.AddWithValue("@VP", T.ValeurPilotage);
+                cmd.Parameters.AddWithValue("@ValPil", T.ValeurPilotage);
                 cmd.Parameters.AddWithValue("@Com", T.Commentaires);
+                cmd.Parameters.AddWithValue("@Camp", T.XIDCamp);
+                cmd.Parameters.AddWithValue("@Vaisseau", T.XIDVaisseau);
+                cmd.Parameters.AddWithValue("@type", T.XIDType);
                 cmd.ExecuteScalar();
             }
         }
@@ -36,6 +40,9 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "DELETE FROM detailpilotetypeamelioration WHERE XIDPilote = @param2";
+                cmd.Parameters.AddWithValue("@param2", id);
+                cmd.ExecuteNonQuery();
                 cmd.CommandText = "DELETE FROM pilote WHERE id = @param";
                 cmd.Parameters.AddWithValue("@param", id);
                 cmd.ExecuteNonQuery();
@@ -43,7 +50,7 @@ namespace DAL.Repository
 
         }
 
-        public IEnumerable<Pilote> GetAll()
+        public IEnumerable<ViewPilote> GetAll()
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -53,14 +60,10 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Pilote
+                    yield return new ViewPilote
                     {
-                        Nom = r["Nom"].ToString(),
-                        Unique = (bool) r["EstUnique"],
-                        Cout = (int)r["Cout"],
-                        ValeurPilotage = (int)r["ValPilotage"],
-                        Commentaires = r["Commentaire"].ToString(),
-                        Id = (int)r["id"]
+                        Id = (int)r["ID"],
+                        Nom = r["Nom"].ToString()
                     };
                 }
             }
@@ -80,8 +83,8 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SELECT *"
                     + " FROM pilote"
-                    + " WHERE pilote.id = @p1";
-                cmd.Parameters.AddWithValue("p1", name);
+                    + " WHERE pilote.Nom = @p1";
+                cmd.Parameters.AddWithValue("@p1", name);
 
                 SqlDataReader r = cmd.ExecuteReader();
                 if (r.Read())
@@ -92,61 +95,71 @@ namespace DAL.Repository
                     u.Camp = CR.GetLinkPilote((int)r["ID"]);
                     u.Amelioration = AR.GetLinkPilote((int)r["ID"]);
                     u.Commentaires = r["Commentaire"].ToString();
+                    u.Cout = (int)r["Cout"];
+                    u.Unique = (bool)r["EstUnique"];
+                    u.ValeurPilotage = (int)r["ValPilotage"];
                 }
                 return u;
             }
         }
 
-        public IEnumerable<Pilote> GetLinkVaisseau(int id)
+        public IEnumerable<ViewPilote> GetLinkVaisseau(int id)
         {
+            VaisseauRepo VR = new VaisseauRepo();
+            CampRepo CR = new CampRepo();
+            AmeliorationRepo AR = new AmeliorationRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SELECT * FROM pilote join vaisseau on pilote.XIDVaisseau = vaisseau.ID"
-                    + "  where vaisseau.ID = @p1";
+                    + " where vaisseau.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Pilote
+                    yield return new ViewPilote
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"],
-                        Commentaires = r["Commentaire"].ToString(),
-                        Cout = (int)r["Cout"],
+                        Id = (int)r["ID"]
                     };
                 }
             }
         }
 
-        public IEnumerable<Pilote> GetLinkPilote(int id)
+
+        public IEnumerable<ViewPilote> GetLinkCollection(int id)
         {
+            VaisseauRepo VR = new VaisseauRepo();
+            CampRepo CR = new CampRepo();
+            AmeliorationRepo AR = new AmeliorationRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM pilote join vaisseau on pilote.XIDVaisseau = vaisseau.ID"
-                    + "  where pilote.ID = @p1";
+                cmd.CommandText = "SELECT * FROM pilote join detailpilotecollection"
+                    + " on pilote.ID = detailpilotecollection.XIDPilote join collection"
+                    + " on collection.ID = detailpilotecollection.XIDCollection"
+                    + " where pilote.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Pilote
+                    yield return new ViewPilote
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"],
-                        Cout = (int)r["Cout"],
-                        Unique = (bool)r["ID"],
-                        Commentaires = r["Commentaires"].ToString(),
-                        ValeurPilotage = (int)r["ValPilotage"]
+                        Id = (int)r["ID"]
                     };
                 }
             }
         }
 
-        public IEnumerable<Pilote> GetLinkCamp(int id)
+
+        public IEnumerable<ViewPilote> GetLinkCamp(int id)
         {
+            VaisseauRepo VR = new VaisseauRepo();
+            CampRepo CR = new CampRepo();
+            AmeliorationRepo AR = new AmeliorationRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
@@ -157,48 +170,47 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Pilote
+                    yield return new ViewPilote
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"],
-                        Cout = (int)r["Cout"],
-                        Commentaires = r["Commentaire"].ToString(),
-                        ValeurPilotage = (int)r["ValPilotage"]
+                        Id = (int)r["ID"]
                     };
                 }
             }
         }
 
-        public IEnumerable<Pilote> GetLinkAmelioration(int id)
+        public IEnumerable<ViewPilote> GetLinkAmelioration(int id)
         {
+            VaisseauRepo VR = new VaisseauRepo();
+            CampRepo CR = new CampRepo();
+            AmeliorationRepo AR = new AmeliorationRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SELECT * FROM pilote join detailpilotetypeamelioration"
-                    + " on detailpilotetypeamelioration.XIDPilote = pilote.ID"
-                    + " join typeamelioration on detailpilotetypeamelioration.XIDTypeAmelioration"
-                    + " join amelioration on amelioration.ID = detailepiloteamelioration.XIDAmelioration"
-                    + " where amelioration.ID = @p1";
+                                + " on detailpilotetypeamelioration.XIDPilote = pilote.ID"
+                                + " join typeamelioration on detailpilotetypeamelioration.XIDTypeAmelioration = typeamelioration.ID"
+                                + " join amelioration on amelioration.XIDTypeAmelioration = typeamelioration.ID"
+                                + " where amelioration.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Pilote
+                    yield return new ViewPilote
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"],
-                        Cout = (int)r["Cout"],
-                        Unique = (bool)r["ID"],
-                        Commentaires = r["Commentaires"].ToString(),
-                        ValeurPilotage = (int)r["ValPilotage"]
+                        Id = (int)r["ID"]
                     };
                 }
             }
         }
 
-        public IEnumerable<Pilote> GetLinkEscadron(int id)
+        public IEnumerable<ViewPilote> GetLinkEscadron(int id)
         {
+            VaisseauRepo VR = new VaisseauRepo();
+            CampRepo CR = new CampRepo();
+            AmeliorationRepo AR = new AmeliorationRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
@@ -210,14 +222,10 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new Pilote
+                    yield return new ViewPilote
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"],
-                        Cout = (int)r["Cout"],
-                        Unique = (bool)r["ID"],
-                        Commentaires = r["Commentaires"].ToString(),
-                        ValeurPilotage = (int)r["ValPilotage"]
+                        Id = (int)r["ID"]
                     };
                 }
             }
@@ -238,7 +246,7 @@ namespace DAL.Repository
                 cmd.CommandText = "SELECT *"
                     + " FROM pilote"
                     + " WHERE pilote.id = @p1";
-                cmd.Parameters.AddWithValue("p1", id);
+                cmd.Parameters.AddWithValue("@p1", id);
 
                 SqlDataReader r = cmd.ExecuteReader();
                 if (r.Read())
@@ -249,6 +257,9 @@ namespace DAL.Repository
                     u.Camp = CR.GetLinkPilote((int)r["ID"]);
                     u.Amelioration = AR.GetLinkPilote((int)r["ID"]);
                     u.Commentaires = r["Commentaire"].ToString();
+                    u.Cout = (int)r["Cout"];
+                    u.Unique = (bool)r["EstUnique"];
+                    u.ValeurPilotage = (int)r["ValPilotage"];
                 }
             }
             return u;
@@ -262,14 +273,22 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SP_Update_Pilote";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", T.Id);
+                cmd.Parameters.AddWithValue("@Id", id);
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
                 cmd.Parameters.AddWithValue("@Unique", T.Unique);
                 cmd.Parameters.AddWithValue("@Cout", T.Cout);
-                cmd.Parameters.AddWithValue("@VP", T.ValeurPilotage);
+                cmd.Parameters.AddWithValue("@ValPil", T.ValeurPilotage);
                 cmd.Parameters.AddWithValue("@Com", T.Commentaires);
+                cmd.Parameters.AddWithValue("@Camp", T.XIDCamp);
+                cmd.Parameters.AddWithValue("@Vaisseau", T.XIDVaisseau);
+                cmd.Parameters.AddWithValue("@type", T.XIDType);
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        IEnumerable<Pilote> IRepository<int, Pilote>.GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

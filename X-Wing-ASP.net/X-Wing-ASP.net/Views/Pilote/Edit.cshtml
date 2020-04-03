@@ -59,6 +59,30 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Camp, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("camps", new SelectList(ViewBag.camp, "Value", "Text"))
+                @Html.ValidationMessageFor(m => m.Camp, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Vaisseaux, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("vaisseaux", new SelectList(ViewBag.vaisseaux, "Value", "Text"))
+                @Html.ValidationMessageFor(m => m.Vaisseaux, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("type", new SelectList(ViewBag.type, "Value", "Text"))
+                @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>

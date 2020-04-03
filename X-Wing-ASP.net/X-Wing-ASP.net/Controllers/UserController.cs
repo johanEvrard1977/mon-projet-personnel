@@ -1,5 +1,6 @@
 ﻿using DAL.Entities;
 using DAL.Repository;
+using DAL.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace X_Wing_ASP.net.Controllers
         {
             UserRepository AR = new UserRepository();
             // GET: api/Action
-            IEnumerable<User> p = AR.GetAll();
+            IEnumerable<View> p = AR.GetAll();
 
             return View(p);
         }
@@ -115,10 +116,17 @@ namespace X_Wing_ASP.net.Controllers
             try
             {
                 UserRepository AR = new UserRepository();
-                if (ModelState.IsValid)
-                {
-                    AR.Delete(id);
-                }
+                AR.Delete(id, new User()
+                    {
+                        ID = collection.ID,
+                        Nom = collection.Nom,
+                        UserName = collection.UserName,
+                        Collection = collection.Collection,
+                        Mail = collection.Mail,
+                        Password = collection.Password,
+                        Prenom = collection.Prenom,
+                        Role = collection.Role
+                    });
                 return RedirectToAction("Index");
             }
             catch

@@ -1,4 +1,5 @@
-﻿using DalXwing.Models;
+﻿using DAL.ViewModels;
+using DalXwing.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,9 @@ namespace WebApi_Demo_01.Models
         public int Energie { get; set; }
         public string Taille { get; set; }
         public string Capacite { get; set; }
-        public IEnumerable<Pilote> Pilote { get; set; }
-        public IEnumerable<Actions> Action { get; set; }
-        public IEnumerable<Camp> Camp { get; set; }
+        public IEnumerable<ViewPilote> Pilote { get; set; }
+        public IEnumerable<ViewAction> Action { get; set; }
+        public IEnumerable<ViewCamp> Camp { get; set; }
+        public int XIDAction { get; set; }
     }
 }

@@ -3,6 +3,8 @@ using DAL.Entities;
 using DalXwing.Models;
 using WebApi_Demo_01.Models;
 using WebApiXwing.Models;
+using WebApi_Demo_01.ViewModels;
+using DAL.ViewModels;
 
 namespace WebApi_Demo_01.Mapper
 {
@@ -14,7 +16,8 @@ namespace WebApi_Demo_01.Mapper
             {
                 Nom = UM.Nom,
                 Id = UM.Id,
-                vaisseau = UM.Vaisseau
+                vaisseau = UM.Vaisseau,
+                XIDVaisseau = UM.XIDVaisseau
             };
         }
 
@@ -24,7 +27,44 @@ namespace WebApi_Demo_01.Mapper
             {
                 Nom = UM.Nom,
                 Id = UM.Id,
-                Vaisseau = UM.vaisseau
+                Vaisseau = UM.vaisseau,
+                XIDVaisseau = UM.XIDVaisseau
+            };
+        }
+
+        public static actions MapToEntityToView(this ViewModelAction UM)
+        {
+            return new actions
+            {
+                Nom = UM.Nom,
+                Id = UM.Id,
+            };
+        }
+
+        public static ViewModelAction MapToEntityToView(this actions UM)
+        {
+            return new ViewModelAction
+            {
+                Nom = UM.Nom,
+                Id = UM.Id,
+            };
+        }
+
+        public static ViewAction MapToEntityToViewModel(this ViewModelAction UM)
+        {
+            return new ViewAction
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewModelAction MapToEntityToViewModel(this ViewAction UM)
+        {
+            return new ViewModelAction
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
             };
         }
 
@@ -41,7 +81,8 @@ namespace WebApi_Demo_01.Mapper
                 Unique = UM.Unique,
                 UnParVaisseau = UM.UnParVaisseau,
                 Pilote = UM.Pilote,
-                Type = UM.Type
+                Type = UM.Type,
+                XIDType = UM.XIDType
             };
         }
 
@@ -58,7 +99,44 @@ namespace WebApi_Demo_01.Mapper
                 Unique = UM.Unique,
                 UnParVaisseau = UM.UnParVaisseau,
                 Pilote = UM.Pilote,
-                Type = UM.Type
+                Type = UM.Type,
+                XIDType = UM.XIDType
+            };
+        }
+
+        public static ameliorations MapToEntityToView(this ViewModelAmelioration UM)
+        {
+            return new ameliorations
+            {
+                Nom = UM.Nom,
+                Id = UM.Id,
+            };
+        }
+
+        public static ViewModelAmelioration MapToEntityToView(this ameliorations UM)
+        {
+            return new ViewModelAmelioration
+            {
+                Nom = UM.Nom,
+                Id = UM.Id,
+            };
+        }
+
+        public static ViewAmelioration MapToEntityToViewModel(this ViewModelAmelioration UM)
+        {
+            return new ViewAmelioration
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewModelAmelioration MapToEntityToViewModel(this ViewAmelioration UM)
+        {
+            return new ViewModelAmelioration
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
             };
         }
 
@@ -84,6 +162,42 @@ namespace WebApi_Demo_01.Mapper
             };
         }
 
+        public static camps MapToEntityToView(this ViewModelCamp UM)
+        {
+            return new camps
+            {
+                Nom = UM.Nom,
+                Id = UM.Id,
+            };
+        }
+
+        public static ViewModelCamp MapToEntityToView(this camps UM)
+        {
+            return new ViewModelCamp
+            {
+                Nom = UM.Nom,
+                Id = UM.Id,
+            };
+        }
+
+        public static ViewCamp MapToEntityToViewModel(this ViewModelCamp UM)
+        {
+            return new ViewCamp
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewModelCamp MapToEntityToViewModel(this ViewCamp UM)
+        {
+            return new ViewModelCamp
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
         public static Collection MapToEntity(this collections UM)
         {
             return new Collection
@@ -94,7 +208,8 @@ namespace WebApi_Demo_01.Mapper
                 Pilote = UM.Pilote,
                 Escadron = UM.Escadron,
                 Vaisseau = UM.Vaisseau,
-                Users = UM.Users
+                Users = UM.Users,
+                XIDUser = UM.XIDUser
             };
         }
 
@@ -108,7 +223,44 @@ namespace WebApi_Demo_01.Mapper
                 Pilote = UM.Pilote,
                 Escadron = UM.Escadron,
                 Vaisseau = UM.Vaisseau,
-                Users = UM.Users
+                Users = UM.Users,
+                XIDUser = UM.XIDUser
+            };
+        }
+
+        public static collections MapToEntityToView(this ViewModelCollection UM)
+        {
+            return new collections
+            {
+                Nom = UM.Nom,
+                Id = UM.Id,
+            };
+        }
+
+        public static ViewModelCollection MapToEntityToView(this collections UM)
+        {
+            return new ViewModelCollection
+            {
+                Nom = UM.Nom,
+                Id = UM.Id,
+            };
+        }
+
+        public static ViewCollection MapToEntityToViewModel(this ViewModelCollection UM)
+        {
+            return new ViewCollection
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewModelCollection MapToEntityToViewModel(this ViewCollection UM)
+        {
+            return new ViewModelCollection
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
             };
         }
 
@@ -118,7 +270,8 @@ namespace WebApi_Demo_01.Mapper
             {
                 Nom = UM.Nom,
                 Id = UM.Id,
-                Amelioration = UM.Amelioration
+                Amelioration = UM.Amelioration,
+                XIDPilote = UM.XIDPilote
             };
         }
 
@@ -128,7 +281,44 @@ namespace WebApi_Demo_01.Mapper
             {
                 Nom = UM.Nom,
                 Id = UM.Id,
-                Amelioration = UM.Amelioration
+                Amelioration = UM.Amelioration,
+                XIDPilote = UM.XIDPilote
+            };
+        }
+
+        public static typeAmeliorations MapToEntityToView(this ViewModelType UM)
+        {
+            return new typeAmeliorations
+            {
+                Nom = UM.Nom,
+                Id = UM.Id,
+            };
+        }
+
+        public static ViewModelType MapToEntityToView(this typeAmeliorations UM)
+        {
+            return new ViewModelType
+            {
+                Nom = UM.Nom,
+                Id = UM.Id,
+            };
+        }
+
+        public static ViewType MapToEntityToViewModel(this ViewModelType UM)
+        {
+            return new ViewType
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewModelType MapToEntityToViewModel(this ViewType UM)
+        {
+            return new ViewModelType
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
             };
         }
 
@@ -144,7 +334,11 @@ namespace WebApi_Demo_01.Mapper
                 Id = UM.Id,
                 Vaisseaux = UM.Vaisseaux,
                 Amelioration = UM.Amelioration,
-                Type = UM.Type
+                Type = UM.Type,
+                Camp = UM.Camp,
+                XIDCamp = UM.XIDCamp,
+                XIDVaisseau = UM.XIDVaisseau,
+                XIDType = UM.XIDType
             };
         }
 
@@ -160,7 +354,47 @@ namespace WebApi_Demo_01.Mapper
                 Id = UM.Id,
                 Vaisseaux = UM.Vaisseaux,
                 Amelioration = UM.Amelioration,
-                Type = UM.Type
+                Type = UM.Type,
+                Camp = UM.Camp,
+                XIDCamp = UM.XIDCamp,
+                XIDVaisseau = UM.XIDVaisseau,
+                XIDType = UM.XIDType
+            };
+        }
+
+        public static pilotes MapToEntityToView(this ViewModelPilote UM)
+        {
+            return new pilotes
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewModelPilote MapToEntityToView(this pilotes UM)
+        {
+            return new ViewModelPilote
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewPilote MapToEntityToViewModel(this ViewModelPilote UM)
+        {
+            return new ViewPilote
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewModelPilote MapToEntityToViewModel(this ViewPilote UM)
+        {
+            return new ViewModelPilote
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
             };
         }
 
@@ -179,7 +413,8 @@ namespace WebApi_Demo_01.Mapper
                 Id = UM.Id,
                 Action = UM.Action,
                 Camp = UM.Camp,
-                Pilote = UM.Pilote
+                Pilote = UM.Pilote,
+                XIDAction = UM.XIDAction
             };
         }
 
@@ -198,9 +433,65 @@ namespace WebApi_Demo_01.Mapper
                 Id = UM.Id,
                 Action = UM.Action,
                 Camp = UM.Camp,
-                Pilote = UM.Pilote
+                Pilote = UM.Pilote,
+                XIDAction = UM.XIDAction
             };
         }
+
+        public static vaisseaux MapToEntityToView(this ViewModelVaisseau UM)
+        {
+            return new vaisseaux
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewModelVaisseau MapToEntityToView(this vaisseaux UM)
+        {
+            return new ViewModelVaisseau
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static Vaisseaux MapToEntityTo(this ViewModelVaisseau UM)
+        {
+            return new Vaisseaux
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewModelVaisseau MapToEntityTo(this Vaisseaux UM)
+        {
+            return new ViewModelVaisseau
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewVaisseau MapToEntityToViewModel(this ViewModelVaisseau UM)
+        {
+            return new ViewVaisseau
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewModelVaisseau MapToEntityToViewModel(this ViewVaisseau UM)
+        {
+            return new ViewModelVaisseau
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
 
         public static adresses MapToEntity(this Adresses UM)
         {
@@ -258,6 +549,42 @@ namespace WebApi_Demo_01.Mapper
             };
         }
 
+        public static Users MapToEntityToView(this ViewUserModel UM)
+        {
+            return new Users
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewUserModel MapToEntityToView(this Users UM)
+        {
+            return new ViewUserModel
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewUser MapToEntityToViewModel(this ViewUserModel UM)
+        {
+            return new ViewUser
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewUserModel MapToEntityToViewModel(this ViewUser UM)
+        {
+            return new ViewUserModel
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
         public static escadrons MapToEntity(this Escadron UM)
         {
             return new escadrons
@@ -266,8 +593,15 @@ namespace WebApi_Demo_01.Mapper
                 Id = UM.Id,
                 Visible = UM.Visible,
                 Points = UM.Points,
-                Description = UM.Description
-                
+                Description = UM.Description,
+                Amelioration = UM.Amelioration,
+                Camp = UM.Camp,
+                Collection = UM.Collection,
+                Pilote = UM.Pilote,
+                Vaisseau = UM.Vaisseau,
+                XIDCamp = UM.XIDCamp,
+                XIDColllection = UM.XIDColllection,
+                XIDUser = UM.XIDUser
             };
         }
 
@@ -279,7 +613,51 @@ namespace WebApi_Demo_01.Mapper
                 Id = UM.Id,
                 Visible = UM.Visible,
                 Points = UM.Points,
-                Description = UM.Description
+                Description = UM.Description,
+                Amelioration = UM.Amelioration,
+                Camp = UM.Camp,
+                Collection = UM.Collection,
+                Pilote = UM.Pilote,
+                Vaisseau = UM.Vaisseau,
+                XIDCamp = UM.XIDCamp,
+                XIDColllection = UM.XIDColllection,
+                XIDUser = UM.XIDUser
+            };
+        }
+
+        public static escadrons MapToEntityToView(this ViewModelEscadron UM)
+        {
+            return new escadrons
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewModelEscadron MapToEntityToView(this escadrons UM)
+        {
+            return new ViewModelEscadron
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewEscadron MapToEntityToViewModel(this ViewModelEscadron UM)
+        {
+            return new ViewEscadron
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static ViewModelEscadron MapToEntityToViewModel(this ViewEscadron UM)
+        {
+            return new ViewModelEscadron
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
             };
         }
     }

@@ -1,4 +1,5 @@
 ﻿using DAL.Repository;
+using DAL.ViewModels;
 using DalXwing.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace X_Wing_ASP.net.Controllers
         {
             AmeliorationRepo AR = new AmeliorationRepo();
             // GET: api/Amelioration
-            IEnumerable<Amelioration> p = AR.GetAll();
+            IEnumerable<View> p = AR.GetAll();
 
             return View(p);
         }
@@ -31,12 +32,15 @@ namespace X_Wing_ASP.net.Controllers
         // GET: Amelioration/Create
         public ActionResult Create()
         {
+            TypeAmeliorationRepo TAR = new TypeAmeliorationRepo();
+
+            ViewBag.type = new SelectList(TAR.GetAll(), "Id", "Nom", "selectedValue");
             return View();
         }
 
         // POST: Amelioration/Create
         [HttpPost]
-        public ActionResult Create(Amelioration collection)
+        public ActionResult Create(FormCollection collection)
         {
             try
             {
@@ -44,22 +48,23 @@ namespace X_Wing_ASP.net.Controllers
                 if (ModelState.IsValid)
                 {
                     AR.Create(new Amelioration() {
-                        Id = collection.Id,
-                        Nom = collection.Nom,
-                        Cout = collection.Cout,
-                        Description = collection.Description,
-                        Pilote = collection.Pilote,
-                        TailleMax = collection.TailleMax,
-                        TailleMin = collection.TailleMin,
-                        Type= collection.Type,
-                        Unique = collection.Unique,
-                        UnParVaisseau = collection.UnParVaisseau
-                        });
+                        Nom = collection["Nom"],
+                        Cout = int.Parse(collection["Cout"]),
+                        Description = collection["Description"],
+                        TailleMax = collection["TailleMax"],
+                        TailleMin = collection["TailleMin"],
+                        Unique = bool.Parse(collection["Unique"]),
+                        UnParVaisseau = bool.Parse(collection["UnParVaisseau"]),
+                        XIDType = int.Parse(collection["type"])
+                    });
                 }
                 return RedirectToAction("Index");
             }
             catch
             {
+                TypeAmeliorationRepo TAR = new TypeAmeliorationRepo();
+
+                ViewBag.type = new SelectList(TAR.GetAll(), "Id", "Nom", "selectedValue");
                 return View();
             }
         }
@@ -67,6 +72,9 @@ namespace X_Wing_ASP.net.Controllers
         // GET: Amelioration/Edit/5
         public ActionResult Edit(int id)
         {
+            TypeAmeliorationRepo TAR = new TypeAmeliorationRepo();
+
+            ViewBag.type = new SelectList(TAR.GetAll(), "Id", "Nom", "selectedValue");
             AmeliorationRepo AR = new AmeliorationRepo();
             Amelioration a = new Amelioration();
             a = AR.GetOne(id);
@@ -75,7 +83,7 @@ namespace X_Wing_ASP.net.Controllers
 
         // POST: Amelioration/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Amelioration collection)
+        public ActionResult Edit(int id, FormCollection collection)
         {
             try
             {
@@ -83,16 +91,14 @@ namespace X_Wing_ASP.net.Controllers
                 if (ModelState.IsValid)
                 {
                     AR.Update(id, new Amelioration() {
-                        Id = collection.Id,
-                        Nom = collection.Nom,
-                        Cout = collection.Cout,
-                        Description = collection.Description,
-                        Pilote = collection.Pilote,
-                        TailleMax = collection.TailleMax,
-                        TailleMin = collection.TailleMin,
-                        Type = collection.Type,
-                        Unique = collection.Unique,
-                        UnParVaisseau = collection.UnParVaisseau
+                        Nom = collection["Nom"],
+                        Cout = int.Parse(collection["Cout"]),
+                        Description = collection["Description"],
+                        TailleMax = collection["TailleMax"],
+                        TailleMin = collection["TailleMin"],
+                        Unique = bool.Parse(collection["Unique"]),
+                        UnParVaisseau = bool.Parse(collection["UnParVaisseau"]),
+                        XIDType = int.Parse(collection["type"])
                     });
                 }
                 return RedirectToAction("Index");
@@ -119,11 +125,20 @@ namespace X_Wing_ASP.net.Controllers
             try
             {
                 AmeliorationRepo AR = new AmeliorationRepo();
-                if (ModelState.IsValid)
-                {
-                    AR.Delete(id);
-                }
-                return RedirectToAction("Index");
+                 AR.Delete(id, new Amelioration()
+                    {
+                        Id = collection.Id,
+                        Nom = collection.Nom,
+                        Cout = collection.Cout,
+                        Description = collection.Description,
+                        TailleMax = collection.TailleMax,
+                        TailleMin = collection.TailleMin,
+                        Type = collection.Type,
+                        Unique = collection.Unique,
+                        UnParVaisseau = collection.UnParVaisseau
+                    });
+                
+                    return RedirectToAction("Index");
             }
             catch
             {

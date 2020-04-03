@@ -40,8 +40,8 @@ namespace WebApi_Demo_01.Mapper
                 TailleMin = UM.TailleMin,
                 Unique = UM.Unique,
                 UnParVaisseau = UM.UnParVaisseau,
-                Pilote = UM.Pilote,
-                Type = UM.Type
+                Type = UM.Type,
+                XIDType = UM.XIDType
             };
         }
 
@@ -57,8 +57,8 @@ namespace WebApi_Demo_01.Mapper
                 TailleMin = UM.TailleMin,
                 Unique = UM.Unique,
                 UnParVaisseau = UM.UnParVaisseau,
-                Pilote = UM.Pilote,
-                Type = UM.Type
+                Type = UM.Type,
+                XIDType = UM.XIDType
             };
         }
 
@@ -118,7 +118,9 @@ namespace WebApi_Demo_01.Mapper
             {
                 Nom = UM.Nom,
                 Id = UM.Id,
-                Amelioration = UM.Amelioration
+                Amelioration = UM.Amelioration,
+                Pilotes = UM.Pilotes,
+                Pil = UM.Pil
             };
         }
 
@@ -128,7 +130,8 @@ namespace WebApi_Demo_01.Mapper
             {
                 Nom = UM.Nom,
                 Id = UM.Id,
-                Amelioration = UM.Amelioration
+                Amelioration = UM.Amelioration,
+                Pil = UM.Pil
             };
         }
 
@@ -143,8 +146,12 @@ namespace WebApi_Demo_01.Mapper
                 Commentaires = UM.Commentaires,
                 Id = UM.Id,
                 Vaisseaux = UM.Vaisseaux,
-                Amelioration = UM.Amelioration,
-                Type = UM.Type
+                Ameliorations = UM.Amelioration,
+                Type = UM.Type,
+                Camp = UM.Camp,
+                XIDCamp = UM.camp,
+                XIDVaisseau = UM.vaisseau,
+                XIDType = UM.XIDType
             };
         }
 
@@ -159,8 +166,12 @@ namespace WebApi_Demo_01.Mapper
                 Commentaires = UM.Commentaires,
                 Id = UM.Id,
                 Vaisseaux = UM.Vaisseaux,
-                Amelioration = UM.Amelioration,
-                Type = UM.Type
+                Amelioration = UM.Ameliorations,
+                Type = UM.Type,
+                Camp = UM.Camp,
+                camp = UM.XIDCamp,
+                vaisseau = UM.XIDVaisseau,
+                XIDType = UM.XIDType
             };
         }
 
@@ -178,8 +189,9 @@ namespace WebApi_Demo_01.Mapper
                 Capacite = UM.Capacite,
                 Id = UM.Id,
                 Action = UM.Action,
-                Camp = UM.Camp,
-                Pilote = UM.Pilote
+                camps = UM.camps,
+                Pilote = UM.Pilote,
+                XIDAction = UM.XIDAction
             };
         }
 
@@ -197,8 +209,9 @@ namespace WebApi_Demo_01.Mapper
                 Capacite = UM.Capacite,
                 Id = UM.Id,
                 Action = UM.Action,
-                Camp = UM.Camp,
-                Pilote = UM.Pilote
+                camps = UM.camps,
+                Pilote = UM.Pilote,
+                XIDAction = UM.XIDAction
             };
         }
 

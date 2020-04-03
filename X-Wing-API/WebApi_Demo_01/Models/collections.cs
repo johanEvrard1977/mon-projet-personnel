@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using DAL.ViewModels;
 using DalXwing.Models;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,11 @@ namespace WebApi_Demo_01.Models
 {
     public class collections: Elements
     {
-        public IEnumerable<Pilote> Pilote { get; set; }
-        public IEnumerable<Vaisseaux> Vaisseau { get; set; }
-        public IEnumerable<Escadron> Escadron { get; set; }
-        public IEnumerable<Amelioration> Amelioration { get; set; }
-        public IEnumerable<User> Users { get; set; }
+        public IEnumerable<ViewPilote> Pilote { get; set; }
+        public IEnumerable<ViewVaisseau> Vaisseau { get; set; }
+        public IEnumerable<ViewEscadron> Escadron { get; set; }
+        public IEnumerable<ViewAmelioration> Amelioration { get; set; }
+        public IEnumerable<ViewUser> Users { get; set; }
+        public int XIDUser { get; set; }
     }
 }

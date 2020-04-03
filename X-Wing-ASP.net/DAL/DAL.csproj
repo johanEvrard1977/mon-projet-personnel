@@ -38,6 +38,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -77,6 +78,7 @@
     <Compile Include="Repository\TypeAmeliorationRepo.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Repository\VaisseauRepo.cs" />
+    <Compile Include="ViewModels\View.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,11 +13,12 @@ namespace DalXwing.Models
         public string Nom { get; set; }
         public int Cout { get; set; }
         public bool Unique { get; set; }
-        public int TailleMin { get; set; }
-        public int TailleMax { get; set; }
+        public string TailleMin { get; set; }
+        public string TailleMax { get; set; }
         public string Description { get; set; }
         public bool UnParVaisseau { get; set; }
-        public IEnumerable<TypeAmelioration> Type { get; set; }
-        public IEnumerable<Pilote> Pilote { get; set; }
+        public IEnumerable<ViewType> Type { get; set; }
+        public IEnumerable<ViewPilote> Pilote { get; set; }
+        public int XIDType { get; set; }
     }
 }

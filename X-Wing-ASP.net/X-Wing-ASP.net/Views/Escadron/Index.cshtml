@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DalXwing.Models.Escadron>
+﻿@model IEnumerable<DAL.ViewModels.View>
 
 @{
     ViewBag.Title = "Index";
@@ -14,15 +14,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Nom)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Visible)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Points)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
         <th></th>
     </tr>
 
@@ -30,15 +21,6 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Nom)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Visible)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Points)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

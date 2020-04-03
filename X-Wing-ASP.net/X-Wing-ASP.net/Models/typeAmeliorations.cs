@@ -10,5 +10,7 @@ namespace WebApi_Demo_01.Models
     public class typeAmeliorations : Elements
     {
         public IEnumerable<Amelioration> Amelioration { get; set; }
+        public IEnumerable<Pilote> Pilotes { get; set; }
+        public int Pil { get; set; }
     }
 }

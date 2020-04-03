@@ -9,6 +9,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApi_Demo_01.Helper;
 using WebApi_Demo_01.Models;
+using WebApi_Demo_01.ViewModels;
 
 namespace WebApi_Demo_01.Controllers
 {
@@ -18,13 +19,13 @@ namespace WebApi_Demo_01.Controllers
     {
         AmeliorationRepo amelioration = new AmeliorationRepo();
         // GET: api/Action
-        public IEnumerable<ameliorations> Get()
+        public IEnumerable<ViewModelAmelioration> Get()
         {
-            List<ameliorations> l = new List<ameliorations>();
+            List<ViewModelAmelioration> l = new List<ViewModelAmelioration>();
 
             foreach (var item in amelioration.GetAll())
             {
-                l.Add(Mapper.Mapper.MapToEntity(item));
+                l.Add(Mapper.Mapper.MapToEntityToViewModel(item));
             }
 
             return l;
