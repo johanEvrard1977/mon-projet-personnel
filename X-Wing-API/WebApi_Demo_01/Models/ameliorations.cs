@@ -17,7 +17,6 @@ namespace WebApi_Demo_01.Models
         public string Description { get; set; }
         public bool UnParVaisseau { get; set; }
         public IEnumerable<ViewType> Type { get; set; }
-        public IEnumerable<ViewPilote> Pilote { get; set; }
         public int XIDType { get; set; }
     }
 }

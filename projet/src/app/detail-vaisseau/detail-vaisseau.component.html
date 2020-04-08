@@ -1,5 +1,29 @@
-<h2>Vaisseaux-details</h2>
-
 <div *ngIf="vaisseaux">
-    <h3>{{ vaisseaux.Nom }}</h3>
+    <h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Vaisseau:</h1>
+    <h2>- {{ vaisseaux.Nom }}</h2>
+    <h2>- Point de bouclier: {{ vaisseaux.Bouclier }}</h2>
+    <h2>- Energie: {{ vaisseaux.Energie }}</h2>
+    <h2>- Capacité: {{ vaisseaux.Capacite }}</h2>
+    <h2>- Points de structure: {{ vaisseaux.Structure }}</h2>
+    <h2>- Taille: {{ vaisseaux.Taille }}</h2>
+    <h2>- ValeurAgilite: {{ vaisseaux.ValeurAgilite }}</h2>
+    <h2>- ValeurArmePrincipale: {{ vaisseaux.ValeurArmePrincipale }}</h2>
+</div>
+<h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Actions concernées:</h1>
+<div *ngFor="let action of vaisseaux.Action">
+    <h2>
+        - {{ action.Nom }}
+    </h2>
+</div>
+<h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Pilotes concernées:</h1>
+<div *ngFor="let pilote of vaisseaux.Pilote">
+    <h2>
+        - {{ pilote.Nom }}
+    </h2>
+</div>
+<h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Camp concerné:</h1>
+<div *ngFor="let camp of vaisseaux.Camp">
+    <h2>
+        - {{ camp.Nom }}
+    </h2>
 </div>

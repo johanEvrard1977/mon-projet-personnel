@@ -90,9 +90,7 @@ namespace DAL.Repository
                     u.TailleMin = r["TailleMinAutorisee"].ToString();
                     u.TailleMax = r["TailleMaxAutorisee"].ToString();
                     u.Description = r["Description"].ToString();
-                    u.XIDType = (int)r["XIDTypeAmelioration"];
                     u.Type = TR.GetLinkAmelioration((int)r["ID"]);
-                    u.Pilote = PR.GetLinkAmelioration((int)r["ID"]);
                 }
             }
             return u;
@@ -123,7 +121,6 @@ namespace DAL.Repository
                     u.TailleMax = r["TailleMaxAutorisee"].ToString();
                     u.Description = r["Description"].ToString();
                     u.Type = TR.GetLinkAmelioration((int)r["ID"]);
-                    u.Pilote = PR.GetLinkAmelioration((int)r["ID"]);
                 }
             }
             return u;

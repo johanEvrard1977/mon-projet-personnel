@@ -98,7 +98,7 @@ namespace DAL.Repository
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SELECT * FROM vaisseau join detailvaisseaucollection on detailvaisseaucollection.XIDVaisseau = vaisseau.ID"
-                    + "  where detailvaisseaucollection.XIDVaisseau = @p1";
+                    + "  where detailvaisseaucollection.XIDCollection = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())

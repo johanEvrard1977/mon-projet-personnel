@@ -1,0 +1,51 @@
+<h2>Register</h2>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    
+    <div class="form-group" *ngFor="let user of collections.Users">
+        <input [(ngModel)]="user.Id" type="hidden" formControlName="UserId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.UserId.errors }" />
+        <div *ngIf="submitted && f.UserId.errors" class="invalid-feedback">
+            <div *ngIf="f.UserId.errors.required">Name is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" formControlName="Nom" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Nom.errors }" />
+        <div *ngIf="submitted && f.Nom.errors" class="invalid-feedback">
+            <div *ngIf="f.Nom.errors.required">Name is required</div>
+        </div>
+    </div>
+        
+    <label for="vaisseau">Choisis tes vaisseaux: </label>
+    <select formControlName="Vaisseau" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.vaisseaux.errors }" multiple>
+        
+        <option *ngFor="let vaisseau of vaisseaux" value={{vaisseau.Id}}>{{vaisseau.Nom}}</option>
+
+    </select>
+    <label for="quantiteV">quantite: </label>
+    <input type="number" min="1" max="100" formControlName="quantiteV" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.quantiteV.errors }">
+
+    <label for="pilote">Choisis tes pilotes: </label>
+    <select formControlName="Pilote" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pilotes.errors }" multiple>
+        
+        <option *ngFor="let pilote of pilotes" value={{pilote.Id}}>{{pilote.Nom}}</option>
+
+    </select>
+    <label for="quantiteP">quantite: </label>
+    <input type="number" min="1" max="100" formControlName="quantiteP" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.quantiteP.errors }">
+
+    <label for="amelioration">Choisis tes ameliorations: </label>
+    <select formControlName="Amelioration" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ameliorations.errors }" multiple>
+        
+        <option *ngFor="let amelioration of ameliorations" value={{amelioration.Id}}>{{amelioration.Nom}}</option>
+
+    </select>
+    <label for="quantiteA">quantite: </label>
+    <input type="number" min="1" max="100" formControlName="quantiteA" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.quantiteA.errors }">
+
+    <div class="form-group" *ngFor="let user of collections.Users">
+        <button class="btn btn-primary">
+            Register
+        </button>
+        <a [routerLink]="['/inscrit/'+user.Nom]" class="btn btn-link">Cancel</a>
+    </div>
+</form>

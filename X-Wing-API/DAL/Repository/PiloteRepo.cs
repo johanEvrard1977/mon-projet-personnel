@@ -93,7 +93,7 @@ namespace DAL.Repository
                     u.Nom = r["Nom"].ToString();
                     u.Vaisseaux = VR.GetLinkPilote((int)r["ID"]);
                     u.Camp = CR.GetLinkPilote((int)r["ID"]);
-                    u.Amelioration = AR.GetLinkPilote((int)r["ID"]);
+                    u.Type = TA.GetLinkPilote((int)r["ID"]);
                     u.Commentaires = r["Commentaire"].ToString();
                     u.Cout = (int)r["Cout"];
                     u.Unique = (bool)r["EstUnique"];
@@ -140,7 +140,7 @@ namespace DAL.Repository
                 cmd.CommandText = "SELECT * FROM pilote join detailpilotecollection"
                     + " on pilote.ID = detailpilotecollection.XIDPilote join collection"
                     + " on collection.ID = detailpilotecollection.XIDCollection"
-                    + " where pilote.ID = @p1";
+                    + " where collection.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
@@ -255,7 +255,7 @@ namespace DAL.Repository
                     u.Nom = r["Nom"].ToString();
                     u.Vaisseaux = VR.GetLinkPilote((int)r["ID"]);
                     u.Camp = CR.GetLinkPilote((int)r["ID"]);
-                    u.Amelioration = AR.GetLinkPilote((int)r["ID"]);
+                    u.Type = TA.GetLinkPilote((int)r["ID"]);
                     u.Commentaires = r["Commentaire"].ToString();
                     u.Cout = (int)r["Cout"];
                     u.Unique = (bool)r["EstUnique"];

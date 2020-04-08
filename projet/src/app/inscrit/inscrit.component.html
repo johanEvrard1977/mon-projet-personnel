@@ -1,9 +1,10 @@
-<h1>Hi {{currentUser.Nom}}!</h1>
-<p>You're logged in with Angular 8!!</p>
-<h3>All registered users:</h3>
-<ul>
-    <li *ngFor="let user of users">
-        {{user.Nom}} ({{user.Prenom}} {{user.Username}})
-        - <a (click)="deleteUser(user.Id)" class="text-danger">Delete</a>
-    </li>
-</ul>
+<h1>Bonjour {{users.Nom}}</h1>
+    
+    <h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Vos collections:</h1>
+<div *ngFor="let collection of users.Collection">
+    <h2>
+        <a [routerLink]="['/collection', collection.Id ]"> {{ collection.Nom }}</a>
+    </h2>
+</div>
+<a [routerLink]="['/registerCollection', users.Id ]"> ajoutez votre collection</a>
+<a routerLink="/registerEscadron" class="btn btn-link">Formez vos escadrons</a>

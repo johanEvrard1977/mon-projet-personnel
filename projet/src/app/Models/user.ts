@@ -7,4 +7,5 @@ export class User {
     Mail:string;
     Role:string;
     token:string;
+    Collection: any[];
 }

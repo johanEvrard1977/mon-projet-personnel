@@ -1,5 +1,11 @@
-<h2>Amelioration-details</h2>
-
 <div *ngIf="ameliorations">
-    <h3>{{ ameliorations.Nom }}</h3>
+    <h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Amelioration:</h1>
+    <h2>- {{ ameliorations.Nom }}</h2>
+
+<h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Type concernés:</h1>
+<div *ngFor="let type of ameliorations.Type">
+    <h2>
+        - {{ type.Nom }}
+    </h2>
+</div>
 </div>

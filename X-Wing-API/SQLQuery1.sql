@@ -1,0 +1,1 @@
+﻿SELECT * FROM vaisseau join detailvaisseaucollection on detailvaisseaucollection.XIDVaisseau = vaisseau.ID where detailvaisseaucollection.XIDCollection = 1

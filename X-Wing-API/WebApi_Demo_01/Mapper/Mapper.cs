@@ -80,7 +80,6 @@ namespace WebApi_Demo_01.Mapper
                 TailleMin = UM.TailleMin,
                 Unique = UM.Unique,
                 UnParVaisseau = UM.UnParVaisseau,
-                Pilote = UM.Pilote,
                 Type = UM.Type,
                 XIDType = UM.XIDType
             };
@@ -98,7 +97,6 @@ namespace WebApi_Demo_01.Mapper
                 TailleMin = UM.TailleMin,
                 Unique = UM.Unique,
                 UnParVaisseau = UM.UnParVaisseau,
-                Pilote = UM.Pilote,
                 Type = UM.Type,
                 XIDType = UM.XIDType
             };
@@ -209,7 +207,14 @@ namespace WebApi_Demo_01.Mapper
                 Escadron = UM.Escadron,
                 Vaisseau = UM.Vaisseau,
                 Users = UM.Users,
-                XIDUser = UM.XIDUser
+                XIDUser = UM.XIDUser,
+                XIDAmelioration = UM.XIDAmelioration,
+                XIDEscadron = UM.XIDEscadron,
+                XIDPilote = UM.XIDPilote,
+                XIDVaisseau = UM.XIDVaisseau,
+                QuantiteAmelioration = UM.QuantiteAmelioration,
+                QuantitePilote = UM.QuantitePilote,
+                QuantiteVaisseau = UM.QuantiteVaisseau
             };
         }
 
@@ -224,7 +229,14 @@ namespace WebApi_Demo_01.Mapper
                 Escadron = UM.Escadron,
                 Vaisseau = UM.Vaisseau,
                 Users = UM.Users,
-                XIDUser = UM.XIDUser
+                XIDUser = UM.XIDUser,
+                XIDAmelioration = UM.XIDAmelioration,
+                XIDEscadron = UM.XIDEscadron,
+                XIDPilote = UM.XIDPilote,
+                XIDVaisseau = UM.XIDVaisseau,
+                QuantiteAmelioration = UM.QuantiteAmelioration,
+                QuantitePilote = UM.QuantitePilote,
+                QuantiteVaisseau = UM.QuantiteVaisseau
             };
         }
 
@@ -333,7 +345,6 @@ namespace WebApi_Demo_01.Mapper
                 Commentaires = UM.Commentaires,
                 Id = UM.Id,
                 Vaisseaux = UM.Vaisseaux,
-                Amelioration = UM.Amelioration,
                 Type = UM.Type,
                 Camp = UM.Camp,
                 XIDCamp = UM.XIDCamp,
@@ -353,7 +364,6 @@ namespace WebApi_Demo_01.Mapper
                 Commentaires = UM.Commentaires,
                 Id = UM.Id,
                 Vaisseaux = UM.Vaisseaux,
-                Amelioration = UM.Amelioration,
                 Type = UM.Type,
                 Camp = UM.Camp,
                 XIDCamp = UM.XIDCamp,

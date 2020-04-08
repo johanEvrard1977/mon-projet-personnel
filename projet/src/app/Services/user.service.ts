@@ -36,9 +36,14 @@ export class UserService {
       
   }
 
-  getUserById(id:number): Observable<any> {
+  getUserById(id:any): Observable<any> {
     return this.http.get<User>(this.UserUrl +id, httpOptions).pipe(
       retry(3), catchError(this.handleError('getUserById')));
+  }
+
+  getUserByName(username:string): Observable<any> {
+    return this.http.get<User>(this.UserUrl +"GetByName/"+username, httpOptions).pipe(
+      retry(3), catchError(this.handleError('getUserByName')));
   }
 
   checkUser(username:string, password:string){

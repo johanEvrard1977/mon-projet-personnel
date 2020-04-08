@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table" [@openClose]="isOpen ? 'open' : 'closed'">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -6,10 +6,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let pilote of pilotes">
-        <th scope="row">{{ pilote.Id }}</th>
+      <tr *ngFor="let pilote of pilotes | slice:compteur:compteur2">
+        <th>{{ pilote.Id }}</th>
         <td>{{pilote.Nom}}</td>
         <td><button class="edit" [title]="pilote.Nom + ' details'" [routerLink]="['/pilote', pilote.Id ]">edit</button>
       </tr>
     </tbody>
   </table>
+  <button *ngIf="compteur>=12" (click)="before()">
+    Page précédente
+  </button>
+  <button *ngIf="compteur<=90" (click)="next()">
+    Page suivante
+  </button>
+  

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionService } from '../Services/action.service';
-import { Action } from '../Models/action';
+import { actions } from '../Models/actions';
 
 @Component({
   selector: 'app-action',
   templateUrl: './action.component.html',
-  providers: [Action],
-  styleUrls: ['./action.component.css']
+  providers: [actions],
+  styleUrls: ['./action.component.css'],
 })
 export class ActionComponent implements OnInit {
 
-  actions: Action[];
+  actions: actions[];
 
   constructor(private actionService: ActionService) { 
     
@@ -30,7 +30,6 @@ export class ActionComponent implements OnInit {
     this.actionService.getActionById(id)
       .subscribe(data => {
         this.actions = data
-        console.log(data);
       });
   }
 }

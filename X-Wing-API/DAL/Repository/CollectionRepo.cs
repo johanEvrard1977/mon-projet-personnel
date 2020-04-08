@@ -16,15 +16,65 @@ namespace DAL.Repository
         private string connect = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=projetPerso;Integrated Security=True;Pooling=False";
         public void Create(Collection T)
         {
-            using (SqlConnection conn = new SqlConnection(connect))
+            try
             {
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SP_Add_Collection";
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Name", T.Nom);
-                cmd.Parameters.AddWithValue("@userId", T.XIDUser);
-                cmd.ExecuteScalar();
+                using (SqlConnection conn = new SqlConnection(connect))
+                {
+                    conn.Open();
+                    SqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "SP_Add_Collection";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    DataTable Vaisseaux = new DataTable();
+                    Vaisseaux.Columns.Add(new DataColumn("XIDVaisseau", typeof(int)));
+                    foreach (int v in T.XIDVaisseau)
+                    {
+                        Vaisseaux.Rows.Add(v);
+                    }
+                    SqlParameter vvaisseaux = new SqlParameter()
+                    {
+                        ParameterName = "@vaisseau",
+                        Value = Vaisseaux,
+                        TypeName = "multipleId"
+                    };
+                    cmd.Parameters.Add(vvaisseaux);
+                    DataTable Pilotes = new DataTable();
+                    Pilotes.Columns.Add(new DataColumn("XIDPilote", typeof(int)));
+                    foreach (int p in T.XIDPilote)
+                    {
+                        Pilotes.Rows.Add(p);
+                    }
+                    SqlParameter ppilotes = new SqlParameter()
+                    {
+                        ParameterName = "@pilote",
+                        Value = Pilotes,
+                        TypeName = "multipleId"
+                    };
+                    cmd.Parameters.Add(ppilotes);
+
+                    DataTable Ameliorations = new DataTable();
+                    Ameliorations.Columns.Add(new DataColumn("XIDAmelioration", typeof(int)));
+                    foreach (int a in T.XIDAmelioration)
+                    {
+                        Ameliorations.Rows.Add(a);
+                    }
+                    SqlParameter aameliorations = new SqlParameter()
+                    {
+                        ParameterName = "@amelioration",
+                        Value = Ameliorations,
+                        TypeName = "multipleId"
+                    };
+                    cmd.Parameters.Add(aameliorations);
+                    cmd.Parameters.AddWithValue("@Name", T.Nom);
+                    cmd.Parameters.AddWithValue("@user", T.XIDUser);
+                    cmd.Parameters.AddWithValue("@qv", T.QuantiteVaisseau);
+                    cmd.Parameters.AddWithValue("@qp", T.QuantitePilote);
+                    cmd.Parameters.AddWithValue("@qa", T.QuantiteAmelioration);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (ArgumentException e)
+            {
+                Console.Write(e.Message);
             }
         }
 
@@ -87,6 +137,7 @@ namespace DAL.Repository
                     u.Vaisseau = VR.GetLinkCollection((int)r["ID"]);
                     u.Amelioration = AR.GetLinkCollection((int)r["ID"]);
                     u.Escadron = ER.GetLinkCollection((int)r["ID"]);
+                    u.Users = UR.GetLinkCollection((int)r["ID"]);
                 }
             }
             return u;
@@ -99,7 +150,7 @@ namespace DAL.Repository
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SELECT * FROM collection join Users"
-                    + " on collection.XIDUsers = collection.ID"
+                    + " on collection.XIDUsers = Users.UserId"
                     + " where Users.UserId = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
@@ -162,6 +213,7 @@ namespace DAL.Repository
                     u.Vaisseau = VR.GetLinkCollection((int)r["ID"]);
                     u.Amelioration = AR.GetLinkCollection((int)r["ID"]);
                     u.Escadron = ER.GetLinkCollection((int)r["ID"]);
+                    u.Users = UR.GetLinkCollection((int)r["ID"]);
                 }
             }
             return u;

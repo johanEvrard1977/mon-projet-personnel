@@ -1,0 +1,32 @@
+<div  *ngIf="collections">
+    <h1 [@openClose]="isOpen ? 'open' : 'closed'">Collection:</h1>
+    <h2>- {{ collections.Nom }}</h2>
+
+    <h1 [@openClose]="isOpen ? 'open' : 'closed'">Vaisseaux concernés:</h1>
+    <div *ngFor="let vaisseau of collections.Vaisseau">
+        <h2>
+            - {{ vaisseau.Nom }}
+        </h2>
+    </div>
+    <h1 [@openClose]="isOpen ? 'open' : 'closed'">Pilotes concernés:</h1>
+    <div *ngFor="let pilote of collections.Pilote">
+        <h2>
+            - {{ pilote.Nom }}
+        </h2>
+    </div>
+    <h1 [@openClose]="isOpen ? 'open' : 'closed'">Améliorations concernées:</h1>
+    <div *ngFor="let amelioration of collections.Amelioration">
+        <h2>
+            - {{ amelioration.Nom }}
+        </h2>
+    </div>
+    <h1 [@openClose]="isOpen ? 'open' : 'closed'">Utilisateur</h1>
+    <div *ngFor="let user of collections.Users">
+        <h2>
+            - {{ user.Nom }}
+        </h2>
+    </div>
+    <div *ngFor="let user of collections.Users">
+    <a [routerLink]="['/inscrit/'+user.Nom]">retour à la liste de collection</a>
+    </div>
+</div>

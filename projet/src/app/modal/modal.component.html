@@ -1,0 +1,22 @@
+<div id="modal-content-wrapper">
+    <header id="modal-header">
+        <h1 id="modal-title">{{users.Nom}}</h1>
+    </header>
+    
+    <section id="modal-body">
+        <div class="form-group" *ngFor="let user of collections.Users">
+            <input type="text" [(ngModel)]="user.Id" type="text" />
+        </div>
+        <select >
+        
+            <option *ngFor="let camp of camps" value={{camp.Nom}}>{{camp.Nom}}</option>
+    
+        </select>
+    </section>
+    <footer id="modal-footer" *ngIf="camps">
+        <div>
+        <button mat-raised-button (click)="closeModal()" [routerLink]="['/registerCollection', users.Id ]" class="btn btn-link">Go</button>
+        <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Go back</button>
+        </div>
+    </footer>
+</div>

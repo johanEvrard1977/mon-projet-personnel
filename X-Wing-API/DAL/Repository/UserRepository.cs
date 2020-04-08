@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using DAL.ViewModels;
 using DalXwing.Models;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,10 @@ namespace DAL.Repository
                 SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SP_Add_User";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Name", T.Nom);
+                cmd.Parameters.AddWithValue("@FirstName", T.Prenom);
+                cmd.Parameters.AddWithValue("@LastName", T.Nom);
+                cmd.Parameters.AddWithValue("@UserName", T.UserName);
+                cmd.Parameters.AddWithValue("@pass", T.Password);
                 cmd.ExecuteScalar();
             }
         }
@@ -80,7 +84,7 @@ namespace DAL.Repository
             }
         }
 
-        public IEnumerable<User> GetLinkCollection(int id)
+        public IEnumerable<ViewUser> GetLinkCollection(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -93,13 +97,11 @@ namespace DAL.Repository
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    yield return new User
+                    yield return new ViewUser
                     {
                         Nom = r["Nom"].ToString(),
-                        ID = (int)r["UserId"],
-                        Prenom = r["Prenom"].ToString(),
-                        Role = r["Role"].ToString()
-                    };
+                        Id = (int)r["UserId"]
+                };
                 }
             }
         }
@@ -168,7 +170,11 @@ namespace DAL.Repository
                 cmd.CommandText = "SP_Update_Action";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@Name", T.Nom);
+                cmd.Parameters.AddWithValue("@FirstName", T.Prenom);
+                cmd.Parameters.AddWithValue("@LastName", T.Nom);
+                cmd.Parameters.AddWithValue("@UserName", T.UserName);
+                cmd.Parameters.AddWithValue("@pass", T.Password);
+                cmd.Parameters.AddWithValue("@Role", T.Role);
                 cmd.ExecuteNonQuery();
             }
         }

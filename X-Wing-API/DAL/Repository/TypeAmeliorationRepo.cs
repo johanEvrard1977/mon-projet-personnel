@@ -61,7 +61,28 @@ namespace DAL.Repository
 
         }
 
-       
+        public IEnumerable<ViewType> GetLinkPilote(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(connect))
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM typeamelioration"
+                                 + " join detailpilotetypeamelioration on detailpilotetypeamelioration.XIDTypeAmelioration = typeamelioration.ID"
+                                 + " join pilote on pilote.ID = detailpilotetypeamelioration.XIDPilote where pilote.ID = @p1";
+                cmd.Parameters.AddWithValue("@p1", id);
+                SqlDataReader r = cmd.ExecuteReader();
+                while (r.Read())
+                {
+                    yield return new ViewType
+                    {
+                        Nom = r["Nom"].ToString(),
+                        Id = (int)r["ID"]
+                    };
+                }
+            }
+        }
+
         public IEnumerable<ViewType> GetLinkAmelioration(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))

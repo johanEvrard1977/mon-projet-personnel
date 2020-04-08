@@ -27,7 +27,6 @@ export class AmeliorationComponent implements OnInit {
     this.ameliorationService.getAmeliorationById(id)
       .subscribe(data => {
         this.ameliorations = data
-        console.log(data);
       });
   
   }
