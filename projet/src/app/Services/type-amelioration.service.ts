@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { HandleError, HttpErrorHandler } from './http-error-handler.service';
 import { Observable } from 'rxjs';
+import { type } from '../Models/type';
 import { catchError, retry } from 'rxjs/operators';
-import { Camp } from '../Models/camp';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -14,26 +14,28 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class CampService {
+export class TypeAmeliorationService {
 
-  CampUrl = 'http://localhost:60504/api/Camp/';  // URL to web api
+  TypeUrl = 'http://localhost:60504/api/TypeAmelioration/';  // URL to web api
   private handleError: HandleError;
   constructor(
     private http: HttpClient,
     httpErrorHandler: HttpErrorHandler) {
-    this.handleError = httpErrorHandler.createHandleError('CampService');
+    this.handleError = httpErrorHandler.createHandleError('TypeAmeliorationService');
   
   }
    /** GET heroes from the server */
-   getCamps (): Observable<Camp[]> {
+   getTypes (): Observable<type[]> {
     
-    return this.http.get<Camp[]>(this.CampUrl, httpOptions)
-      .pipe(catchError(this.handleError('getCamps', []))
+    return this.http.get<type[]>(this.TypeUrl, httpOptions)
+      .pipe(catchError(this.handleError('getTypes', []))
       );
+      
   }
 
-  getCampById(id:any): Observable<any> {
-    return this.http.get<Camp>(this.CampUrl +id, httpOptions).pipe(
-      retry(3), catchError(this.handleError('getCampById')));
+  getTypeById(id:any): Observable<any> {
+    console.log(id);
+    return this.http.get<type>(this.TypeUrl +id, httpOptions).pipe(
+      retry(3), catchError(this.handleError('getTypeById')));
   }
 }

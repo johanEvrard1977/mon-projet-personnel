@@ -2,7 +2,7 @@ import { Pilote } from './pilote';
 import { Vaisseau } from './vaisseau';
 import { type } from './type';
 
-export class Camp {
+export class ChangeCamps {
     Id:number;
     Nom:string;
     Pilote:Pilote[];

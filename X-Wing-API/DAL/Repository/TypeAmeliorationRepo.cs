@@ -152,6 +152,32 @@ namespace DAL.Repository
             return u;
         }
 
+        public IEnumerable<ViewType> GetLinkCamp(int id)
+        {
+            VaisseauRepo VR = new VaisseauRepo();
+            CampRepo CR = new CampRepo();
+            AmeliorationRepo AR = new AmeliorationRepo();
+            using (SqlConnection conn = new SqlConnection(connect))
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT distinct typeamelioration.Nom, typeamelioration.ID FROM typeamelioration"
+                    + " join detailpilotetypeamelioration on detailpilotetypeamelioration.XIDTypeamelioration = typeamelioration.Id"
+                    + " join pilote on detailpilotetypeamelioration.XIDPilote = pilote.Id"
+                    + " join camp on camp.ID = pilote.XIDCamp where camp.ID = @p1";
+                cmd.Parameters.AddWithValue("@p1", id);
+                SqlDataReader r = cmd.ExecuteReader();
+                while (r.Read())
+                {
+                    yield return new ViewType
+                    {
+                        Nom = r["Nom"].ToString(),
+                        Id = (int)r["ID"]
+                    };
+                }
+            }
+        }
+
         public void Update(int id, TypeAmelioration T)
         {
             using (SqlConnection conn = new SqlConnection(connect))

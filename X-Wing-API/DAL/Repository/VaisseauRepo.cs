@@ -163,7 +163,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM vaisseau join pilote on pilote.XIDVaisseau = vaisseau.ID"
+                cmd.CommandText = "SELECT distinct vaisseau.Nom, vaisseau.ID FROM vaisseau join pilote on pilote.XIDVaisseau = vaisseau.ID"
                     + " join camp on camp.ID = pilote.XIDCamp where camp.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();

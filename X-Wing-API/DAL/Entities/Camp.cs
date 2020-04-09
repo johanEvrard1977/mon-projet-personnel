@@ -13,5 +13,6 @@ namespace DalXwing.Models
         public string Nom { get; set; }
         public IEnumerable<ViewPilote> Pilote { get; set; }
         public IEnumerable<ViewVaisseau> Vaisseau { get; set; }
+        public IEnumerable<ViewType> Type { get; set; }
     }
 }

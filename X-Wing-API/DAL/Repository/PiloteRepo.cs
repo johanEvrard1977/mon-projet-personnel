@@ -164,7 +164,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM pilote"
+                cmd.CommandText = "SELECT distinct pilote.Nom, pilote.ID FROM pilote"
                     + " join camp on camp.ID = pilote.XIDCamp where camp.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();

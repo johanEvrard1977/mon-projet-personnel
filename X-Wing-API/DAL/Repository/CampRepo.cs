@@ -63,6 +63,7 @@ namespace DAL.Repository
             Camp u = new Camp();
             VaisseauRepo VR = new VaisseauRepo();
             PiloteRepo PR = new PiloteRepo();
+            TypeAmeliorationRepo TAR = new TypeAmeliorationRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
@@ -79,6 +80,7 @@ namespace DAL.Repository
                     u.Nom = r["Nom"].ToString();
                     u.Vaisseau = VR.GetLinkCamp((int)r["ID"]);
                     u.Pilote = PR.GetLinkCamp((int)r["ID"]);
+                    u.Type = TAR.GetLinkCamp((int)r["ID"]);
                 }
             }
             return u;

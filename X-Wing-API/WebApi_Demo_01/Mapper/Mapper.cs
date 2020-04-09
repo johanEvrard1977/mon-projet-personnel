@@ -145,7 +145,8 @@ namespace WebApi_Demo_01.Mapper
                 Nom = UM.Nom,
                 Id = UM.Id,
                 Pilote = UM.Pilote,
-                Vaisseau = UM.Vaisseau
+                Vaisseau = UM.Vaisseau,
+                Type = UM.Type
             };
         }
 
@@ -156,7 +157,8 @@ namespace WebApi_Demo_01.Mapper
                 Nom = UM.Nom,
                 Id = UM.Id,
                 Pilote = UM.Pilote,
-                Vaisseau = UM.Vaisseau
+                Vaisseau = UM.Vaisseau,
+                Type = UM.Type
             };
         }
 
