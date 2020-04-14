@@ -22,5 +22,6 @@ namespace DalXwing.Models
         public IEnumerable<ViewAction> Action { get; set; }
         public IEnumerable<ViewCamp> Camp { get; set; }
         public int XIDAction { get; set; }
+        public int Quantite { get; set; }
     }
 }

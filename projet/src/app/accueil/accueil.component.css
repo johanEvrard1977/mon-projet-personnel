@@ -1,3 +1,15 @@
+.row h1{
+    font-size: 43px;
+    padding-bottom: 70px;
+}
+
 p{
     color: white;
+    font-size: 20px;
+    text-align: justify;
+    line-height: 1.2em;
+}
+.container{
+    text-align: center;
+    padding-left: 70px;
 }

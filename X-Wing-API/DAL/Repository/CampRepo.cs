@@ -64,6 +64,7 @@ namespace DAL.Repository
             VaisseauRepo VR = new VaisseauRepo();
             PiloteRepo PR = new PiloteRepo();
             TypeAmeliorationRepo TAR = new TypeAmeliorationRepo();
+            AmeliorationRepo AR = new AmeliorationRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
@@ -81,9 +82,33 @@ namespace DAL.Repository
                     u.Vaisseau = VR.GetLinkCamp((int)r["ID"]);
                     u.Pilote = PR.GetLinkCamp((int)r["ID"]);
                     u.Type = TAR.GetLinkCamp((int)r["ID"]);
+                    u.Amelioration = AR.GetLinkCamp((int)r["ID"]);
                 }
             }
             return u;
+        }
+
+        public IEnumerable<ViewCamp> GetLinkCollection(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(connect))
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT *"
+                    + " FROM camp ca join collection co"
+                    + " on ca.ID = co.XIDCamp"
+                    + " where co.ID = @p1";
+                cmd.Parameters.AddWithValue("@p1", id);
+                SqlDataReader r = cmd.ExecuteReader();
+                while (r.Read())
+                {
+                    yield return new ViewCamp
+                    {
+                        Nom = r["Nom"].ToString(),
+                        Id = (int)r["ID"]
+                    };
+                }
+            }
         }
 
         public IEnumerable<ViewCamp> GetLinkVaisseau(int id)
@@ -161,6 +186,7 @@ namespace DAL.Repository
             Camp u = new Camp();
             VaisseauRepo VR = new VaisseauRepo();
             PiloteRepo PR = new PiloteRepo();
+            AmeliorationRepo AR = new AmeliorationRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
@@ -177,6 +203,7 @@ namespace DAL.Repository
                     u.Nom = r["Nom"].ToString();
                     u.Vaisseau = VR.GetLinkCamp((int)r["ID"]);
                     u.Pilote = PR.GetLinkCamp((int)r["ID"]);
+                    u.Amelioration = AR.GetLinkCamp((int)r["ID"]);
                 }
             }
             return u;

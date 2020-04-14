@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ActionService } from '../Services/action.service'
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { slideInAnimation } from '../Models/slide-in-animation';
-import { transform } from 'typescript';
+import { AuthenticationService } from '../Services/authentification.service';
+
 @Component({
   selector: 'app-detail-action',
   templateUrl: './detail-action.component.html',
@@ -33,20 +34,21 @@ export class DetailActionComponent implements OnInit {
 
   
   actions:any;
+  currentUser: any;
 
-  constructor(private route: ActivatedRoute,
-    private actionService: ActionService) {
-     }
+  constructor(private route: ActivatedRoute, private actionService: ActionService,
+    private authenticationService: AuthenticationService) {
+    this.currentUser = this.authenticationService.currentUserValue;
+  }
 
-     ngOnInit(): void {
-     let id = this.route.snapshot.paramMap.get('Id');
-     this.actionService.getActionById(id).subscribe(Action => this.actions = Action) 
-    }
+  ngOnInit(): void {
+    let id = this.route.snapshot.paramMap.get('Id');
+    this.actionService.getActionById(id).subscribe(Action => this.actions = Action) 
+  }
 
-    isOpen = true;
+  isOpen = true;
 
   toggle() {
     this.isOpen = !this.isOpen;
-  }
-    
+  }    
 }

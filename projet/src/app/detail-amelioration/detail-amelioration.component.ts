@@ -3,6 +3,7 @@ import { AmeliorationService } from '../Services/amelioration.service';
 import { ActivatedRoute } from '@angular/router';
 import { slideInAnimation } from '../Models/slide-in-animation';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { AuthenticationService } from '../Services/authentification.service';
 
 @Component({
   selector: 'app-detail-amelioration',
@@ -32,17 +33,19 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class DetailameliorationComponent implements OnInit {
 
   ameliorations:any;
+  currentUser: any;
   
-  constructor(private route: ActivatedRoute,
-    private ameliorationsService: AmeliorationService) {
-     }
+  constructor(private route: ActivatedRoute, private ameliorationsService: AmeliorationService,
+    private authenticationService: AuthenticationService) {
+    this.currentUser = this.authenticationService.currentUserValue;
+  }
 
-     ngOnInit(): void {
-      let id = this.route.snapshot.paramMap.get('Id');
-     this.ameliorationsService.getAmeliorationById(id).subscribe(amelioration => this.ameliorations = amelioration); 
-    }
+  ngOnInit(): void {
+    let id = this.route.snapshot.paramMap.get('Id');
+    this.ameliorationsService.getAmeliorationById(id).subscribe(amelioration => this.ameliorations = amelioration); 
+  }
 
-    isOpen = true;
+  isOpen = true;
 
   toggle() {
     this.isOpen = !this.isOpen;

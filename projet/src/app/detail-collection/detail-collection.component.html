@@ -1,32 +1,91 @@
-<div  *ngIf="collections">
-    <h1 [@openClose]="isOpen ? 'open' : 'closed'">Collection:</h1>
-    <h2>- {{ collections.Nom }}</h2>
-
-    <h1 [@openClose]="isOpen ? 'open' : 'closed'">Vaisseaux concernés:</h1>
-    <div *ngFor="let vaisseau of collections.Vaisseau">
-        <h2>
-            - {{ vaisseau.Nom }}
-        </h2>
-    </div>
-    <h1 [@openClose]="isOpen ? 'open' : 'closed'">Pilotes concernés:</h1>
-    <div *ngFor="let pilote of collections.Pilote">
-        <h2>
-            - {{ pilote.Nom }}
-        </h2>
-    </div>
-    <h1 [@openClose]="isOpen ? 'open' : 'closed'">Améliorations concernées:</h1>
-    <div *ngFor="let amelioration of collections.Amelioration">
-        <h2>
-            - {{ amelioration.Nom }}
-        </h2>
-    </div>
-    <h1 [@openClose]="isOpen ? 'open' : 'closed'">Utilisateur</h1>
-    <div *ngFor="let user of collections.Users">
-        <h2>
-            - {{ user.Nom }}
-        </h2>
-    </div>
-    <div *ngFor="let user of collections.Users">
-    <a [routerLink]="['/inscrit/'+user.Nom]">retour à la liste de collection</a>
-    </div>
+<div *ngIf="collections">
+        <div class="une"> 
+            <table class="table">
+                <thead>
+                  <tr [@openClose]="isOpen ? 'open' : 'closed'">
+                    <th scope="col">Collection</th>
+                    <th scope="col">Camp</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ collections.Nom }}</td>
+                    <td *ngFor="let camp of collections.Camp">{{ camp.Nom }}</td>
+                    <td><button (click)="deleteCollection(collections.Id)">Delete</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="deux">    
+                <table class="table" *ngFor="let vaisseau of collections.Vaisseau">
+                    <thead>
+                        <tr [@openClose]="isOpen ? 'open' : 'closed'" >
+                          <th scope="col">Vaisseaux</th>
+                          <th scope="col"></th>
+                          <th scope="col"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                    <tr>
+                        <td>{{ vaisseau.Nom }}</td>
+                        <td>{{ vaisseau.Quantite}}</td>
+                        <td><button (click)="deleteVaisseau(vaisseau.Id, collections.Id)">
+                            Delete
+                        </button></td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+        <div class="trois">
+            <table class="table" *ngFor="let pilote of collections.Pilote">
+                <thead>
+                    <tr [@openClose]="isOpen ? 'open' : 'closed'" >
+                      <th scope="col">Pilotes</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                <tr>
+                    <td>{{ pilote.Nom }}</td>
+                    <td>{{ pilote.Quantite}}</td>
+                    <td><button (click)="deletePilote(pilote.Id, collections.Id)">
+                        Delete
+                    </button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="quatre">
+            <table class="table" *ngFor="let amelioration of collections.Amelioration">
+                <thead>
+                    <tr [@openClose]="isOpen ? 'open' : 'closed'">
+                      <th scope="col">Améliorations</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                <tr>
+                    <td>{{ amelioration.Nom }}</td>
+                    <td>{{ amelioration.Quantite}}</td>
+                    <td><button (click)="deleteAmelioration(amelioration.Id, collections.Id)">
+                        Delete
+                    </button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer>
+            <div>
+                <a [routerLink]="['/updateCollection/'+collections.Id ]"  class="btn btn-link">Ajouter éléments dans la collection</a>
+            </div>
+            <div>
+                <a [routerLink]="['/registerEscadron/'+collections.Id]" class="btn btn-link">Formez vos escadrons</a>
+            </div>
+            <div *ngFor="let user of collections.Users">
+                <a [routerLink]="['/inscrit/'+user.Nom]"  class="btn btn-link">retour à la liste de collection</a>
+            </div>
+        </footer>
 </div>

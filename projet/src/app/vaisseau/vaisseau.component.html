@@ -3,13 +3,20 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Nom</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let vaisseaux of vaisseau">
+      <tr *ngFor="let vaisseaux of vaisseau | slice:compteur:compteur2">
         <th scope="row">{{ vaisseaux.Id }}</th>
         <td>{{vaisseaux.Nom}}</td>
         <td><button class="edit" [title]="vaisseaux.Nom + ' details'" [routerLink]="['/vaisseau', vaisseaux.Id ]">edit</button>
       </tr>
     </tbody>
   </table>
+  <button *ngIf="compteur>=12" (click)="before()">
+    Page précédente
+  </button>
+  <button *ngIf="compteur<=90" (click)="next()">
+    Page suivante
+  </button>

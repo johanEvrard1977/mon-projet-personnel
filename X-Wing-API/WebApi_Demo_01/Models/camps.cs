@@ -13,5 +13,6 @@ namespace WebApi_Demo_01.Models
         public IEnumerable<ViewPilote> Pilote { get; set; }
         public IEnumerable<ViewVaisseau> Vaisseau { get; set; }
         public IEnumerable<ViewType> Type { get; set; }
+        public IEnumerable<ViewAmelioration> Amelioration { get; set; }
     }
 }

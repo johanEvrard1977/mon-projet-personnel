@@ -53,15 +53,16 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM amelioration";
+                cmd.CommandText = "SELECT ID, Nom,(select count(a.ID) from amelioration a where a.ID = amelioration.ID ) as [count] FROM amelioration";
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
                     yield return new ViewAmelioration
                     {
                         Id = (int)r["ID"],
-                        Nom = r["Nom"].ToString()
-                };
+                        Nom = r["Nom"].ToString(),
+                        Quantite = (int)r["count"],
+                    };
                 }
             }
         }
@@ -75,7 +76,8 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * from amelioration where amelioration.ID = @p1";
+                cmd.CommandText = "SELECT *,(select count(a.ID) from amelioration a where a.ID = @p1 ) as [count] from amelioration"
+                    + " join typeamelioration t on t.ID = amelioration.XIDTypeAmelioration where amelioration.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
 
@@ -91,6 +93,7 @@ namespace DAL.Repository
                     u.TailleMax = r["TailleMaxAutorisee"].ToString();
                     u.Description = r["Description"].ToString();
                     u.Type = TR.GetLinkAmelioration((int)r["ID"]);
+                    u.Quantite = (int)r["count"];
                 }
             }
             return u;
@@ -105,7 +108,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * from amelioration where amelioration.Nom = @p1";
+                cmd.CommandText = "SELECT *,(select count(a.ID) from amelioration a where a.Nom = @p1 ) as [count] from amelioration where amelioration.Nom = @p1";
                 cmd.Parameters.AddWithValue("@p1", name);
                 SqlDataReader r = cmd.ExecuteReader();
 
@@ -121,9 +124,38 @@ namespace DAL.Repository
                     u.TailleMax = r["TailleMaxAutorisee"].ToString();
                     u.Description = r["Description"].ToString();
                     u.Type = TR.GetLinkAmelioration((int)r["ID"]);
+                    u.Quantite = (int)r["count"];
                 }
             }
             return u;
+        }
+
+        public IEnumerable<ViewAmelioration> GetLinkCamp(int id)
+        {
+            VaisseauRepo VR = new VaisseauRepo();
+            CampRepo CR = new CampRepo();
+            AmeliorationRepo AR = new AmeliorationRepo();
+            using (SqlConnection conn = new SqlConnection(connect))
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT distinct amelioration.Nom, amelioration.ID,(select count(a.ID) from amelioration a) as [count] FROM amelioration"
+                    + " join typeAmelioration on amelioration.XIDTypeAmelioration = typeAmelioration.ID"
+                    + " join detailpilotetypeamelioration on detailpilotetypeamelioration.XIDTypeAmelioration = typeamelioration.ID"
+                    + " join pilote on pilote.ID = detailpilotetypeamelioration.XIDPilote"
+                    + " join camp on camp.ID = pilote.XIDCamp where pilote.XIDCamp = @p1";
+                cmd.Parameters.AddWithValue("@p1", id);
+                SqlDataReader r = cmd.ExecuteReader();
+                while (r.Read())
+                {
+                    yield return new ViewAmelioration
+                    {
+                        Nom = r["Nom"].ToString(),
+                        Id = (int)r["ID"],
+                        Quantite = (int)r["count"],
+                    };
+                }
+            }
         }
 
         public IEnumerable<ViewAmelioration> GetLinkEscadron(int id)
@@ -132,10 +164,11 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM amelioration join detailescadronamelioration"
-                    + " on detailescadronamelioration.XIDAmelioration = amelioration.ID join escadron"
-                    + " on escadron.ID = detailescadronamelioration.XIDEscadron"
-                    + " where escadron.ID = @p1";
+                cmd.CommandText = "SELECT a.ID, a.Nom,(select count(*) from detailescadronamelioration d where d.XIDEscadron = @p1 and d.XIDAmelioration = a.ID) as [count]"
+                    + " FROM amelioration a join detailescadronamelioration"
+                    + " on a.ID = detailescadronamelioration.XIDAmelioration join escadron e"
+                    + " on e.ID = detailescadronamelioration.XIDEscadron"
+                    + " where e.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
@@ -143,7 +176,8 @@ namespace DAL.Repository
                     yield return new ViewAmelioration
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"]
+                        Id = (int)r["ID"],
+                        Quantite = (int)r["count"],
                     };
                 }
             }
@@ -155,10 +189,11 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM amelioration join detailameliorationcollection"
-                    + " on detailameliorationcollection.XIDAmelioration = amelioration.ID join collection"
-                    + " on collection.ID = detailameliorationcollection.XIDCollection"
-                    + " where collection.ID = @p1";
+                cmd.CommandText = "SELECT *"
+                    + " FROM amelioration a join detailameliorationcollection"
+                    + " on a.ID = detailameliorationcollection.XIDAmelioration join collection c"
+                    + " on c.ID = detailameliorationcollection.XIDCollection"
+                    + " where c.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
@@ -166,7 +201,8 @@ namespace DAL.Repository
                     yield return new ViewAmelioration
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"]
+                        Id = (int)r["ID"],
+                        Quantite = (int)r["Quantite"],
                     };
                 }
             }
@@ -179,7 +215,9 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM amelioration"
+                cmd.CommandText = "SELECT *,(select count(a.ID) from amelioration a join typeamelioration on typeamelioration.ID = amelioration.XIDTypeAmelioration"
+                                 + " join detailpilotetypeamelioration on detailpilotetypeamelioration.XIDTypeAmelioration = typeamelioration.ID"
+                                 + " join pilote p on p.ID = detailpilotetypeamelioration.XIDPilote where p.ID = @p1) as [count] FROM amelioration"
                                  + " join typeamelioration on typeamelioration.ID = amelioration.XIDTypeAmelioration"
                                  + " join detailpilotetypeamelioration on detailpilotetypeamelioration.XIDTypeAmelioration = typeamelioration.ID"
                                  + " join pilote on pilote.ID = detailpilotetypeamelioration.XIDPilote where pilote.ID = @p1";
@@ -190,7 +228,8 @@ namespace DAL.Repository
                     yield return new ViewAmelioration
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"]
+                        Id = (int)r["ID"],
+                        Quantite = (int)r["count"]
                     };
                 }
             }
@@ -202,7 +241,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM amelioration join typeamelioration"
+                cmd.CommandText = "SELECT *,(select count(a.ID) from amelioration a) as [count] FROM amelioration join typeamelioration"
                     + " on amelioration.XIDTypeAmelioration = typeamelioration.ID"
                     + " where typeamelioration.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
@@ -212,7 +251,8 @@ namespace DAL.Repository
                     yield return new ViewAmelioration
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"]
+                        Id = (int)r["ID"],
+                        Quantite = (int)r["count"],
                     };
                 }
             }

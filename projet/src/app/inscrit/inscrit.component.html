@@ -1,10 +1,20 @@
-<h1>Bonjour {{users.Nom}}</h1>
+<div *ngIf="users">
+  <h1 >Bonjour {{users.Nom}}</h1>
+
     
     <h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Vos collections:</h1>
-<div *ngFor="let collection of users.Collection">
+<div *ngFor="let collection of users.Collection | slice:compteur:compteur2">
     <h2>
         <a [routerLink]="['/collection', collection.Id ]"> {{ collection.Nom }}</a>
     </h2>
 </div>
-<a [routerLink]="['/registerCollection', users.Id ]"> ajoutez votre collection</a>
-<a routerLink="/registerEscadron" class="btn btn-link">Formez vos escadrons</a>
+<div>
+<button *ngIf="compteur>=12" (click)="before()">
+    Page précédente
+  </button>
+  <button *ngIf="compteur>0 && compteur2<=90" (click)="next()">
+    Page suivante
+  </button>
+  </div>
+<a [routerLink]="['/registerCollection', users.Id ]"> ajoutez une collection</a>
+</div>

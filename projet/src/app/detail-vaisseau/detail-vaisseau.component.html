@@ -1,29 +1,53 @@
 <div *ngIf="vaisseaux">
-    <h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Vaisseau:</h1>
-    <h2>- {{ vaisseaux.Nom }}</h2>
-    <h2>- Point de bouclier: {{ vaisseaux.Bouclier }}</h2>
-    <h2>- Energie: {{ vaisseaux.Energie }}</h2>
-    <h2>- Capacité: {{ vaisseaux.Capacite }}</h2>
-    <h2>- Points de structure: {{ vaisseaux.Structure }}</h2>
-    <h2>- Taille: {{ vaisseaux.Taille }}</h2>
-    <h2>- ValeurAgilite: {{ vaisseaux.ValeurAgilite }}</h2>
-    <h2>- ValeurArmePrincipale: {{ vaisseaux.ValeurArmePrincipale }}</h2>
-</div>
-<h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Actions concernées:</h1>
-<div *ngFor="let action of vaisseaux.Action">
-    <h2>
-        - {{ action.Nom }}
-    </h2>
-</div>
-<h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Pilotes concernées:</h1>
-<div *ngFor="let pilote of vaisseaux.Pilote">
-    <h2>
-        - {{ pilote.Nom }}
-    </h2>
-</div>
-<h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Camp concerné:</h1>
-<div *ngFor="let camp of vaisseaux.Camp">
-    <h2>
-        - {{ camp.Nom }}
-    </h2>
+    <table class="table">
+        <thead>
+          <tr [@openClose]="isOpen ? 'open' : 'closed'">
+            <th scope="col">Vaisseau</th>
+            <th scope="col">Energie</th>
+            <th scope="col">Bouclier:</th>
+            <th scope="col">Structure</th>
+            <th scope="col">ValeurAgilite</th>
+            <th scope="col">ValeurArmePrincipale</th>
+            <th scope="col">Structure</th>
+            <th scope="col">Taille</th>
+            <th scope="col">Camp</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ vaisseaux.Nom }}</td>
+            <td>{{ vaisseaux.Energie }}</td>
+            <td>{{ vaisseaux.Bouclier }}</td>
+            <td>{{ vaisseaux.Structure }}</td>
+            <td>{{ vaisseaux.ValeurAgilite }}</td>
+            <td>{{ vaisseaux.ValeurArmePrincipale }}</td>
+            <td>{{ vaisseaux.Taille }}</td>
+            <td *ngFor="let c of vaisseaux.Camp">{{ c.Nom }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+          <tr [@openClose]="isOpen ? 'open' : 'closed'">
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let a of vaisseaux.Action">
+            <td>{{ a.Nom }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+          <tr [@openClose]="isOpen ? 'open' : 'closed'">
+            <th scope="col">Pilote</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let p of vaisseaux.Pilote">
+            <td>{{ p.Nom }}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>

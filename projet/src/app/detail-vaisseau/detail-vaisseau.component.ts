@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { VaisseauService } from '../Services/vaisseau.service';
 import { slideInAnimation } from '../Models/slide-in-animation';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { AuthenticationService } from '../Services/authentification.service';
 
 @Component({
   selector: 'app-detail-vaisseau',
@@ -32,9 +33,11 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class DetailVaisseauComponent implements OnInit {
 
   vaisseaux;
+  currentUser: any;
   
-  constructor(private route: ActivatedRoute,
-    private vaisseauxService: VaisseauService) {
+  constructor(private route: ActivatedRoute,private vaisseauxService: VaisseauService,
+    private authenticationService: AuthenticationService) {
+      this.currentUser = this.authenticationService.currentUserValue;
      }
 
      ngOnInit(): void {

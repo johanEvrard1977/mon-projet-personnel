@@ -8,5 +8,6 @@ namespace WebApi_Demo_01.ViewModels
 {
     public class ViewModelPilote : Elements
     {
+        public int Quantite { get; set; }
     }
 }

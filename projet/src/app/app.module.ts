@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule }      from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
@@ -33,10 +33,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollectionComponent } from './collection/collection.component';
 import { DetailCollectionComponent } from './detail-collection/detail-collection.component';
 import { RegisterCollectionComponent } from './register-collection/register-collection.component';
-import { RegisterEscadronComponent } from './register-escadron/register-escadron.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ModalComponent as ModalComponent } from './modal/modal.component';
+import { UpdateCollectionComponent } from './update-collection/update-collection.component';
+import { RegisterEscadronComponent } from './register-escadron/register-escadron.component';
+import { CommonModule } from '@angular/common';
+import { AuthGardService } from './Helpers/auth-gard.service';
 
 @NgModule({
   declarations: [
@@ -58,8 +60,8 @@ import { ModalComponent as ModalComponent } from './modal/modal.component';
     CollectionComponent,
     DetailCollectionComponent,
     RegisterCollectionComponent,
-    RegisterEscadronComponent,
-    ModalComponent
+    UpdateCollectionComponent,
+    RegisterEscadronComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -67,6 +69,7 @@ import { ModalComponent as ModalComponent } from './modal/modal.component';
     FormsModule,
     MatButtonModule,
     MatDialogModule,
+    CommonModule,
     // import HttpClientModule after BrowserModule.
     HttpClientModule,
     HttpClientXsrfModule.withOptions({
@@ -82,19 +85,22 @@ import { ModalComponent as ModalComponent } from './modal/modal.component';
       { path: 'action', component: ActionComponent },
       { path: 'amelioration/:Id', component: DetailameliorationComponent },
       { path: 'amelioration', component: AmeliorationComponent },
-      { path: 'collection/:Id', component: DetailCollectionComponent },
-      { path: 'collection', component: CollectionComponent },
-      { path: 'registerCollection', component: RegisterCollectionComponent },
-      { path: 'registerCollection/:Id', component: RegisterCollectionComponent },
+      { path: 'collection/:Id', canActivate: [AuthGardService], component: DetailCollectionComponent },
+      { path: 'collection', canActivate: [AuthGardService], component: CollectionComponent },
+      { path: 'registerCollection', canActivate: [AuthGardService], component: RegisterCollectionComponent },
+      { path: 'registerCollection/:Id', canActivate: [AuthGardService], component: RegisterCollectionComponent },
+      { path: 'registerEscadron', canActivate: [AuthGardService], component: RegisterEscadronComponent },
+      { path: 'registerEscadron/:Id, canActivate: [AuthGardService]', component: RegisterEscadronComponent },
       { path: 'pilote/:Id', component: DetailPiloteComponent },
       { path: 'pilote', component: PiloteComponent },
       { path: 'vaisseau/:Id', component: DetailVaisseauComponent },
       { path: 'vaisseau', component: VaisseauComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'inscrit', component: InscritComponent },
-      { path: 'inscrit/:name', component: InscritComponent },
-      { path: 'register', component: RegisterComponent },
-      { path: 'modal/:Id', component: ModalComponent },
+      { path: 'inscrit', canActivate: [AuthGardService], component: InscritComponent },
+      { path: 'inscrit/:name', canActivate: [AuthGardService], component: InscritComponent },
+      { path: 'register', canActivate: [AuthGardService], component: RegisterComponent },
+      { path: 'updateCollection', canActivate: [AuthGardService], component: UpdateCollectionComponent },
+      { path: 'updateCollection/:Id', canActivate: [AuthGardService], component: UpdateCollectionComponent },
     ]),
     BrowserAnimationsModule
   ],
@@ -110,6 +116,8 @@ import { ModalComponent as ModalComponent } from './modal/modal.component';
     InscritComponent,
     RegisterCollectionComponent,
     RegisterComponent,
+    UpdateCollectionComponent,
+    RegisterEscadronComponent,
     { 
       provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true
     },
@@ -117,6 +125,6 @@ import { ModalComponent as ModalComponent } from './modal/modal.component';
     },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ModalComponent]
+  
 })
 export class AppModule { }

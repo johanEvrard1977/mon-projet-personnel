@@ -57,10 +57,6 @@ export class PiloteComponent implements OnInit {
       });
   }
 
-  toggle() {
-    this.isOpen = !this.isOpen;
-}
-
   next(){
     this.compteur += 12;
     this.compteur2 +=12;

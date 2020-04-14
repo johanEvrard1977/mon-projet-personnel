@@ -56,14 +56,15 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM pilote";
+                cmd.CommandText = "SELECT *,(select count(p.ID) from pilote p join vaisseau v on p.XIDVaisseau = v.ID where p.ID = Pilote.ID ) as [count] FROM pilote";
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
                     yield return new ViewPilote
                     {
                         Id = (int)r["ID"],
-                        Nom = r["Nom"].ToString()
+                        Nom = r["Nom"].ToString(),
+                        Quantite = (int)r["count"],
                     };
                 }
             }
@@ -81,8 +82,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT *"
-                    + " FROM pilote"
+                cmd.CommandText = "SELECT *,(select count(p.ID) from pilote p join vaisseau v on p.XIDVaisseau = v.ID where p.Nom = @p1 ) as [count] FROM pilote"
                     + " WHERE pilote.Nom = @p1";
                 cmd.Parameters.AddWithValue("@p1", name);
 
@@ -98,6 +98,7 @@ namespace DAL.Repository
                     u.Cout = (int)r["Cout"];
                     u.Unique = (bool)r["EstUnique"];
                     u.ValeurPilotage = (int)r["ValPilotage"];
+                    u.Quantite = (int)r["count"];
                 }
                 return u;
             }
@@ -112,8 +113,8 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM pilote join vaisseau on pilote.XIDVaisseau = vaisseau.ID"
-                    + " where vaisseau.ID = @p1";
+                cmd.CommandText = "SELECT *,(select count(p.ID) from pilote p join vaisseau v on p.XIDVaisseau = v.ID where p.ID = pilote.ID ) as [count] FROM pilote join vaisseau on pilote.XIDVaisseau = vaisseau.ID"
+                    + "  where vaisseau.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
@@ -121,7 +122,8 @@ namespace DAL.Repository
                     yield return new ViewPilote
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"]
+                        Id = (int)r["ID"],
+                        Quantite = (int)r["count"],
                     };
                 }
             }
@@ -137,10 +139,11 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM pilote join detailpilotecollection"
-                    + " on pilote.ID = detailpilotecollection.XIDPilote join collection"
-                    + " on collection.ID = detailpilotecollection.XIDCollection"
-                    + " where collection.ID = @p1";
+                cmd.CommandText = "SELECT *"
+                    + " FROM pilote p join detailpilotecollection"
+                    + " on p.ID = detailpilotecollection.XIDPilote join collection c"
+                    + " on c.ID = detailpilotecollection.XIDCollection"
+                    + " where c.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
@@ -148,7 +151,8 @@ namespace DAL.Repository
                     yield return new ViewPilote
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"]
+                        Id = (int)r["ID"],
+                        Quantite = (int)r["Quantite"],
                     };
                 }
             }
@@ -164,7 +168,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT distinct pilote.Nom, pilote.ID FROM pilote"
+                cmd.CommandText = "SELECT distinct pilote.Nom, pilote.ID,(select count(p.ID) from pilote p join camp c on c.ID = p.XIDCamp where p.XIDCamp = @p1) as [count] FROM pilote"
                     + " join camp on camp.ID = pilote.XIDCamp where camp.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
@@ -173,7 +177,8 @@ namespace DAL.Repository
                     yield return new ViewPilote
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"]
+                        Id = (int)r["ID"],
+                        Quantite = (int)r["count"],
                     };
                 }
             }
@@ -188,7 +193,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM pilote join detailpilotetypeamelioration"
+                cmd.CommandText = "SELECT *,(select count(p.ID) from pilote p) as [count] FROM pilote join detailpilotetypeamelioration"
                                 + " on detailpilotetypeamelioration.XIDPilote = pilote.ID"
                                 + " join typeamelioration on detailpilotetypeamelioration.XIDTypeAmelioration = typeamelioration.ID"
                                 + " join amelioration on amelioration.XIDTypeAmelioration = typeamelioration.ID"
@@ -200,7 +205,8 @@ namespace DAL.Repository
                     yield return new ViewPilote
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"]
+                        Id = (int)r["ID"],
+                        Quantite = (int)r["count"],
                     };
                 }
             }
@@ -215,9 +221,12 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM pilote join camp on camp.ID = pilote.XIDCamp"
-                    +" join escadron on escadron.XIDCamp = camp.ID"
-                    + " where escadron.ID = @p1";
+                cmd.CommandText = "SELECT p.ID, p.Nom,(select count(*) from detailescadronvaisseau d where d.XIDEscadron = @p1 and d.XIDVaisseau = v.ID) as [count]"
+                    + " FROM vaisseau v join detailescadronvaisseau"
+                    + " on v.ID = detailescadronvaisseau.XIDVaisseau join escadron e"
+                    + " on e.ID = detailescadronvaisseau.XIDEscadron"
+                    + " join pilote p on p.XIDVaisseau = v.ID"
+                    + " where e.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
@@ -225,7 +234,8 @@ namespace DAL.Repository
                     yield return new ViewPilote
                     {
                         Nom = r["Nom"].ToString(),
-                        Id = (int)r["ID"]
+                        Id = (int)r["ID"],
+                        Quantite = (int)r["count"],
                     };
                 }
             }
@@ -243,9 +253,8 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT *"
-                    + " FROM pilote"
-                    + " WHERE pilote.id = @p1";
+                cmd.CommandText = "SELECT *,(select count(p.ID) from pilote p join vaisseau v on p.XIDVaisseau = v.ID where p.XIDVaisseau = @p1 ) as [count] FROM pilote"
+                    + " WHERE pilote.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
 
                 SqlDataReader r = cmd.ExecuteReader();
@@ -260,6 +269,7 @@ namespace DAL.Repository
                     u.Cout = (int)r["Cout"];
                     u.Unique = (bool)r["EstUnique"];
                     u.ValeurPilotage = (int)r["ValPilotage"];
+                    u.Quantite = (int)r["count"];
                 }
             }
             return u;

@@ -54,6 +54,16 @@ namespace WebApi_Demo_01.Controllers
             collection.Create(em);
         }
 
+        // POST: api/Collection
+        [Route("api/Collection/PostElements/{collection}")]
+        [HttpPost]
+        public void PostElements(collections emp)
+        {
+            Collection em = new Collection();
+            em = Mapper.Mapper.MapToEntity(emp);
+            collection.InsertIntoCollection(em);
+        }
+
         // PUT: api/Collection/5
         [HttpPut]
         public void Put(int id, collections emp)
@@ -68,6 +78,14 @@ namespace WebApi_Demo_01.Controllers
         public void Delete(int id)
         {
             collection.Delete(id);
+        }
+
+        // DELETE: api/Collection/DeleteVaisseau
+        [Route("api/Collection/DeleteVaisseau/{vaisseauId}/{collectionId}")]
+        [HttpDelete]
+        public void DeleteVaisseau(int idV, int idC)
+        {
+            collection.DeleteVaisseau(idV, idC);
         }
     }
 }

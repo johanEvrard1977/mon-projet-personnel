@@ -11,24 +11,28 @@ import { AuthGardService } from './Helpers/auth-gard.service';
 import { DetailCollectionComponent } from './detail-collection/detail-collection.component';
 import { CollectionComponent } from './collection/collection.component';
 import { RegisterCollectionComponent } from './register-collection/register-collection.component';
+import { UpdateCollectionComponent } from './update-collection/update-collection.component';
 
 const routes: Routes = [
-  { path: 'action', component: ActionComponent },
-  { path: 'action:/', component: ActionComponent },
-  { path: 'amelioration', component: AmeliorationComponent },
-  { path: 'amelioration/:Id', component: AmeliorationComponent },
+  { path: 'action', component: ActionComponent, canActivate: [AuthGardService] },
+  { path: 'action:/', component: ActionComponent, canActivate: [AuthGardService] },
+  { path: 'amelioration', component: AmeliorationComponent, canActivate: [AuthGardService] },
+  { path: 'amelioration/:Id', component: AmeliorationComponent, canActivate: [AuthGardService] },
   { path: 'collection/:Id', component: DetailCollectionComponent, canActivate: [AuthGardService] },
-  { path: 'collection', component: CollectionComponent },
-  { path: 'pilote', component: PiloteComponent },
-  { path: 'pilote/:Id', component: PiloteComponent },
-  { path: 'vaisseau', component: VaisseauComponent },
-  { path: 'vaisseau/:Id', component: VaisseauComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'inscrit', component: InscritComponent },
+  { path: 'collection', component: CollectionComponent, canActivate: [AuthGardService] },
+  { path: 'pilote', component: PiloteComponent, canActivate: [AuthGardService] },
+  { path: 'pilote/:Id', component: PiloteComponent, canActivate: [AuthGardService] },
+  { path: 'vaisseau', component: VaisseauComponent, canActivate: [AuthGardService] },
+  { path: 'vaisseau/:Id', component: VaisseauComponent, canActivate: [AuthGardService] },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGardService] },
+  { path: 'inscrit', component: InscritComponent, canActivate: [AuthGardService] },
   { path: 'inscrit/:name', component: InscritComponent, canActivate: [AuthGardService] },
-  { path: 'registerCollection', component: RegisterCollectionComponent },
-  { path: 'registerCollection/:Id', component: RegisterCollectionComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'registerCollection', component: RegisterCollectionComponent, canActivate: [AuthGardService] },
+  { path: 'registerCollection/:Id', component: RegisterCollectionComponent, canActivate: [AuthGardService] },
+  { path: 'register', component: RegisterComponent, canActivate: [AuthGardService] },
+  { path: 'updateCollection', component: UpdateCollectionComponent , canActivate: [AuthGardService] },
+  { path: 'updateCollection/:Id', component: UpdateCollectionComponent, canActivate: [AuthGardService] },
+  { path: 'updateCollection/:Id/:Id', component: UpdateCollectionComponent, canActivate: [AuthGardService] },
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];

@@ -20,5 +20,6 @@ namespace WebApi_Demo_01.Models
         public int XIDCamp { get; set; }
         public int XIDVaisseau { get; set; }
         public int XIDType { get; set; }
+        public int Quantite { get; set; }
     }
 }

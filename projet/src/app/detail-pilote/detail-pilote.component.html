@@ -1,22 +1,29 @@
 <div *ngIf="pilotes">
-    <h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Pilote</h1>
-    <h2>{{ pilotes.Nom }}</h2>
-    <h2>- Coût: {{ pilotes.Cout }}</h2>
-    <h2>- Commentaires: {{ pilotes.Commentaires }}</h2>
-    <h2>- Unique: {{ pilotes.Unique }}</h2>
-    <h2>- ValeurPilotage: {{ pilotes.ValeurPilotage }}</h2>
+    <table class="table">
+        <thead>
+          <tr [@openClose]="isOpen ? 'open' : 'closed'">
+            <th scope="col">Pilote</th>
+            <th scope="col">Cout</th>
+            <th scope="col">Valeur de pilotage</th>
+            <th scope="col">Unique</th>
+            <th scope="col">Vaisseaux</th>
+            <th scope="col">Camp</th>
+            <!--<th scope="col">Type d'améliorations</th>-->
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ pilotes.Nom }}</td>
+            <td>{{ pilotes.Cout }}</td>
+            <td>{{ pilotes.ValeurPilotage }}</td>
+            <td>{{ pilotes.Unique }}</td>
+            <td *ngFor="let v of pilotes.Vaisseaux">{{ v.Nom }}</td>
+            <td *ngFor="let c of pilotes.Camp">{{ c.Nom }}</td>
+            <!--<td *ngFor="let t of pilotes.Type">{{ t.Nom }}</td>-->
+        </tr>
+        </tbody>
+    </table>
 
-    <h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Type d'améliorations:</h1>
-    <div *ngFor="let type of pilotes.Type">
-        <h2>- {{ type.Nom }}</h2>
-    </div>
-    <h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Camp: </h1>
-    <div *ngFor="let camp of pilotes.Camp">
-        <h2>- {{ camp.Nom }}</h2>
-    </div>
-    <h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Vaisseaux: </h1>
-    <div *ngFor="let vaisseau of pilotes.Vaisseaux">
-        <h2>- {{ vaisseau.Nom }}</h2>
-    </div>
+    <h1>{{ pilotes.Commentaires }}</h1>
 </div>  
 

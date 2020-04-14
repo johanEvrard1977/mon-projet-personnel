@@ -12,4 +12,5 @@ export class Pilote {
     Type:type[];
     Vaisseaux:Vaisseau[];
     Camp:Camp[];
+    Quantite:number;
 }

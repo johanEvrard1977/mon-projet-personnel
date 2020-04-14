@@ -81,7 +81,8 @@ namespace WebApi_Demo_01.Mapper
                 Unique = UM.Unique,
                 UnParVaisseau = UM.UnParVaisseau,
                 Type = UM.Type,
-                XIDType = UM.XIDType
+                XIDType = UM.XIDType,
+                Quantite = UM.Quantite
             };
         }
 
@@ -98,7 +99,8 @@ namespace WebApi_Demo_01.Mapper
                 Unique = UM.Unique,
                 UnParVaisseau = UM.UnParVaisseau,
                 Type = UM.Type,
-                XIDType = UM.XIDType
+                XIDType = UM.XIDType,
+                Quantite = UM.Quantite
             };
         }
 
@@ -108,6 +110,7 @@ namespace WebApi_Demo_01.Mapper
             {
                 Nom = UM.Nom,
                 Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -117,6 +120,7 @@ namespace WebApi_Demo_01.Mapper
             {
                 Nom = UM.Nom,
                 Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -125,7 +129,8 @@ namespace WebApi_Demo_01.Mapper
             return new ViewAmelioration
             {
                 Nom = UM.Nom,
-                Id = UM.Id
+                Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -134,7 +139,8 @@ namespace WebApi_Demo_01.Mapper
             return new ViewModelAmelioration
             {
                 Nom = UM.Nom,
-                Id = UM.Id
+                Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -146,7 +152,8 @@ namespace WebApi_Demo_01.Mapper
                 Id = UM.Id,
                 Pilote = UM.Pilote,
                 Vaisseau = UM.Vaisseau,
-                Type = UM.Type
+                Type = UM.Type,
+                Amelioration = UM.Amelioration
             };
         }
 
@@ -158,7 +165,8 @@ namespace WebApi_Demo_01.Mapper
                 Id = UM.Id,
                 Pilote = UM.Pilote,
                 Vaisseau = UM.Vaisseau,
-                Type = UM.Type
+                Type = UM.Type,
+                Amelioration = UM.Amelioration
             };
         }
 
@@ -198,6 +206,24 @@ namespace WebApi_Demo_01.Mapper
             };
         }
 
+        public static ViewCamp MapToEntityToViewModel(this Camp UM)
+        {
+            return new ViewCamp
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
+        public static Camp MapToEntityToView(this ViewCamp UM)
+        {
+            return new Camp
+            {
+                Nom = UM.Nom,
+                Id = UM.Id
+            };
+        }
+
         public static Collection MapToEntity(this collections UM)
         {
             return new Collection
@@ -206,17 +232,16 @@ namespace WebApi_Demo_01.Mapper
                 Id = UM.Id,
                 Amelioration = UM.Amelioration,
                 Pilote = UM.Pilote,
-                Escadron = UM.Escadron,
                 Vaisseau = UM.Vaisseau,
                 Users = UM.Users,
                 XIDUser = UM.XIDUser,
                 XIDAmelioration = UM.XIDAmelioration,
-                XIDEscadron = UM.XIDEscadron,
                 XIDPilote = UM.XIDPilote,
                 XIDVaisseau = UM.XIDVaisseau,
-                QuantiteAmelioration = UM.QuantiteAmelioration,
-                QuantitePilote = UM.QuantitePilote,
-                QuantiteVaisseau = UM.QuantiteVaisseau
+                Camp = UM.Camp,
+                XIDCamp = UM.XIDCamp,
+                XIDEscadron = UM.XIDEscadron,
+                Escdrons = UM.Escdrons
             };
         }
 
@@ -228,17 +253,16 @@ namespace WebApi_Demo_01.Mapper
                 Id = UM.Id,
                 Amelioration = UM.Amelioration,
                 Pilote = UM.Pilote,
-                Escadron = UM.Escadron,
                 Vaisseau = UM.Vaisseau,
                 Users = UM.Users,
                 XIDUser = UM.XIDUser,
                 XIDAmelioration = UM.XIDAmelioration,
-                XIDEscadron = UM.XIDEscadron,
                 XIDPilote = UM.XIDPilote,
                 XIDVaisseau = UM.XIDVaisseau,
-                QuantiteAmelioration = UM.QuantiteAmelioration,
-                QuantitePilote = UM.QuantitePilote,
-                QuantiteVaisseau = UM.QuantiteVaisseau
+                Camp = UM.Camp,
+                XIDCamp = UM.XIDCamp,
+                XIDEscadron = UM.XIDEscadron,
+                Escdrons = UM.Escdrons
             };
         }
 
@@ -351,7 +375,8 @@ namespace WebApi_Demo_01.Mapper
                 Camp = UM.Camp,
                 XIDCamp = UM.XIDCamp,
                 XIDVaisseau = UM.XIDVaisseau,
-                XIDType = UM.XIDType
+                XIDType = UM.XIDType,
+                Quantite = UM.Quantite
             };
         }
 
@@ -370,7 +395,8 @@ namespace WebApi_Demo_01.Mapper
                 Camp = UM.Camp,
                 XIDCamp = UM.XIDCamp,
                 XIDVaisseau = UM.XIDVaisseau,
-                XIDType = UM.XIDType
+                XIDType = UM.XIDType,
+                Quantite = UM.Quantite
             };
         }
 
@@ -379,7 +405,8 @@ namespace WebApi_Demo_01.Mapper
             return new pilotes
             {
                 Nom = UM.Nom,
-                Id = UM.Id
+                Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -388,7 +415,8 @@ namespace WebApi_Demo_01.Mapper
             return new ViewModelPilote
             {
                 Nom = UM.Nom,
-                Id = UM.Id
+                Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -397,7 +425,8 @@ namespace WebApi_Demo_01.Mapper
             return new ViewPilote
             {
                 Nom = UM.Nom,
-                Id = UM.Id
+                Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -406,7 +435,8 @@ namespace WebApi_Demo_01.Mapper
             return new ViewModelPilote
             {
                 Nom = UM.Nom,
-                Id = UM.Id
+                Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -426,7 +456,8 @@ namespace WebApi_Demo_01.Mapper
                 Action = UM.Action,
                 Camp = UM.Camp,
                 Pilote = UM.Pilote,
-                XIDAction = UM.XIDAction
+                XIDAction = UM.XIDAction,
+                Quantite = UM.Quantite
             };
         }
 
@@ -446,7 +477,8 @@ namespace WebApi_Demo_01.Mapper
                 Action = UM.Action,
                 Camp = UM.Camp,
                 Pilote = UM.Pilote,
-                XIDAction = UM.XIDAction
+                XIDAction = UM.XIDAction,
+                Quantite = UM.Quantite
             };
         }
 
@@ -455,7 +487,8 @@ namespace WebApi_Demo_01.Mapper
             return new vaisseaux
             {
                 Nom = UM.Nom,
-                Id = UM.Id
+                Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -464,7 +497,8 @@ namespace WebApi_Demo_01.Mapper
             return new ViewModelVaisseau
             {
                 Nom = UM.Nom,
-                Id = UM.Id
+                Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -473,7 +507,8 @@ namespace WebApi_Demo_01.Mapper
             return new Vaisseaux
             {
                 Nom = UM.Nom,
-                Id = UM.Id
+                Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -482,7 +517,8 @@ namespace WebApi_Demo_01.Mapper
             return new ViewModelVaisseau
             {
                 Nom = UM.Nom,
-                Id = UM.Id
+                Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -491,7 +527,8 @@ namespace WebApi_Demo_01.Mapper
             return new ViewVaisseau
             {
                 Nom = UM.Nom,
-                Id = UM.Id
+                Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -500,7 +537,8 @@ namespace WebApi_Demo_01.Mapper
             return new ViewModelVaisseau
             {
                 Nom = UM.Nom,
-                Id = UM.Id
+                Id = UM.Id,
+                Quantite = UM.Quantite
             };
         }
 
@@ -613,7 +651,10 @@ namespace WebApi_Demo_01.Mapper
                 Vaisseau = UM.Vaisseau,
                 XIDCamp = UM.XIDCamp,
                 XIDColllection = UM.XIDColllection,
-                XIDUser = UM.XIDUser
+                XIDAmelioration = UM.XIDAmelioration,
+                XIDPilote = UM.XIDPilote,
+                XIDVaisseau = UM.XIDVaisseau,
+                Quantite = UM.Quantite
             };
         }
 
@@ -633,7 +674,10 @@ namespace WebApi_Demo_01.Mapper
                 Vaisseau = UM.Vaisseau,
                 XIDCamp = UM.XIDCamp,
                 XIDColllection = UM.XIDColllection,
-                XIDUser = UM.XIDUser
+                XIDAmelioration = UM.XIDAmelioration,
+                XIDPilote = UM.XIDPilote,
+                XIDVaisseau = UM.XIDVaisseau,
+                Quantite = UM.Quantite
             };
         }
 

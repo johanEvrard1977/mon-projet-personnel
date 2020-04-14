@@ -146,7 +146,7 @@ namespace DAL.Repository
                     r.Read();
                     u.Nom = r["Nom"].ToString();
                     u.Id = (int)r["ID"];
-                    u.Amelioration = AR.GetByLinkType((int)r["aId"]);
+                    u.Amelioration = AR.GetByLinkType((int)r["ID"]);
                 }
             }
             return u;

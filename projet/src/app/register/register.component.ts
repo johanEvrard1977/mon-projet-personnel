@@ -11,6 +11,7 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
     submitted = false;
+    currentUser: any;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -21,6 +22,7 @@ export class RegisterComponent implements OnInit {
     ) {
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
+            this.currentUser = this.authenticationService.currentUserValue;
             this.router.navigate(['/']);
         }
     }

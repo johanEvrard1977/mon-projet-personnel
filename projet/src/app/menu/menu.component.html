@@ -15,6 +15,9 @@
     <a [routerLink]="['./action']">
       Actions
     </a>
+    <a *ngIf="currentUser" (click)="retour(currentUser)">
+      Collection
+    </a>
     <a *ngIf="currentUser" (click)="logout()">Logout</a>
   </nav>
 </div> 

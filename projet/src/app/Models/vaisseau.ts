@@ -15,4 +15,5 @@ export class Vaisseau {
     Pilote:Pilote;
     Camp:Camp;
     Action:actions;
+    Quantite:number;
 }

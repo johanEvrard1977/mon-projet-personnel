@@ -11,11 +11,16 @@ import { Vaisseau } from '../Models/vaisseau';
 export class VaisseauComponent implements OnInit {
 
   vaisseau: Vaisseau[];
+  compteur: number;
+  compteur2:number;
+  
 
   constructor(private vaisseauService: VaisseauService) { }
 
   ngOnInit(): void {
     this.getVaisseaux();
+    this.compteur = 0;
+    this.compteur2 = 12;
   }
 
   getVaisseaux(): void {
@@ -32,4 +37,12 @@ export class VaisseauComponent implements OnInit {
       });
   }
 
+  next(){
+    this.compteur += 12;
+    this.compteur2 +=12;
+  }
+  before(){
+    this.compteur -= 12;
+    this.compteur2 -=12;
+  }
 }

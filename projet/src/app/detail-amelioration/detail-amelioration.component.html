@@ -1,11 +1,36 @@
 <div *ngIf="ameliorations">
-    <h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Amelioration:</h1>
-    <h2>- {{ ameliorations.Nom }}</h2>
-
-<h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Type concernés:</h1>
-<div *ngFor="let type of ameliorations.Type">
-    <h2>
-        - {{ type.Nom }}
-    </h2>
-</div>
+    <table class="table">
+        <thead>
+          <tr [@openClose]="isOpen ? 'open' : 'closed'">
+            <th scope="col">Amélioration</th>
+            <th scope="col">Cout</th>
+            <th scope="col">Un seul par vaisseau:</th>
+            <th scope="col">Taille minimum autorisée</th>
+            <th scope="col">Taille maximum autorisée</th>
+            <th scope="col">Concerne un seul pilote</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ ameliorations.Nom }}</td>
+            <td>{{ ameliorations.Cout }}</td>
+            <td>{{ ameliorations.UnParVaisseau }}</td>
+            <td>{{ ameliorations.TailleMin }}</td>
+            <td>{{ ameliorations.TailleMax }}</td>
+            <td>{{ ameliorations.Unique }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+          <tr [@openClose]="isOpen ? 'open' : 'closed'">
+            <th scope="col">Type d'améliorations</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let t of ameliorations.Type">
+            <td>{{ t.Nom }}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>

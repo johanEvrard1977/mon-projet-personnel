@@ -10,7 +10,7 @@ import { AuthenticationService } from '../Services/authentification.service';
 })
 export class MenuComponent implements OnInit {
 
-  currentUser: User;
+  currentUser: any;
 
     constructor(
         private router: Router,
@@ -18,10 +18,14 @@ export class MenuComponent implements OnInit {
     ) {
         this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     }
+
+
   ngOnInit(): void {
-    
   }
 
+  retour(nom:any){
+    this.router.navigate(['/inscrit/'+this.authenticationService.currentUserValue]);
+  }
     logout() {
         this.authenticationService.logout();
         this.router.navigate(['/']);

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PiloteService } from '../Services/pilote.service';
 import { slideInAnimation } from '../Models/slide-in-animation';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { AuthenticationService } from '../Services/authentification.service';
 
 @Component({
   selector: 'app-detail-pilote',
@@ -32,8 +33,10 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class DetailPiloteComponent implements OnInit {
 
   pilotes:any;
-  constructor(private route: ActivatedRoute,
-    private piloteService: PiloteService) {
+  currentUser: any;
+  constructor(private route: ActivatedRoute,private piloteService: PiloteService,
+    private authenticationService: AuthenticationService) {
+      this.currentUser = this.authenticationService.currentUserValue;
      }
 
      ngOnInit(): void {

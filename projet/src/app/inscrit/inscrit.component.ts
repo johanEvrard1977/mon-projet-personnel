@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { first, switchMap } from 'rxjs/operators';
-
 import { User } from '../Models/user';
 import { AuthenticationService } from '../Services/authentification.service';
 import { UserService } from '../Services/user.service';
 import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 import { slideInAnimation } from '../Models/slide-in-animation';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
-import { ModalComponent } from '../modal/modal.component';
 @Component({
   selector: 'app-inscrit',
   templateUrl: './inscrit.component.html',
@@ -38,19 +35,22 @@ export class InscritComponent implements OnInit {
     currentUser: User;
     users:any;
     isOpen = true;
+    compteur: number;
+    compteur2:number;
 
     constructor(
         private authenticationService: AuthenticationService,
         private userService: UserService,
-        private route: ActivatedRoute,
-        public matDialog: MatDialog
+        private route: ActivatedRoute
     ) {
         this.currentUser = this.authenticationService.currentUserValue;
     }
 
     ngOnInit() {
         let name = this.route.snapshot.paramMap.get('name');
-        this.GetByUser(name)
+        this.GetByUser(name);
+        this.compteur = 0;
+        this.compteur2 = 12;
     }
 
     deleteUser(id: number) {
@@ -75,14 +75,12 @@ export class InscritComponent implements OnInit {
         this.isOpen = !this.isOpen;
   }
 
-  openModal() {
-    const dialogConfig = new MatDialogConfig();
-    // The user can't close the dialog by clicking outside its body
-    dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
-    dialogConfig.height = "350px";
-    dialogConfig.width = "600px";
-    // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
+  next(){
+    this.compteur += 12;
+    this.compteur2 +=12;
+  }
+  before(){
+    this.compteur -= 12;
+    this.compteur2 -=12;
   }
 }

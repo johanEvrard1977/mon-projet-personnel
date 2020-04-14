@@ -1,0 +1,27 @@
+.une{
+    margin-bottom: 20px;
+    width: 300px;
+}
+.deux{
+    float: left;
+    padding-right: 20px;
+    width: 320px;
+}
+.trois{
+    float: left;
+    padding-right: 20px;
+    margin-left: 110px;
+    width: 320px;
+}
+.quatre{
+    float: right;
+    padding-right: 20px;
+    width: 320px;
+}
+footer{
+    clear: both;
+}
+.table{
+    
+    color:white;
+}

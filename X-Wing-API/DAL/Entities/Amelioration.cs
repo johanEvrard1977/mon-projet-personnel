@@ -19,5 +19,6 @@ namespace DalXwing.Models
         public bool UnParVaisseau { get; set; }
         public IEnumerable<ViewType> Type { get; set; }
         public int XIDType { get; set; }
+        public int Quantite { get; set; }
     }
 }

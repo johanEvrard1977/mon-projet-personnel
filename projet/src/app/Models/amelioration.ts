@@ -10,4 +10,5 @@ export class Amelioration {
     UnParVaisseau:boolean;
     Unique:boolean;
     Type:type[];
+    Quantite:number;
 }

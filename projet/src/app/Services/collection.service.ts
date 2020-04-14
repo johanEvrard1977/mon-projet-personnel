@@ -33,12 +33,38 @@ export class CollectionService {
   }
 
   getcollectionById(id:any): Observable<any> {
-    console.log(this.collectionUrl +id);
     return this.http.get<Collection>(this.collectionUrl +id, httpOptions).pipe(
       retry(3), catchError(this.handleError('getCollectionById')));
   }
 
   register(collection: Collection) {
     return this.http.post(this.collectionUrl, collection, httpOptions);
-}
+  }
+
+  registerIntoCollection(collection: Collection) {
+    return this.http.post(this.collectionUrl, collection, httpOptions);
+  }
+
+  update(collection: Collection, id:any) {
+    return this.http.put(this.collectionUrl+id, collection, httpOptions);
+  }
+
+  deleteCollection(id:number){
+    return this.http.delete(this.collectionUrl+id, httpOptions)
+  }
+
+  deleteVaisseau(idV:number, idC:number){
+    console.log(idV, idC);
+    //return this.http.delete(this.collectionUrl+"DeleteVaisseau/"+idV+"/"+idC, httpOptions)
+  }
+  
+  deletePilote(idP:number, idC:number){
+    console.log(idP, idC);
+    //return this.http.delete(this.collectionUrl+"/DeletePilote/"+id, httpOptions)
+  }
+  
+  deleteAmelioration(idA:number, idC:number){
+    console.log(idA, idC);
+  //return this.http.delete(this.collectionUrl+"/DeleteAmelioration/"+id, httpOptions)
+  }
 }
