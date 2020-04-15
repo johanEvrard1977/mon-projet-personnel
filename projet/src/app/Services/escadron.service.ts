@@ -42,4 +42,14 @@ export class EscadronService {
   register(escadron: Escadron) {
     return this.http.post(this.EscadronUrl, escadron, httpOptions);
 }
+
+deleteEscadron(id:number){
+  return this.http.delete(this.EscadronUrl+id, httpOptions)
+}
+
+deleteIntoEscadron(col: Escadron) {
+  let result = this.http.post(this.EscadronUrl+"DeleteIntoEscadron", col, httpOptions);
+  console.log(result);
+      return result;
+}
 }

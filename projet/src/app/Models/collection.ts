@@ -11,7 +11,7 @@ export class Collection {
     Pilote:Pilote[];
     Vaisseau:Vaisseau[];
     Amelioration:Amelioration[];
-    Escadron:Escadron[];
+    Escadrons:Escadron[];
     Users:User[];
     Camp:Camp;
 }

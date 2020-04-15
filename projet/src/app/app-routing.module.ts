@@ -12,12 +12,14 @@ import { DetailCollectionComponent } from './detail-collection/detail-collection
 import { CollectionComponent } from './collection/collection.component';
 import { RegisterCollectionComponent } from './register-collection/register-collection.component';
 import { UpdateCollectionComponent } from './update-collection/update-collection.component';
+import { DetailAmeliorationBisComponent } from './detail-amelioration-bis/detail-amelioration-bis.component';
+import { RegisterEscadronComponent } from './register-escadron/register-escadron.component';
 
 const routes: Routes = [
   { path: 'action', component: ActionComponent, canActivate: [AuthGardService] },
   { path: 'action:/', component: ActionComponent, canActivate: [AuthGardService] },
   { path: 'amelioration', component: AmeliorationComponent, canActivate: [AuthGardService] },
-  { path: 'amelioration/:Id', component: AmeliorationComponent, canActivate: [AuthGardService] },
+  { path: 'amelioration/:Id', component: DetailAmeliorationBisComponent, canActivate: [AuthGardService] },
   { path: 'collection/:Id', component: DetailCollectionComponent, canActivate: [AuthGardService] },
   { path: 'collection', component: CollectionComponent, canActivate: [AuthGardService] },
   { path: 'pilote', component: PiloteComponent, canActivate: [AuthGardService] },
@@ -29,6 +31,8 @@ const routes: Routes = [
   { path: 'inscrit/:name', component: InscritComponent, canActivate: [AuthGardService] },
   { path: 'registerCollection', component: RegisterCollectionComponent, canActivate: [AuthGardService] },
   { path: 'registerCollection/:Id', component: RegisterCollectionComponent, canActivate: [AuthGardService] },
+  { path: 'registerEscadron', component: RegisterEscadronComponent, canActivate: [AuthGardService] },
+  { path: 'registerEscadron/:Id', component: RegisterEscadronComponent, canActivate: [AuthGardService] },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGardService] },
   { path: 'updateCollection', component: UpdateCollectionComponent , canActivate: [AuthGardService] },
   { path: 'updateCollection/:Id', component: UpdateCollectionComponent, canActivate: [AuthGardService] },

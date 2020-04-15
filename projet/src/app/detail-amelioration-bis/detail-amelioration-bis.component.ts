@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AmeliorationService } from '../Services/amelioration.service';
 import { ActivatedRoute } from '@angular/router';
+import { AmeliorationService } from '../Services/amelioration.service';
+import { AuthenticationService } from '../Services/authentification.service';
 import { slideInAnimation } from '../Models/slide-in-animation';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AuthenticationService } from '../Services/authentification.service';
 
 @Component({
-  selector: 'app-detail-amelioration',
-  templateUrl: './detail-amelioration.component.html',
-  providers: [AmeliorationService],
-  styleUrls: ['./detail-amelioration.component.css'],
+  selector: 'app-detail-amelioration-bis',
+  templateUrl: './detail-amelioration-bis.component.html',
+  styleUrls: ['./detail-amelioration-bis.component.css'],
   animations: [
     slideInAnimation,
     // animation triggers go here
@@ -30,7 +29,7 @@ import { AuthenticationService } from '../Services/authentification.service';
       ]),
   ],
 })
-export class DetailameliorationComponent implements OnInit {
+export class DetailAmeliorationBisComponent implements OnInit {
 
   ameliorations:any;
   currentUser: any;

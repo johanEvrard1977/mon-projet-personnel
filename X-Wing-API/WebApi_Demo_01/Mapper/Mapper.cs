@@ -241,7 +241,8 @@ namespace WebApi_Demo_01.Mapper
                 Camp = UM.Camp,
                 XIDCamp = UM.XIDCamp,
                 XIDEscadron = UM.XIDEscadron,
-                Escdrons = UM.Escdrons
+                XIDCollection = UM.XIDCollection,
+                Escadrons = UM.Escadrons
             };
         }
 
@@ -262,7 +263,8 @@ namespace WebApi_Demo_01.Mapper
                 Camp = UM.Camp,
                 XIDCamp = UM.XIDCamp,
                 XIDEscadron = UM.XIDEscadron,
-                Escdrons = UM.Escdrons
+                XIDCollection = UM.XIDCollection,
+                Escadrons = UM.Escadrons
             };
         }
 
@@ -650,7 +652,7 @@ namespace WebApi_Demo_01.Mapper
                 Pilote = UM.Pilote,
                 Vaisseau = UM.Vaisseau,
                 XIDCamp = UM.XIDCamp,
-                XIDColllection = UM.XIDColllection,
+                XIDCollection = UM.XIDCollection,
                 XIDAmelioration = UM.XIDAmelioration,
                 XIDPilote = UM.XIDPilote,
                 XIDVaisseau = UM.XIDVaisseau,
@@ -673,7 +675,7 @@ namespace WebApi_Demo_01.Mapper
                 Pilote = UM.Pilote,
                 Vaisseau = UM.Vaisseau,
                 XIDCamp = UM.XIDCamp,
-                XIDColllection = UM.XIDColllection,
+                XIDCollection = UM.XIDCollection,
                 XIDAmelioration = UM.XIDAmelioration,
                 XIDPilote = UM.XIDPilote,
                 XIDVaisseau = UM.XIDVaisseau,

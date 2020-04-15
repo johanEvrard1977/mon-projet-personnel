@@ -150,7 +150,7 @@ namespace DAL.Repository
                         TypeName = "multipleId"
                     };
                     cmd.Parameters.Add(aameliorations);
-                    cmd.Parameters.AddWithValue("@collection", T.Id);
+                    cmd.Parameters.AddWithValue("@collection", T.XIDCollection);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -173,16 +173,75 @@ namespace DAL.Repository
 
         }
 
-        public void DeleteVaisseau(int idV, int idC)
+        public void DeleteIntoCollection(Collection T)
         {
-            using (SqlConnection conn = new SqlConnection(connect))
+            try
             {
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "DELETE FROM detailvaisseaucollection WHERE XIDVaisseau = @param and XIDCollection = @param2 ";
-                cmd.Parameters.AddWithValue("@param", idV);
-                cmd.Parameters.AddWithValue("@param2", idC);
-                cmd.ExecuteNonQuery();
+                using (SqlConnection conn = new SqlConnection(connect))
+                {
+                    conn.Open();
+                    SqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "SP_Delete_Into_Collection";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    DataTable Vaisseaux = new DataTable();
+                    Vaisseaux.Columns.Add(new DataColumn("XIDVaisseau", typeof(int)));
+                    if (T.XIDVaisseau != null)
+                    {
+                        foreach (int v in T.XIDVaisseau)
+                        {
+                            Vaisseaux.Rows.Add(v);
+                        }
+
+                    }
+                    SqlParameter vvaisseaux = new SqlParameter()
+                    {
+                        ParameterName = "@vaisseau",
+                        Value = Vaisseaux,
+                        TypeName = "multipleId"
+                    };
+                    cmd.Parameters.Add(vvaisseaux);
+
+                    DataTable Pilotes = new DataTable();
+                    Pilotes.Columns.Add(new DataColumn("XIDPilote", typeof(int)));
+                    if (T.XIDPilote != null)
+                    {
+                        foreach (int p in T.XIDPilote)
+                        {
+                            Pilotes.Rows.Add(p);
+                        }
+                    }
+                    SqlParameter ppilotes = new SqlParameter()
+                    {
+                        ParameterName = "@pilote",
+                        Value = Pilotes,
+                        TypeName = "multipleId"
+                    };
+                    cmd.Parameters.Add(ppilotes);
+
+
+                    DataTable Ameliorations = new DataTable();
+                    Ameliorations.Columns.Add(new DataColumn("XIDAmelioration", typeof(int)));
+                    if (T.XIDAmelioration != null)
+                    {
+                        foreach (int a in T.XIDAmelioration)
+                        {
+                            Ameliorations.Rows.Add(a);
+                        }
+                    }
+                    SqlParameter aameliorations = new SqlParameter()
+                    {
+                        ParameterName = "@amelioration",
+                        Value = Ameliorations,
+                        TypeName = "multipleId"
+                    };
+                    cmd.Parameters.Add(aameliorations);
+                    cmd.Parameters.AddWithValue("@collection", T.XIDCollection);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (ArgumentException e)
+            {
+                Console.Write(e.Message);
             }
 
         }
@@ -235,7 +294,7 @@ namespace DAL.Repository
                     u.Amelioration = AR.GetLinkCollection((int)r["ID"]);
                     u.Users = UR.GetLinkCollection((int)r["ID"]);
                     u.Camp = CR.GetLinkCollection((int)r["ID"]);
-                    u.Escdrons = ER.GetByLinkCollection((int)r["ID"]);
+                    u.Escadrons = ER.GetByLinkCollection((int)r["ID"]);
                 }
             }
             return u;
@@ -313,7 +372,7 @@ namespace DAL.Repository
                     u.Amelioration = AR.GetLinkCollection((int)r["ID"]);
                     u.Users = UR.GetLinkCollection((int)r["ID"]);
                     u.Camp = CR.GetLinkCollection((int)r["ID"]);
-                    u.Escdrons = ER.GetByLinkCollection((int)r["ID"]);
+                    u.Escadrons = ER.GetByLinkCollection((int)r["ID"]);
                 }
             }
             return u;

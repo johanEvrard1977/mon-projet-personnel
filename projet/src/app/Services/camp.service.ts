@@ -32,7 +32,7 @@ export class CampService {
       );
   }
 
-  getCampById(id:any): Observable<any> {
+  getCampById(id:number): Observable<any> {
     return this.http.get<Camp>(this.CampUrl +id, httpOptions).pipe(
       retry(3), catchError(this.handleError('getCampById')));
   }

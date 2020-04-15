@@ -14,7 +14,6 @@ import { ActionComponent } from './action/action.component';
 import { DetailActionComponent } from './detail-action/detail-action.component';
 import { ActionService } from './Services/action.service';
 import { AmeliorationComponent } from './amelioration/amelioration.component';
-import { DetailameliorationComponent } from './detail-amelioration/detail-amelioration.component'
 import { AmeliorationService } from './Services/amelioration.service';
 import { PiloteComponent } from './pilote/pilote.component';
 import { PiloteService } from './Services/pilote.service';
@@ -39,6 +38,7 @@ import { UpdateCollectionComponent } from './update-collection/update-collection
 import { RegisterEscadronComponent } from './register-escadron/register-escadron.component';
 import { CommonModule } from '@angular/common';
 import { AuthGardService } from './Helpers/auth-gard.service';
+import { DetailAmeliorationBisComponent } from './detail-amelioration-bis/detail-amelioration-bis.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,8 @@ import { AuthGardService } from './Helpers/auth-gard.service';
     DetailCollectionComponent,
     RegisterCollectionComponent,
     UpdateCollectionComponent,
-    RegisterEscadronComponent
+    RegisterEscadronComponent,
+    DetailAmeliorationBisComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -83,14 +84,14 @@ import { AuthGardService } from './Helpers/auth-gard.service';
       { path: '', component: AccueilComponent },
       { path: 'action/:Id', component: DetailActionComponent },
       { path: 'action', component: ActionComponent },
-      { path: 'amelioration/:Id', component: DetailameliorationComponent },
+      { path: 'amelioration/:Id', component: DetailAmeliorationBisComponent },
       { path: 'amelioration', component: AmeliorationComponent },
       { path: 'collection/:Id', canActivate: [AuthGardService], component: DetailCollectionComponent },
       { path: 'collection', canActivate: [AuthGardService], component: CollectionComponent },
       { path: 'registerCollection', canActivate: [AuthGardService], component: RegisterCollectionComponent },
       { path: 'registerCollection/:Id', canActivate: [AuthGardService], component: RegisterCollectionComponent },
       { path: 'registerEscadron', canActivate: [AuthGardService], component: RegisterEscadronComponent },
-      { path: 'registerEscadron/:Id, canActivate: [AuthGardService]', component: RegisterEscadronComponent },
+      { path: 'registerEscadron/:Id', canActivate: [AuthGardService], component: RegisterEscadronComponent },
       { path: 'pilote/:Id', component: DetailPiloteComponent },
       { path: 'pilote', component: PiloteComponent },
       { path: 'vaisseau/:Id', component: DetailVaisseauComponent },
@@ -117,6 +118,7 @@ import { AuthGardService } from './Helpers/auth-gard.service';
     RegisterCollectionComponent,
     RegisterComponent,
     UpdateCollectionComponent,
+    DetailAmeliorationBisComponent,
     RegisterEscadronComponent,
     { 
       provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true

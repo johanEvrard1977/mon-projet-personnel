@@ -17,8 +17,32 @@
                 </tbody>
             </table>
         </div>
+        <div class="cinq">
+          <table class="table">
+              <thead>
+                  <tr [@openClose]="isOpen ? 'open' : 'closed'">
+                    <th scope="col">Escadrons</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let e of collections.Escadrons | slice:compteure:compteure2">
+              <tr>
+                  <td>{{ e.Nom }}</td>
+                  <td><button (click)="deleteEscadron(e.Id)">
+                      Delete
+                  </button></td>
+              </tr>
+              </tbody>
+              <button *ngIf="compteure>=3" (click)="beforeE()">
+                Page précédente
+              </button>
+              <button *ngIf="compteure2<=3" (click)="nextE()">
+                Page suivante
+              </button>
+          </table>
+      </div>
         <div class="deux">    
-                <table class="table" *ngFor="let vaisseau of collections.Vaisseau">
+                <table class="table">
                     <thead>
                         <tr [@openClose]="isOpen ? 'open' : 'closed'" >
                           <th scope="col">Vaisseaux</th>
@@ -26,19 +50,26 @@
                           <th scope="col"></th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody *ngFor="let vaisseau of collections.Vaisseau | slice:compteur:compteur2">
                     <tr>
                         <td>{{ vaisseau.Nom }}</td>
                         <td>{{ vaisseau.Quantite}}</td>
-                        <td><button (click)="deleteVaisseau(vaisseau.Id, collections.Id)">
+                        <td><button (click)="deleteIntoCollection(vaisseau.Id, collections.Id)">
                             Delete
                         </button></td>
                     </tr>
                     </tbody>
+                    <button *ngIf="compteur>=3" (click)="before()">
+                      Page précédente
+                    </button>
+                    <button *ngIf="compteur<=2" (click)="next()">
+                      Page suivante
+                    </button>
                 </table>
+                
         </div>
         <div class="trois">
-            <table class="table" *ngFor="let pilote of collections.Pilote">
+            <table class="table">
                 <thead>
                     <tr [@openClose]="isOpen ? 'open' : 'closed'" >
                       <th scope="col">Pilotes</th>
@@ -46,19 +77,25 @@
                       <th scope="col"></th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody *ngFor="let pilote of collections.Pilote | slice:compteurp:compteurp2">
                 <tr>
                     <td>{{ pilote.Nom }}</td>
                     <td>{{ pilote.Quantite}}</td>
-                    <td><button (click)="deletePilote(pilote.Id, collections.Id)">
+                   <td><button (click)="deletePiloteIntoCollection(pilote.Id, collections.Id)">
                         Delete
                     </button></td>
                 </tr>
                 </tbody>
+                <button *ngIf="compteurp>=3" (click)="beforeP()">
+                  Page précédente
+                </button>
+                <button *ngIf="compteurp<=2" (click)="nextP()">
+                  Page suivante
+                </button>
             </table>
         </div>
         <div class="quatre">
-            <table class="table" *ngFor="let amelioration of collections.Amelioration">
+            <table class="table">
                 <thead>
                     <tr [@openClose]="isOpen ? 'open' : 'closed'">
                       <th scope="col">Améliorations</th>
@@ -66,20 +103,27 @@
                       <th scope="col"></th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody *ngFor="let amelioration of collections.Amelioration | slice:compteura:compteura2">
                 <tr>
                     <td>{{ amelioration.Nom }}</td>
                     <td>{{ amelioration.Quantite}}</td>
-                    <td><button (click)="deleteAmelioration(amelioration.Id, collections.Id)">
+                    <td><button (click)="deleteAmeliorationIntoCollection(amelioration.Id, collections.Id)">
                         Delete
                     </button></td>
                 </tr>
                 </tbody>
+                <button *ngIf="compteura>=3" (click)="beforeA()">
+                  Page précédente
+                </button>
+                <button *ngIf="compteura<=2" (click)="nextA()">
+                  Page suivante
+                </button>
             </table>
         </div>
+        
         <footer>
             <div>
-                <a [routerLink]="['/updateCollection/'+collections.Id ]"  class="btn btn-link">Ajouter éléments dans la collection</a>
+                <a [routerLink]="['/updateCollection/'+collections.Id]"  class="btn btn-link">Ajouter éléments dans la collection</a>
             </div>
             <div>
                 <a [routerLink]="['/registerEscadron/'+collections.Id]" class="btn btn-link">Formez vos escadrons</a>

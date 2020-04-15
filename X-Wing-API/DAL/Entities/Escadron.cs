@@ -23,7 +23,7 @@ namespace DalXwing.Models
         public IEnumerable<int?> XIDVaisseau { get; set; }
         public IEnumerable<int?> XIDAmelioration { get; set; }
         public IEnumerable<int?> XIDPilote { get; set; }
-        public int XIDColllection { get; set; }
+        public int XIDCollection { get; set; }
         public int Quantite { get; set; }
     }
 }

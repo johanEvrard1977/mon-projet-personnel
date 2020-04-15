@@ -9,8 +9,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertService } from '../Services/alert.service';
 import { CampService } from '../Services/camp.service';
 import { UserService } from '../Services/user.service';
-import { first } from 'rxjs/operators';
+import { first, switchMap } from 'rxjs/operators';
 import { AuthenticationService } from '../Services/authentification.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-update-collection',
@@ -28,7 +29,6 @@ export class UpdateCollectionComponent implements OnInit {
   XIDVaisseau:number;
   XIDPilote:number;
   XIDAmelioration:number;
-  XIDCamp:number;
   XIDCollection:number;
   objetCollection:any;
   collections:any;
@@ -47,7 +47,6 @@ export class UpdateCollectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      Nom: ['', Validators.required],
       Vaisseau: [''],
       Pilote: [''],
       Amelioration: [''],
@@ -56,9 +55,14 @@ export class UpdateCollectionComponent implements OnInit {
   });
   
     let id = this.route.snapshot.paramMap.get('Id');
-     this.collectionService.getcollectionById(id).subscribe(Collection => this.collections = Collection); 
-     this.idCamp = 1;
-     this.campService.getCampById(this.idCamp).subscribe(camps => this.camps = camps);
+     this.collectionService.getcollectionById(id)
+     .pipe(map(col =>{ this.collections = col; return col.Camp[0].Id}))
+     .pipe(switchMap(id => { 
+       if(id !== null && id !== undefined){
+       return this.campService.getCampById(id);
+     }
+    })).subscribe(ca =>{ this.camps = ca});
+     
   }
 
  // convenience getter for easy access to form fields
@@ -79,12 +83,11 @@ export class UpdateCollectionComponent implements OnInit {
      this.XIDAmelioration = this.registerForm.value.Amelioration;
      this.XIDPilote = this.registerForm.value.Pilote;
      this.XIDCollection = this.registerForm.value.Collection;
-     this.XIDCamp = this.registerForm.value.Camp;
      
      this.objetCollection = {
        "XIDVaisseau":this.XIDVaisseau,
        "XIDAmelioration":this.XIDAmelioration,"XIDPilote":this.XIDPilote,
-       "XIDCollection":this.XIDCollection,"XIDCamp":this.XIDCamp
+       "XIDCollection":this.XIDCollection
      };
      console.log(this.objetCollection);
      this.collectionService.registerIntoCollection(this.objetCollection)
@@ -92,7 +95,7 @@ export class UpdateCollectionComponent implements OnInit {
          .subscribe(
              data => {
                  this.alertService.success('Update successful', true);
-                 this.collectionService.getcollectionById(this.collections).subscribe(heroes => (this.collections = heroes));
+                 this.collectionService.getcollectionById(this.XIDCollection).subscribe(heroes => (this.collections = heroes));
                 // this.router.navigate(['/inscrit/'+this.collections.Nom]);
              },
              error => {

@@ -9,8 +9,9 @@ import { AlertService } from '../Services/alert.service';
 import { CollectionService } from '../Services/collection.service';
 import { CampService } from '../Services/camp.service';
 import { UserService } from '../Services/user.service';
-import { first } from 'rxjs/operators';
+import { first, map, switchMap } from 'rxjs/operators';
 import { AuthenticationService } from '../Services/authentification.service';
+import { EscadronService } from '../Services/escadron.service';
 
 @Component({
   selector: 'app-register-escadron',
@@ -22,6 +23,7 @@ export class RegisterEscadronComponent implements OnInit {
   pilotes: Pilote[];
   ameliorations:Amelioration[];
   Camp:Camp[];
+  Nom:string;
   registerForm: FormGroup;
   submitted = false;
   XIDVaisseau:number;
@@ -32,13 +34,14 @@ export class RegisterEscadronComponent implements OnInit {
   objetCollection:any;
   collections:any;
   camps:any;
+  escadrons:any;
   currentUser: any;
   
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,private alertService: AlertService,
     private collectionService: CollectionService, private router:Router,
     private campService:CampService, private userService:UserService,
-    private authenticationService: AuthenticationService) { 
+    private authenticationService: AuthenticationService, private escadronService:EscadronService) { 
       this.currentUser = this.authenticationService.currentUserValue;
     }
 
@@ -52,8 +55,14 @@ export class RegisterEscadronComponent implements OnInit {
       Collection: [''],
   });
   
-    let id = this.route.snapshot.paramMap.get('Id');
-     this.collectionService.getcollectionById(id).subscribe(C => this.collections = C); 
+  let id = this.route.snapshot.paramMap.get('Id');
+  this.collectionService.getcollectionById(id)
+  .pipe(map(col =>{ this.collections = col; return col.Camp[0].Id}))
+  .pipe(switchMap(id => { 
+    if(id !== null && id !== undefined){
+    return this.campService.getCampById(id);
+  }
+ })).subscribe(ca =>{ this.camps = ca});
   }
 
  // convenience getter for easy access to form fields
@@ -75,19 +84,20 @@ export class RegisterEscadronComponent implements OnInit {
      this.XIDPilote = this.registerForm.value.Pilote;
      this.XIDCollection = this.registerForm.value.Collection;
      this.XIDCamp = this.registerForm.value.Camp;
+     this.Nom = this.registerForm.value.Nom;
      
      this.objetCollection = {
        "XIDVaisseau":this.XIDVaisseau,
        "XIDAmelioration":this.XIDAmelioration,"XIDPilote":this.XIDPilote,
-       "XIDCollection":this.XIDCollection,"XIDCamp":this.XIDCamp
+       "XIDCollection":this.XIDCollection,"XIDCamp":this.XIDCamp, "Nom":this.Nom
      };
      console.log(this.objetCollection);
-     this.collectionService.registerIntoCollection(this.objetCollection)
+     this.escadronService.register(this.objetCollection)
          .pipe(first())
          .subscribe(
              data => {
                  this.alertService.success('Update successful', true);
-                 this.collectionService.getcollectionById(this.collections).subscribe(heroes => (this.collections = heroes));
+                 this.escadronService.getescadronById(this.collections).subscribe(heroes => (this.escadrons = heroes));
                 // this.router.navigate(['/inscrit/'+this.collections.Nom]);
              },
              error => {

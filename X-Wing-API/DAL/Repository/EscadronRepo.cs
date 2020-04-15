@@ -77,7 +77,7 @@ namespace DAL.Repository
                     };
                     cmd.Parameters.Add(aameliorations);
                     cmd.Parameters.AddWithValue("@Name", T.Nom);
-                    cmd.Parameters.AddWithValue("@collection", T.XIDColllection);
+                    cmd.Parameters.AddWithValue("@collection", T.XIDCollection);
                     cmd.Parameters.AddWithValue("@camp", T.XIDCamp);
                     cmd.Parameters.AddWithValue("@estVisible", true);
                     cmd.ExecuteNonQuery();
@@ -239,7 +239,7 @@ namespace DAL.Repository
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
-                cmd.Parameters.AddWithValue("@collection", T.XIDColllection);
+                cmd.Parameters.AddWithValue("@collection", T.XIDCollection);
                 cmd.ExecuteNonQuery();
             }
         }

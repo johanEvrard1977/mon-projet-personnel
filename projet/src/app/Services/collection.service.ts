@@ -4,6 +4,8 @@ import { HandleError, HttpErrorHandler } from './http-error-handler.service';
 import { Observable } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Collection } from '../Models/collection';
+import { Escadron } from '../Models/escadron';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,12 +17,13 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CollectionService {
-
+  objetEscadron:any;
+  collections:any;
   collectionUrl = 'http://localhost:60504/api/Collection/';  // URL to web api
   private handleError: HandleError;
   constructor(
     private http: HttpClient,
-    httpErrorHandler: HttpErrorHandler) {
+    httpErrorHandler: HttpErrorHandler, private router:Router,) {
     this.handleError = httpErrorHandler.createHandleError('CollectionService');
   
   }
@@ -42,7 +45,7 @@ export class CollectionService {
   }
 
   registerIntoCollection(collection: Collection) {
-    return this.http.post(this.collectionUrl, collection, httpOptions);
+    return this.http.post(this.collectionUrl+"PostElements", collection, httpOptions);
   }
 
   update(collection: Collection, id:any) {
@@ -50,21 +53,11 @@ export class CollectionService {
   }
 
   deleteCollection(id:number){
-    return this.http.delete(this.collectionUrl+id, httpOptions)
+    console.log(this.collectionUrl+id);
+    return this.http.delete(this.collectionUrl+id, httpOptions);
   }
 
-  deleteVaisseau(idV:number, idC:number){
-    console.log(idV, idC);
-    //return this.http.delete(this.collectionUrl+"DeleteVaisseau/"+idV+"/"+idC, httpOptions)
-  }
-  
-  deletePilote(idP:number, idC:number){
-    console.log(idP, idC);
-    //return this.http.delete(this.collectionUrl+"/DeletePilote/"+id, httpOptions)
-  }
-  
-  deleteAmelioration(idA:number, idC:number){
-    console.log(idA, idC);
-  //return this.http.delete(this.collectionUrl+"/DeleteAmelioration/"+id, httpOptions)
+  deleteIntoCollection(col: Collection) {
+    return this.http.post(this.collectionUrl+"DeleteIntoCollection", col, httpOptions);
   }
 }

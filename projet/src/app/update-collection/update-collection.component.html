@@ -2,45 +2,38 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     
     <div class="form-group" *ngIf="collections">
-        <input value="{{collections.Id}}" [(ngModel)]="collections.Id" type="hidden" formControlName="Collection" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.collection.errors }" />
+        <input value="{{collections.Id}}" [(ngModel)]="collections.Id" type="hidden" formControlName="Collection" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Collection.errors }" />
         <div *ngIf="submitted && f.Collection.errors" class="invalid-feedback">
             <div *ngIf="f.collection.errors.required">Name is required</div>
         </div>
-        <div *ngFor="let c of collections.Camp">
-            <h2>
-                - {{ c.Nom }}
-            </h2>
+        <div *ngIf="camps">
+            <label for="vaisseau">Choisis tes vaisseaux: </label>
+            <select formControlName="Vaisseau" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Vaisseau.errors }" multiple>
+                
+                <option *ngFor="let v of camps.Vaisseau" value={{v.Id}} >{{v.Nom}}</option>
+                
+            </select>
+            
+            <label for="pilote">Choisis tes pilotes: </label>
+            <select formControlName="Pilote" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Pilote.errors }" multiple>
+                
+                <option *ngFor="let p of camps.Pilote" value={{p.Id}}>{{p.Nom}}</option>
+
+            </select>
+
+            <label for="amelioration">Choisis tes ameliorations: </label>
+            <select formControlName="Amelioration" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Amelioration.errors }" multiple>
+                
+                <option *ngFor="let a of camps.Amelioration" value={{a.Id}}>{{a.Nom}}</option>
+
+            </select>
         </div>
-    
-        
-    <label for="vaisseau">Choisis tes vaisseaux: </label>
-    <select formControlName="Vaisseau" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.vaisseaux.errors }" multiple>
-        
-        <option *ngFor="let v of camps.Vaisseau" value={{v.Id}} >{{v.Nom}}</option>
-        
-    </select>
-    
-    <label for="pilote">Choisis tes pilotes: </label>
-    <select formControlName="Pilote" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pilotes.errors }" multiple>
-        
-        <option *ngFor="let p of camps.Pilote" value={{p.Id}}>{{p.Nom}}</option>
-
-    </select>
-
-    <label for="amelioration">Choisis tes ameliorations: </label>
-    <select formControlName="Amelioration" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ameliorations.errors }" multiple>
-        
-        <option *ngFor="let a of camps.Amelioration" value={{a.Id}}>{{a.Nom}}</option>
-
-    </select>
-    
-        
-</div>
-</form>
-<div *ngIf="collections">
-    <button class="btn btn-primary">
+        <button class="btn btn-primary">
             Register
         </button>
+    </div>
+</form>
+<div *ngIf="collections">
         <a [routerLink]="['/collection', collections.Id ]" class="btn btn-link">Cancel</a>
     <div *ngFor="let user of collections.Users">
         <a [routerLink]="['/inscrit/'+user.Nom]"  class="btn btn-link">retour à la liste de collection</a>

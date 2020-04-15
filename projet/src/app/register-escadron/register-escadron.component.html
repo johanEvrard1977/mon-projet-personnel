@@ -2,9 +2,9 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     
     <div class="form-group" *ngIf="collections">
-        <input [(ngModel)]="collections.Id" type="text" formControlName="Collection" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Collection.errors }" />
+        <input value="{{collections.Id}}" [(ngModel)]="collections.Id" type="hidden" formControlName="Collection" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.collection.errors }" />
         <div *ngIf="submitted && f.Collection.errors" class="invalid-feedback">
-            <div *ngIf="f.Collection.errors.required">Name is required</div>
+            <div *ngIf="f.collection.errors.required">Name is required</div>
         </div>
         <div class="form-group">
             <label for="name">Name</label>
@@ -13,32 +13,41 @@
                 <div *ngIf="f.Nom.errors.required">Name is required</div>
             </div>
         </div>
-        <label for="vaisseau">Choisis tes vaisseaux: </label>
-        <select formControlName="Vaisseau" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.vaisseaux.errors }" multiple>
-            
-            <option *ngFor="let v of vaisseaux" value={{v.Id}}>{{v.Nom}}</option>
-            
-        </select>
-        
-        <label for="pilote">Choisis tes pilotes: </label>
-        <select formControlName="Pilote" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pilotes.errors }" multiple>
-            
-            <option *ngFor="let pilote of pilotes" value={{pilote.Id}}>{{pilote.Nom}}</option>
-
-        </select>
-
-        <label for="amelioration">Choisis tes ameliorations: </label>
-        <select formControlName="Amelioration" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ameliorations.errors }" multiple>
-            
-            <option *ngFor="let amelioration of ameliorations" value={{amelioration.Id}}>{{amelioration.Nom}}</option>
-
-        </select>
-        <div class="form-group">
-            <button class="btn btn-primary">
-                Register
-            </button>
-            <a [routerLink]="['/collection', collections.Id ]" class="btn btn-link">Cancel</a>
+        <div *ngIf="camps">
+            <input value="{{camps.Id}}" [(ngModel)]="camps.Id" type="hidden" formControlName="Camp" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Camp.errors }" />
+            <div *ngIf="submitted && f.Camp.errors" class="invalid-feedback">
+                <div *ngIf="f.Camp.errors.required">Name is required</div>
+            </div>
         </div>
+            <label for="vaisseau">Choisis tes vaisseaux: </label>
+            <select formControlName="Vaisseau" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.vaisseaux.errors }" multiple>
+                
+                <option *ngFor="let v of collections.Vaisseau" value={{v.Id}} >{{v.Nom}}</option>
+                
+            </select>
+            
+            <label for="pilote">Choisis tes pilotes: </label>
+            <select formControlName="Pilote" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pilotes.errors }" multiple>
+                
+                <option *ngFor="let p of collections.Pilote" value={{p.Id}}>{{p.Nom}}</option>
+
+            </select>
+
+            <label for="amelioration">Choisis tes ameliorations: </label>
+            <select formControlName="Amelioration" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ameliorations.errors }" multiple>
+                
+                <option *ngFor="let a of collections.Amelioration" value={{a.Id}}>{{a.Nom}}</option>
+
+            </select>
+        <button class="btn btn-primary">
+            Register
+        </button>
     </div>
 </form>
-  
+<div *ngIf="collections">
+        <a [routerLink]="['/collection', collections.Id ]" class="btn btn-link">Cancel</a>
+    <div *ngFor="let user of collections.Users">
+        <a [routerLink]="['/inscrit/'+user.Nom]"  class="btn btn-link">retour à la liste de collection</a>
+    </div>
+</div>
+        
