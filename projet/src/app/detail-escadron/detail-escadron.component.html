@@ -1,0 +1,108 @@
+<div *ngIf="escadrons">
+    <div class="une"> 
+        <table class="table">
+            <thead>
+              <tr [@openClose]="isOpen ? 'open' : 'closed'">
+                <th scope="col">Escadron</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ escadrons.Nom }}</td>
+                <td><button (click)="deleteEscadron(escadrons.Id)">Delete</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="deux">    
+            <table class="table">
+                <thead>
+                    <tr [@openClose]="isOpen ? 'open' : 'closed'" >
+                      <th scope="col">Vaisseaux</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let vaisseau of escadrons.Vaisseau | slice:compteur:compteur2">
+                <tr>
+                    <td><a [routerLink]="['/vaisseau', vaisseau.Id ]">{{ vaisseau.Nom }}</a></td>
+                    <td>{{ vaisseau.Quantite }}</td>
+                    <td><button (click)="deleteIntoEscadron(vaisseau.Id, escadrons.Id)">
+                        Delete
+                    </button></td>
+                </tr>
+                </tbody>
+                <button *ngIf="compteur>=3" (click)="before()">
+                  Page précédente
+                </button>
+                <button *ngIf="compteur<=2" (click)="next()">
+                  Page suivante
+                </button>
+            </table>
+            
+    </div>
+    <div class="trois">
+        <table class="table">
+            <thead>
+                <tr [@openClose]="isOpen ? 'open' : 'closed'" >
+                  <th scope="col">Pilotes</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let pilote of escadrons.Pilote | slice:compteurp:compteurp2">
+            <tr>
+                <td><a [routerLink]="['/pilote', pilote.Id ]">{{ pilote.Nom }}</a></td>
+                <td>{{ pilote.Quantite}}</td>
+               <td><button (click)="deletePiloteIntoEscadron(pilote.Id, escadrons.Id)">
+                    Delete
+                </button></td>
+            </tr>
+            </tbody>
+            <button *ngIf="compteurp>=3" (click)="beforeP()">
+              Page précédente
+            </button>
+            <button *ngIf="compteurp<=2" (click)="nextP()">
+              Page suivante
+            </button>
+        </table>
+    </div>
+    <div class="quatre">
+        <table class="table">
+            <thead>
+                <tr [@openClose]="isOpen ? 'open' : 'closed'">
+                  <th scope="col">Améliorations</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let amelioration of escadrons.Amelioration | slice:compteura:compteura2">
+            <tr>
+                <td><a [routerLink]="['/amelioration', amelioration.Id ]">{{ amelioration.Nom }}</a></td>
+                <td>{{ amelioration.Quantite}}</td>
+                <td><button (click)="deleteAmeliorationIntoEscadron(amelioration.Id, escadrons.Id)">
+                    Delete
+                </button></td>
+            </tr>
+            </tbody>
+            <button *ngIf="compteura>=3" (click)="beforeA()">
+              Page précédente
+            </button>
+            <button *ngIf="compteura<=2" (click)="nextA()">
+              Page suivante
+            </button>
+        </table>
+    </div>
+    
+    <footer>
+        <div>
+            <a [routerLink]="['/updateEscadron/'+escadrons.Id]"  class="btn btn-link">Ajouter éléments dans votre escadron</a>
+        </div>
+        <div>
+        <a *ngIf="currentUser" class="btn btn-link" (click)="retour(currentUser)">
+          Retour à la liste de collection
+        </a>
+        </div>
+    </footer>
+</div>

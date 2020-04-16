@@ -54,6 +54,15 @@ namespace WebApi_Demo_01.Controllers
             escadron.Create(em);
         }
 
+        [Route("api/Escadron/PostElements")]
+        [HttpPost]
+        public void PostElements(escadrons emp)
+        {
+            Escadron em = new Escadron();
+            em = Mapper.Mapper.MapToEntity(emp);
+            escadron.InsertIntoCollection(em);
+        }
+
         // PUT: api/escadron/5
         [HttpPut]
         public void Put(int id, escadrons emp)
@@ -68,6 +77,15 @@ namespace WebApi_Demo_01.Controllers
         public void Delete(int id)
         {
             escadron.Delete(id);
+        }
+
+        [Route("api/Escadron/DeleteIntoEscadron")]
+        [HttpPost]
+        public void DeleteIntoEscadron(escadrons emp)
+        {
+            Escadron em = new Escadron();
+            em = Mapper.Mapper.MapToEntity(emp);
+            escadron.DeleteIntoEscadron(em);
         }
     }
 }

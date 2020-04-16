@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit {
          .pipe(first())
          .subscribe(
              data => {
+              console.log(JSON.parse(sessionStorage.currentUser));
                  this.router.navigate(['./inscrit/'+this.f.username.value]);
                  this.loading = false;
              },

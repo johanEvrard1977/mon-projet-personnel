@@ -38,7 +38,6 @@ export class DetailActionComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private actionService: ActionService,
     private authenticationService: AuthenticationService) {
-    this.currentUser = this.authenticationService.currentUserValue;
   }
 
   ngOnInit(): void {

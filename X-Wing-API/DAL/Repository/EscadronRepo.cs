@@ -89,6 +89,78 @@ namespace DAL.Repository
             }
         }
 
+        public void InsertIntoCollection(Escadron T)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connect))
+                {
+                    conn.Open();
+                    SqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "SP_Add_Into_Escadron";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    DataTable Vaisseaux = new DataTable();
+                    Vaisseaux.Columns.Add(new DataColumn("XIDVaisseau", typeof(int)));
+                    if (T.XIDVaisseau != null)
+                    {
+                        foreach (int v in T.XIDVaisseau)
+                        {
+                            Vaisseaux.Rows.Add(v);
+                        }
+
+                    }
+                    SqlParameter vvaisseaux = new SqlParameter()
+                    {
+                        ParameterName = "@vaisseau",
+                        Value = Vaisseaux,
+                        TypeName = "multipleId"
+                    };
+                    cmd.Parameters.Add(vvaisseaux);
+
+                    DataTable Pilotes = new DataTable();
+                    Pilotes.Columns.Add(new DataColumn("XIDPilote", typeof(int)));
+                    if (T.XIDPilote != null)
+                    {
+                        foreach (int p in T.XIDPilote)
+                        {
+                            Pilotes.Rows.Add(p);
+                        }
+                    }
+                    SqlParameter ppilotes = new SqlParameter()
+                    {
+                        ParameterName = "@pilote",
+                        Value = Pilotes,
+                        TypeName = "multipleId"
+                    };
+                    cmd.Parameters.Add(ppilotes);
+
+
+                    DataTable Ameliorations = new DataTable();
+                    Ameliorations.Columns.Add(new DataColumn("XIDAmelioration", typeof(int)));
+                    if (T.XIDAmelioration != null)
+                    {
+                        foreach (int a in T.XIDAmelioration)
+                        {
+                            Ameliorations.Rows.Add(a);
+                        }
+                    }
+                    SqlParameter aameliorations = new SqlParameter()
+                    {
+                        ParameterName = "@amelioration",
+                        Value = Ameliorations,
+                        TypeName = "multipleId"
+                    };
+                    cmd.Parameters.Add(aameliorations);
+                    cmd.Parameters.AddWithValue("@escadron", T.XIDEscadron);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (ArgumentException e)
+            {
+                Console.Write(e.Message);
+            }
+        }
+
         public void Delete(int id)
         {
             using (SqlConnection conn = new SqlConnection(connect))
@@ -101,6 +173,80 @@ namespace DAL.Repository
             }
 
         }
+
+        public void DeleteIntoEscadron(Escadron T)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connect))
+                {
+                    conn.Open();
+                    SqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "SP_Delete_Into_Escadron";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    DataTable Vaisseaux = new DataTable();
+                    Vaisseaux.Columns.Add(new DataColumn("XIDVaisseau", typeof(int)));
+                    if (T.XIDVaisseau != null)
+                    {
+                        foreach (int v in T.XIDVaisseau)
+                        {
+                            Vaisseaux.Rows.Add(v);
+                        }
+
+                    }
+                    SqlParameter vvaisseaux = new SqlParameter()
+                    {
+                        ParameterName = "@vaisseau",
+                        Value = Vaisseaux,
+                        TypeName = "multipleId"
+                    };
+                    cmd.Parameters.Add(vvaisseaux);
+
+                    DataTable Pilotes = new DataTable();
+                    Pilotes.Columns.Add(new DataColumn("XIDPilote", typeof(int)));
+                    if (T.XIDPilote != null)
+                    {
+                        foreach (int p in T.XIDPilote)
+                        {
+                            Pilotes.Rows.Add(p);
+                        }
+                    }
+                    SqlParameter ppilotes = new SqlParameter()
+                    {
+                        ParameterName = "@pilote",
+                        Value = Pilotes,
+                        TypeName = "multipleId"
+                    };
+                    cmd.Parameters.Add(ppilotes);
+
+
+                    DataTable Ameliorations = new DataTable();
+                    Ameliorations.Columns.Add(new DataColumn("XIDAmelioration", typeof(int)));
+                    if (T.XIDAmelioration != null)
+                    {
+                        foreach (int a in T.XIDAmelioration)
+                        {
+                            Ameliorations.Rows.Add(a);
+                        }
+                    }
+                    SqlParameter aameliorations = new SqlParameter()
+                    {
+                        ParameterName = "@amelioration",
+                        Value = Ameliorations,
+                        TypeName = "multipleId"
+                    };
+                    cmd.Parameters.Add(aameliorations);
+                    cmd.Parameters.AddWithValue("@escadron", T.XIDEscadron);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (ArgumentException e)
+            {
+                Console.Write(e.Message);
+            }
+
+        }
+
 
         public IEnumerable<ViewEscadron> GetAll()
         {
@@ -153,6 +299,7 @@ namespace DAL.Repository
             EscadronRepo ER = new EscadronRepo();
             VaisseauRepo VR = new VaisseauRepo();
             CollectionRepo CR = new CollectionRepo();
+            CampRepo CaR = new CampRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
@@ -170,7 +317,7 @@ namespace DAL.Repository
                     u.Pilote = PR.GetLinkEscadron((int)r["ID"]);
                     u.Vaisseau = VR.GetLinkEscadron((int)r["ID"]);
                     u.Amelioration = AR.GetLinkEscadron((int)r["ID"]);
-                    u.Collection = CR.GetLinkEscadron((int)r["ID"]);
+                    u.Camp = CaR.GetLinkEscadron((int)r["ID"]);
                 }
             }
             return u;
@@ -206,6 +353,7 @@ namespace DAL.Repository
             CollectionRepo ER = new CollectionRepo();
             VaisseauRepo VR = new VaisseauRepo();
             UserRepository UR = new UserRepository();
+            CampRepo CR = new CampRepo();
             using (SqlConnection conn = new SqlConnection(connect))
             {
                 conn.Open();
@@ -220,10 +368,10 @@ namespace DAL.Repository
                 {
                     u.Id = (int)r["ID"];
                     u.Nom = r["Nom"].ToString();
-                    u.Pilote = PR.GetLinkCollection((int)r["ID"]);
+                    u.Pilote = PR.GetLinkEscadron((int)r["ID"]);
                     u.Vaisseau = VR.GetLinkEscadron((int)r["ID"]);
                     u.Amelioration = AR.GetLinkEscadron((int)r["ID"]);
-                    u.Collection = ER.GetLinkEscadron((int)r["ID"]);
+                    u.Camp = CR.GetLinkEscadron((int)r["ID"]);
                 }
             }
             return u;

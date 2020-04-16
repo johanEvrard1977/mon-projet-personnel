@@ -328,7 +328,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM collection join escadron"
+                cmd.CommandText = "SELECT Id, Nom FROM collection join escadron"
                     + " on collection.ID = escdaron.XIDCollection"
                     + " where escadron.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);

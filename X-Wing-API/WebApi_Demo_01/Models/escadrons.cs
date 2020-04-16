@@ -20,6 +20,7 @@ namespace WebApi_Demo_01.Models
         public IEnumerable<ViewCamp> Camp { get; set; }
         public IEnumerable<ViewCollection> Collection { get; set; }
         public int XIDCamp { get; set; }
+        public int XIDEscadron { get; set; }
         public IEnumerable<int?> XIDVaisseau { get; set; }
         public IEnumerable<int?> XIDAmelioration { get; set; }
         public IEnumerable<int?> XIDPilote { get; set; }

@@ -43,11 +43,16 @@ export class EscadronService {
     return this.http.post(this.EscadronUrl, escadron, httpOptions);
 }
 
+registerIntoEscadron(escadron: Escadron) {
+  return this.http.post(this.EscadronUrl+"PostElements", escadron, httpOptions);
+}
+
 deleteEscadron(id:number){
   return this.http.delete(this.EscadronUrl+id, httpOptions)
 }
 
 deleteIntoEscadron(col: Escadron) {
+  console.log(col);
   let result = this.http.post(this.EscadronUrl+"DeleteIntoEscadron", col, httpOptions);
   console.log(result);
       return result;

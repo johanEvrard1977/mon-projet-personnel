@@ -1,20 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CollectionService } from '../Services/collection.service';
 import { slideInAnimation } from '../Models/slide-in-animation';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CollectionService } from '../Services/collection.service';
 import { AuthenticationService } from '../Services/authentification.service';
-import { Collection } from '../Models/collection';
 import { EscadronService } from '../Services/escadron.service';
-import { map, switchMap } from 'rxjs/operators';
-import { User } from '../Models/user';
 import { UserService } from '../Services/user.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-detail-collection',
-  templateUrl: './detail-collection.component.html',
-  styleUrls: ['./detail-collection.component.css'],
+  selector: 'app-detail-escadron',
+  templateUrl: './detail-escadron.component.html',
+  styleUrls: ['./detail-escadron.component.css'],
   animations: [
     slideInAnimation,
     // animation triggers go here
@@ -35,9 +31,9 @@ import { BehaviorSubject } from 'rxjs';
       ]),
   ],
 })
-export class DetailCollectionComponent implements OnInit {
+export class DetailEscadronComponent implements OnInit {
 
-  collections:any;
+  escadrons:any;
   isOpen = true;
   currentUser: any;
   compteur: number;
@@ -50,19 +46,15 @@ export class DetailCollectionComponent implements OnInit {
   compteure2:number;
   estCache: boolean;
   lblMessage: string;
-  currentUserSubject: any;
 
-  constructor(private route: ActivatedRoute,private collectionService: CollectionService,
+  constructor(private route: ActivatedRoute,
     private authenticationService: AuthenticationService, private router:Router,
     private escadronService:EscadronService, private userservice:UserService) {
-      this.currentUser = this.authenticationService.currentUserValue;
-      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
      }
 
   ngOnInit(): void {
     let id = this.route.snapshot.paramMap.get('Id');
-     this.collectionService.getcollectionById(id).subscribe(Collection => this.collections = Collection);
+     this.escadronService.getescadronById(id).subscribe(escadron => this.escadrons = escadron);
      this.compteur = 0;
     this.compteur2 = 3; 
     this.compteurp = 0;
@@ -71,62 +63,62 @@ export class DetailCollectionComponent implements OnInit {
     this.compteura2 = 3; 
     this.compteure = 0;
     this.compteure2 = 3; 
-    sessionStorage.CurrentUser;
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   toggle() {
     this.isOpen = !this.isOpen;
 }
 
-deleteCollection(id:number){
-  this.collectionService.deleteCollection(id).subscribe(
+retour(nom:any){
+  this.router.navigate(['/inscrit/'+JSON.parse(sessionStorage.currentUser).Username]);
+}
+
+deleteEscadron(id:number){
+  this.escadronService.deleteEscadron(id).subscribe(
     (data) => {
-      this.collectionService.getcollections().subscribe(Collection => this.collections = Collection);
+      this.escadronService.getescadrons().subscribe(escadron => this.escadrons = escadron);
       this.router.navigate(['/inscrit/'+this.userservice.currentUser]);
     }
   );
 }
 
-deleteEscadron(id:number){
-  this.escadronService.deleteEscadron(id).subscribe();
-}
-
-deleteIntoCollection(c:number, c2:number){
+deleteIntoEscadron(c:number, c2:number){
   
-  this.collections = {
+  this.escadrons = {
     "XIDVaisseau": [c],
-    "XIDCollection": c2
+    "XIDEscadron": c2
   }
-  this.collectionService.deleteIntoCollection(this.collections).subscribe(
+  this.escadronService.deleteIntoEscadron(this.escadrons).subscribe(
     (data) => {
-      this.collectionService.getcollectionById(c2).subscribe(Collection => this.collections = Collection);
-      this.router.navigate(['/collection/'+c2]);
+      this.escadronService.getescadronById(c2).subscribe(escadron => this.escadrons = escadron);
+      this.router.navigate(['/escadron/'+c2]);
     });
 }
 
-deletePiloteIntoCollection(c:number, c2:number){
+deletePiloteIntoEscadron(c:number, c2:number){
   
-  this.collections = {
+  this.escadrons = {
     "XIDPilote": [c],
-    "XIDCollection": c2
+    "XIDEscadron": c2
   }
-  this.collectionService.deleteIntoCollection(this.collections).subscribe(
+  this.escadronService.deleteIntoEscadron(this.escadrons).subscribe(
     (data) => {
-      this.collectionService.getcollectionById(c2).subscribe(Collection => this.collections = Collection);
-      this.router.navigate(['/collection/'+c2]);
+      this.escadronService.getescadronById(c2).subscribe(escadron => this.escadrons = escadron);
+      this.router.navigate(['/escadron/'+c2]);
     });
 }
 
-deleteAmeliorationIntoCollection(c:number, c2:number){
+deleteAmeliorationIntoEscadron(c:number, c2:number){
   
-  this.collections = {
+  this.escadrons = {
     "XIDAmelioration": [c],
-    "XIDCollection": c2
+    "XIDEscadron": c2
   }
-  this.collectionService.deleteIntoCollection(this.collections).subscribe(
+  this.escadronService.deleteIntoEscadron(this.escadrons).subscribe(
     (data) => {
-      this.collectionService.getcollectionById(c2).subscribe(Collection => this.collections = Collection);
-      this.router.navigate(['/collection/'+c2]);
+      this.escadronService.getescadronById(c2).subscribe(escadron => this.escadrons = escadron);
+      this.router.navigate(['/escadron/'+c2]);
     });
   }
 next(){

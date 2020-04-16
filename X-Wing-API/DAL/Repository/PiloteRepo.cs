@@ -221,11 +221,10 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT p.ID, p.Nom,(select count(*) from detailescadronvaisseau d where d.XIDEscadron = @p1 and d.XIDVaisseau = v.ID) as [count]"
-                    + " FROM vaisseau v join detailescadronvaisseau"
-                    + " on v.ID = detailescadronvaisseau.XIDVaisseau join escadron e"
-                    + " on e.ID = detailescadronvaisseau.XIDEscadron"
-                    + " join pilote p on p.XIDVaisseau = v.ID"
+                cmd.CommandText = "SELECT *"
+                    + " FROM pilote p join detailescadronpilote"
+                    + " on p.ID = detailescadronpilote.XIDPilote join escadron e"
+                    + " on e.ID = detailescadronpilote.XIDEscadron"
                     + " where e.ID = @p1";
                 cmd.Parameters.AddWithValue("@p1", id);
                 SqlDataReader r = cmd.ExecuteReader();
@@ -235,7 +234,7 @@ namespace DAL.Repository
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["ID"],
-                        Quantite = (int)r["count"],
+                        Quantite = (int)r["Quantite"],
                     };
                 }
             }

@@ -16,15 +16,16 @@ export class MenuComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService
     ) {
-        this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+        
     }
 
 
   ngOnInit(): void {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   retour(nom:any){
-    this.router.navigate(['/inscrit/'+this.authenticationService.currentUserValue]);
+    this.router.navigate(['/inscrit/'+JSON.parse(sessionStorage.currentUser).Username]);
   }
     logout() {
         this.authenticationService.logout();

@@ -27,7 +27,7 @@
                 </thead>
                 <tbody *ngFor="let e of collections.Escadrons | slice:compteure:compteure2">
               <tr>
-                  <td>{{ e.Nom }}</td>
+                  <td><a [routerLink]="['/escadron', e.Id ]">{{ e.Nom }}</a></td>
                   <td><button (click)="deleteEscadron(e.Id)">
                       Delete
                   </button></td>
@@ -52,7 +52,7 @@
                       </thead>
                       <tbody *ngFor="let vaisseau of collections.Vaisseau | slice:compteur:compteur2">
                     <tr>
-                        <td>{{ vaisseau.Nom }}</td>
+                        <td><a [routerLink]="['/vaisseau', vaisseau.Id ]">{{ vaisseau.Nom }}</a></td>
                         <td>{{ vaisseau.Quantite}}</td>
                         <td><button (click)="deleteIntoCollection(vaisseau.Id, collections.Id)">
                             Delete
@@ -79,7 +79,7 @@
                   </thead>
                   <tbody *ngFor="let pilote of collections.Pilote | slice:compteurp:compteurp2">
                 <tr>
-                    <td>{{ pilote.Nom }}</td>
+                    <td><a [routerLink]="['/pilote', pilote.Id ]">{{ pilote.Nom }}</a></td>
                     <td>{{ pilote.Quantite}}</td>
                    <td><button (click)="deletePiloteIntoCollection(pilote.Id, collections.Id)">
                         Delete
@@ -105,7 +105,7 @@
                   </thead>
                   <tbody *ngFor="let amelioration of collections.Amelioration | slice:compteura:compteura2">
                 <tr>
-                    <td>{{ amelioration.Nom }}</td>
+                    <td><a [routerLink]="['/amelioration', amelioration.Id ]">{{ amelioration.Nom }}</a></td>
                     <td>{{ amelioration.Quantite}}</td>
                     <td><button (click)="deleteAmeliorationIntoCollection(amelioration.Id, collections.Id)">
                         Delete

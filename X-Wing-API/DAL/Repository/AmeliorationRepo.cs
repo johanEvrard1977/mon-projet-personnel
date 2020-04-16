@@ -164,7 +164,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT a.ID, a.Nom,(select count(*) from detailescadronamelioration d where d.XIDEscadron = @p1 and d.XIDAmelioration = a.ID) as [count]"
+                cmd.CommandText = "SELECT *"
                     + " FROM amelioration a join detailescadronamelioration"
                     + " on a.ID = detailescadronamelioration.XIDAmelioration join escadron e"
                     + " on e.ID = detailescadronamelioration.XIDEscadron"
@@ -177,7 +177,7 @@ namespace DAL.Repository
                     {
                         Nom = r["Nom"].ToString(),
                         Id = (int)r["ID"],
-                        Quantite = (int)r["count"],
+                        Quantite = (int)r["Quantite"],
                     };
                 }
             }

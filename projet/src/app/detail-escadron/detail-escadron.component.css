@@ -1,28 +1,22 @@
 .une{
     margin-bottom: 20px;
-    width: 281px;
-}
-.cinq{
-    float: left;
-    padding-right: 20px;
-    width: 256px;
-    margin-left: 15px;
+    width: 361px;
 }
 .trois{
+    margin-left: 15px;
     float: left;
     padding-right: 20px;
-    margin-left: 110px;
-    width: 256px;
+    width: 350px;
 }
 .quatre{
-    margin-left: 5px;
+    margin-left: 47px;
     float: left;
-    width: 256px;
+    width: 350px;
 }
 .deux{
     float: right;
     padding-right: 20px;
-    width: 256px;
+    width: 350px;
 }
 footer{
     clear: both;

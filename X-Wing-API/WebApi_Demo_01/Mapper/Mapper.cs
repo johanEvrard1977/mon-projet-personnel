@@ -656,6 +656,7 @@ namespace WebApi_Demo_01.Mapper
                 XIDAmelioration = UM.XIDAmelioration,
                 XIDPilote = UM.XIDPilote,
                 XIDVaisseau = UM.XIDVaisseau,
+                XIDEscadron = UM.XIDEscadron,
                 Quantite = UM.Quantite
             };
         }
@@ -679,6 +680,7 @@ namespace WebApi_Demo_01.Mapper
                 XIDAmelioration = UM.XIDAmelioration,
                 XIDPilote = UM.XIDPilote,
                 XIDVaisseau = UM.XIDVaisseau,
+                XIDEscadron = UM.XIDEscadron,
                 Quantite = UM.Quantite
             };
         }

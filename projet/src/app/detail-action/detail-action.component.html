@@ -1,11 +1,26 @@
 <div *ngIf="actions">
-    <h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Action:</h1>
-    <h2>- {{ actions.Nom }}</h2>
-
-<h1 [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">Vaisseaux concernés:</h1>
-<div *ngFor="let vaisseau of actions.vaisseau">
-    <h2>
-        - {{ vaisseau.Nom }}
-    </h2>
-</div>
+    <table class="table">
+        <thead>
+          <tr [@openClose]="isOpen ? 'open' : 'closed'">
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ actions.Nom }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+          <tr [@openClose]="isOpen ? 'open' : 'closed'">
+            <th scope="col">Vaisseaux</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let v of actions.vaisseau">
+            <td>{{ v.Nom }}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
