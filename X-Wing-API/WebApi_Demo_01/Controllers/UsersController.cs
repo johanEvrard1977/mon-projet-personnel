@@ -2,9 +2,13 @@
 using DAL.Repository;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApi_Demo_01.Helper;
@@ -53,6 +57,38 @@ namespace WebApi_Demo_01.Controllers
             return user.Check(username, password); 
         }
 
+        [Route("api/Users/CheckUserForPass")]
+        [HttpPost]
+        public void CheckUserForPass(Users T)
+        {
+            User u = user.GetByMail(T.Mail);
+            if (u != null)
+            {
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("johan@X-Wing.be");
+                mail.To.Add(T.Mail);
+                mail.Subject = "Réinitialisation du mot de passe";
+                mail.Body = "Bonjour"
+                            + "Veuillez cliquer sur le lien afin de réinitialiser votre mot de passe"
+                            + " http://localhost:4200/PassInit/" + u.UserName;
+
+                /* Attachment attachment;
+                 attachment = new Attachment("c:/textfile.txt");
+                 mail.Attachments.Add(attachment);*/
+                using (SmtpClient smtp = new SmtpClient("127.0.0.1", 25))
+                {
+                    try
+                    {
+                        smtp.Send(mail);
+                    }
+                    catch (SmtpException e)
+                    {
+                        Console.Write(e.Message);
+                    }
+                }
+            }
+        }
+
         // POST: api/User
         [HttpPost]
         public void Post(Users emp)
@@ -68,7 +104,17 @@ namespace WebApi_Demo_01.Controllers
         {
             User em = new User();
             em = Mapper.Mapper.MapToEntity(emp);
-            user.Update(id, em);
+            user.UpdatePass(id, em);
+        }
+
+
+        [Route("api/Users/PutPass/{id}")]
+        [HttpPut]
+        public void PutPass(int id, Users emp)
+        {
+            User em = new User();
+            em = Mapper.Mapper.MapToEntity(emp);
+            user.UpdatePass(id, em);
         }
 
         // DELETE: api/User/5

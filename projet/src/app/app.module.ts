@@ -43,6 +43,8 @@ import { DetailEscadronComponent } from './detail-escadron/detail-escadron.compo
 import { UpdateEscadronComponent } from './update-escadron/update-escadron.component';
 import { EscadronService } from './Services/escadron.service';
 import { AppRoutingModule } from './app-routing.module';
+import { PassOublieComponent } from './pass-oublie/pass-oublie.component';
+import { PassInitComponent } from './pass-init/pass-init.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { AppRoutingModule } from './app-routing.module';
     DetailAmeliorationBisComponent,
     DetailEscadronComponent,
     UpdateEscadronComponent,
-    AccueilComponent
+    AccueilComponent,
+    PassOublieComponent,
+    PassInitComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -106,6 +110,7 @@ import { AppRoutingModule } from './app-routing.module';
     RegisterEscadronComponent,
     EscadronService,
     AuthGardService,
+    PassInitComponent,
     { 
       provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true
     },

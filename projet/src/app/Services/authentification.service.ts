@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../Models/user';
+import { AlertService } from './alert.service';
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -12,12 +13,15 @@ const httpOptions = {
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
+
+    loading = false;
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
     UserUrl = 'http://localhost:60504/api/Users/';
     
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,
+        private alertService: AlertService) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -33,12 +37,19 @@ export class AuthenticationService {
                 let u = new User();
                 if(user){
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                
+                console.log(user);
                 u.Username = username;
                 sessionStorage.setItem('currentUser', JSON.stringify(u));
                 this.currentUserSubject.next(u);
+                return u != null;
                 }
-                return u;
+                else 
+                {
+                    this.alertService.error('Mot de passe et/ou login incorrect', true);
+                    this.loading = false;
+                    return u == null;
+                }
+                
             }));
     }
 

@@ -1,4 +1,5 @@
-﻿using DAL.Repository;
+﻿using DAL.Entities;
+using DAL.Repository;
 
 
 //permet de s'identifier dans le fichier BaseAuthentificator dans le dossier helper

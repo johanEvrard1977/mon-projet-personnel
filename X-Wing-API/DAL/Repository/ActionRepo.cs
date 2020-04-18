@@ -143,7 +143,6 @@ namespace DAL.Repository
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@Name", T.Nom);
-                cmd.Parameters.AddWithValue("@Vaisseau", T.XIDVaisseau);
                 cmd.ExecuteNonQuery();
             }
         }

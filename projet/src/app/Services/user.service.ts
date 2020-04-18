@@ -7,7 +7,9 @@ import { catchError, retry, map } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Authorization': 'Basic '+window.btoa('jojo:jojo')
+    'Authorization': 'Basic '+window.btoa('jojo:jojo'),
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
   })
 }
 
@@ -47,10 +49,17 @@ export class UserService {
   }
 
   checkUser(username:string, password:string){
-    console.log(this.UserUrl+"Check/"+username+"/"+password);
     return this.http.get<User>(this.UserUrl+"Check/"+username+"/"+password, httpOptions).pipe(
       retry(3), catchError(this.handleError('checkUser')));
   }
+
+  checkUserForPass(user:User){
+    return this.http.post(this.UserUrl+"CheckUserForPass/",user, httpOptions);
+  }
+
+  update(user: User, id: number) {
+    return this.http.put(this.UserUrl+"PutPass/"+ id,user, httpOptions);
+}
 
   register(user: User) {
     return this.http.post(this.UserUrl, user, httpOptions);

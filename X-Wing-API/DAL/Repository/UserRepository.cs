@@ -22,9 +22,10 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM Users where UserName = @p1 and Password = @p2";
-                cmd.Parameters.AddWithValue("@p1", username);
-                cmd.Parameters.AddWithValue("@p2", password);
+                cmd.CommandText = "SP_LoginUser";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@username", username);
+                cmd.Parameters.AddWithValue("@Passwd", password);
                 SqlDataReader r = cmd.ExecuteReader();
 
                 if (r.HasRows)
@@ -32,12 +33,38 @@ namespace DAL.Repository
                     r.Read();
                     u.UserName = r["UserName"].ToString();
                     u.ID = (int)r["UserId"];
+                    return u != null;
                 }
+                else return u == null;
             }
-            return u != null;
         }
 
-         public void Create(User T)
+        public bool CheckForPass(User T)
+        {
+            User u = new User();
+            using (SqlConnection conn = new SqlConnection(connect))
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM Users where UserName = @p1 and Mail = @p2";
+                cmd.Parameters.AddWithValue("@p1", T.UserName);
+                cmd.Parameters.AddWithValue("@p2", T.Mail);
+                SqlDataReader r = cmd.ExecuteReader();
+
+                if (r.HasRows)
+                {
+                    r.Read();
+                    u.UserName = r["UserName"].ToString();
+                    u.Password = r["Password"].ToString();
+                    u.ID = (int)r["UserId"];
+                    return u != null;
+                }
+                else return u == null;
+            }
+            
+        }
+
+        public void Create(User T)
         {
             using (SqlConnection conn = new SqlConnection(connect))
             {
@@ -49,6 +76,7 @@ namespace DAL.Repository
                 cmd.Parameters.AddWithValue("@LastName", T.Nom);
                 cmd.Parameters.AddWithValue("@UserName", T.UserName);
                 cmd.Parameters.AddWithValue("@pass", T.Password);
+                cmd.Parameters.AddWithValue("@mail", T.Mail);
                 cmd.ExecuteScalar();
             }
         }
@@ -127,7 +155,29 @@ namespace DAL.Repository
                     u.UserName = r["UserName"].ToString();
                     u.Role = r["Role"].ToString();
                     u.Password = "******";
+                    u.Mail = r["Mail"].ToString();
                     u.Collection = CR.GetByLinkUser((int)r["UserId"]);
+                }
+            }
+            return u;
+        }
+
+        public User GetByMail(string Mail)
+        {
+            User u = new User();
+            CollectionRepo CR = new CollectionRepo();
+            using (SqlConnection conn = new SqlConnection(connect))
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT UserName from Users where Users.Mail = @p1";
+                cmd.Parameters.AddWithValue("@p1", Mail);
+                SqlDataReader r = cmd.ExecuteReader();
+
+                if (r.HasRows)
+                {
+                    r.Read();
+                    u.UserName = r["UserName"].ToString();
                 }
             }
             return u;
@@ -154,6 +204,7 @@ namespace DAL.Repository
                     u.ID = (int)r["UserId"];
                     u.UserName = r["UserName"].ToString();
                     u.Role = r["Role"].ToString();
+                    u.Mail = r["Mail"].ToString();
                     u.Password = "******";
                     u.Collection = CR.GetByLinkUser((int)r["UserId"]);
                 }
@@ -167,7 +218,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SP_Update_Action";
+                cmd.CommandText = "SP_Update_Users";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@FirstName", T.Prenom);
@@ -175,6 +226,20 @@ namespace DAL.Repository
                 cmd.Parameters.AddWithValue("@UserName", T.UserName);
                 cmd.Parameters.AddWithValue("@pass", T.Password);
                 cmd.Parameters.AddWithValue("@Role", T.Role);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void UpdatePass(int id, User T)
+        {
+            using (SqlConnection conn = new SqlConnection(connect))
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SP_Update_Pass";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@pass", T.Password);
                 cmd.ExecuteNonQuery();
             }
         }

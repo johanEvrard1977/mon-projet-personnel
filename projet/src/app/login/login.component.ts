@@ -56,18 +56,15 @@ export class LoginComponent implements OnInit {
          return;
      }
 
-     this.loading = true;
+     this.loading = false;
      this.authenticationService.login(this.f.username.value, this.f.password.value)
          .pipe(first())
          .subscribe(
              data => {
-              console.log(JSON.parse(sessionStorage.currentUser));
-                 this.router.navigate(['./inscrit/'+this.f.username.value]);
-                 this.loading = false;
+                 this.router.navigate(['./inscrit/'+JSON.parse(sessionStorage.currentUser).Username]);
              },
              error => {
                  this.alertService.error(error);
-                 this.loading = false;
              });
  }
 

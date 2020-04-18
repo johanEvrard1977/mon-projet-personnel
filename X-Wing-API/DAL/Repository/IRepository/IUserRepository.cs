@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace DAL.Repository
 {
     public interface IUserRepository
     {
-        bool Check(string FirstName, string pass);
+        bool Check(string username, string password);
     }
 }

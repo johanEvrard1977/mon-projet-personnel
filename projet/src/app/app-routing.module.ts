@@ -20,6 +20,8 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { DetailPiloteComponent } from './detail-pilote/detail-pilote.component';
 import { DetailActionComponent } from './detail-action/detail-action.component';
 import { DetailVaisseauComponent } from './detail-vaisseau/detail-vaisseau.component';
+import { PassOublieComponent } from './pass-oublie/pass-oublie.component';
+import { PassInitComponent } from './pass-init/pass-init.component';
 
 const routes: Routes = [
   { path: '', component: AccueilComponent },
@@ -42,10 +44,11 @@ const routes: Routes = [
   { path: 'registerCollection/:Id', component: RegisterCollectionComponent, canActivate: [AuthGardService] },
   { path: 'registerEscadron', component: RegisterEscadronComponent, canActivate: [AuthGardService] },
   { path: 'registerEscadron/:Id', component: RegisterEscadronComponent, canActivate: [AuthGardService] },
-  { path: 'register', component: RegisterComponent, canActivate: [AuthGardService] },
+  { path: 'register', component: RegisterComponent },
+  { path: 'pass', component: PassOublieComponent },
+  { path: 'passInit/:name', component: PassInitComponent },
   { path: 'updateCollection', component: UpdateCollectionComponent , canActivate: [AuthGardService] },
   { path: 'updateCollection/:Id', component: UpdateCollectionComponent, canActivate: [AuthGardService] },
-  { path: 'updateCollection/:Id/:Id', component: UpdateCollectionComponent, canActivate: [AuthGardService] },
   { path: 'updateEscadron', canActivate: [AuthGardService], component: UpdateEscadronComponent },
   { path: 'updateEscadron/:Id', canActivate: [AuthGardService], component: UpdateEscadronComponent },
     // otherwise redirect to home
