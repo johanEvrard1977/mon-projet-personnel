@@ -105,7 +105,7 @@ namespace DAL.Repository
                    $"{firstName}:{pass}")));
 
                 //la requête
-                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Action/" + name).Result)
+                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Action/GetByName/" + name).Result)
                 {
                     response.EnsureSuccessStatusCode();
                     using (HttpContent content = response.Content)

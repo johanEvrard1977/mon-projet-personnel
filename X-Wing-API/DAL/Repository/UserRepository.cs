@@ -142,7 +142,7 @@ namespace DAL.Repository
             {
                 conn.Open();
                 SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * from Users where Users.Nom = @p1";
+                cmd.CommandText = "SELECT * from Users where Users.UserName = @p1";
                 cmd.Parameters.AddWithValue("@p1", name);
                 SqlDataReader r = cmd.ExecuteReader();
 

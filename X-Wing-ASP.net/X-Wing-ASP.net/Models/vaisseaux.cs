@@ -21,5 +21,6 @@ namespace WebApi_Demo_01.Models
         public IEnumerable<Actions> Action { get; set; }
         public IEnumerable<Camp> camps { get; set; }
         public int XIDAction { get; set; }
+        public int Quantite { get; set; }
     }
 }

@@ -21,3 +21,10 @@ C:\Users\johan\Desktop\Projetpersonnel\X-Wing-ASP.net\DAL\bin\Debug\Newtonsoft.J
 C:\Users\johan\Desktop\Projetpersonnel\X-Wing-ASP.net\DAL\obj\Debug\DAL.dll
 C:\Users\johan\Desktop\Projetpersonnel\X-Wing-ASP.net\DAL\obj\Debug\DAL.pdb
 C:\Users\johan\Desktop\Projetpersonnel\X-Wing-ASP.net\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\johan\Desktop\X-Wing-ASP.net\DAL\bin\Debug\DAL.dll
+C:\Users\johan\Desktop\X-Wing-ASP.net\DAL\bin\Debug\DAL.pdb
+C:\Users\johan\Desktop\X-Wing-ASP.net\DAL\bin\Debug\Newtonsoft.Json.dll
+C:\Users\johan\Desktop\X-Wing-ASP.net\DAL\bin\Debug\Newtonsoft.Json.xml
+C:\Users\johan\Desktop\X-Wing-ASP.net\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\johan\Desktop\X-Wing-ASP.net\DAL\obj\Debug\DAL.dll
+C:\Users\johan\Desktop\X-Wing-ASP.net\DAL\obj\Debug\DAL.pdb

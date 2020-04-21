@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Bonjour</h2>
+
+<div class="form-group">
+    <div class="col-md-10">
+        @ViewBag.Utilisateur.Nom <br/>
+        @Html.ActionLink("Ajoutez votre collection", "Create", "CollectionInscrit", new { area = "Inscrit" })
+    </div>
+</div>
+

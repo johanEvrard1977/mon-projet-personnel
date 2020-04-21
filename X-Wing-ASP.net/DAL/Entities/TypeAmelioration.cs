@@ -13,7 +13,6 @@ namespace DalXwing.Models
         [Required(ErrorMessage = "Veuillez entrer un nom"), MinLength(3), MaxLength(50)]
         public string Nom { get; set; }
         public IEnumerable<Amelioration> Amelioration { get; set; }
-        public IEnumerable<Pilote> Pilotes { get; set; }
-        public int Pil { get; set; }
+        public int XIDPilote { get; set; }
     }
 }

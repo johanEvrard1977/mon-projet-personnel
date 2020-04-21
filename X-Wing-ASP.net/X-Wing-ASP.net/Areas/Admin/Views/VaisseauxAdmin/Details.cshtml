@@ -1,0 +1,82 @@
+﻿@model DalXwing.Models.Vaisseaux
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Vaisseaux</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValeurAgilite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValeurAgilite)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValeurArmePrincipale)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValeurArmePrincipale)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bouclier)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bouclier)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Structure)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Structure)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Energie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Energie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Taille)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Taille)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Capacite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Capacite)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

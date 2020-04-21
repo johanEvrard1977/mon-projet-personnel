@@ -35,8 +35,8 @@ namespace DAL.Repository
             string json = JsonConvert.SerializeObject(T);
 
             HttpContent httpContent = new StringContent(json);
-
-            HttpResponseMessage responseMessage = _httpClient.PostAsync("User", httpContent).Result;
+            httpContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
+            HttpResponseMessage responseMessage = _httpClient.PostAsync("Users", httpContent).Result;
             return responseMessage.IsSuccessStatusCode;
 
         }
@@ -53,10 +53,9 @@ namespace DAL.Repository
             ASCIIEncoding.ASCII.GetBytes(
                $"{firstName}:{pass}")));
             string json = JsonConvert.SerializeObject(T);
-
             HttpContent httpContent = new StringContent(json);
             httpContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
-            HttpResponseMessage responseMessage = _httpClient.DeleteAsync("User/" + id).Result;
+            HttpResponseMessage responseMessage = _httpClient.DeleteAsync("Users/" + id).Result;
         }
 
         public IEnumerable<View> GetAll()
@@ -71,7 +70,7 @@ namespace DAL.Repository
                    $"{firstName}:{pass}")));
 
                 //la requête
-                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}User").Result)
+                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Users").Result)
                 {
                     response.EnsureSuccessStatusCode();
                     using (HttpContent content = response.Content)
@@ -98,7 +97,7 @@ namespace DAL.Repository
                    $"{firstName}:{pass}")));
 
                 //la requête
-                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}User/" + name).Result)
+                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Users/GetByName/" + name).Result)
                 {
                     response.EnsureSuccessStatusCode();
                     using (HttpContent content = response.Content)
@@ -123,7 +122,7 @@ namespace DAL.Repository
                    $"{firstName}:{pass}")));
 
                 //la requête
-                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}User/" + id).Result)
+                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Users/" + id).Result)
                 {
                     response.EnsureSuccessStatusCode();
                     using (HttpContent content = response.Content)
@@ -149,12 +148,63 @@ namespace DAL.Repository
             ASCIIEncoding.ASCII.GetBytes(
                $"{firstName}:{pass}")));
             string json = JsonConvert.SerializeObject(T);
-
             HttpContent httpContent = new StringContent(json);
             httpContent.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
-            HttpResponseMessage responseMessage = _httpClient.PutAsync("User/" + id, httpContent).Result;
+            HttpResponseMessage responseMessage = _httpClient.PutAsync("Users/" + id, httpContent).Result;
             return responseMessage.IsSuccessStatusCode;
         }
+
+
+        public bool Check(string username, string password)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Basic", Convert.ToBase64String(
+                ASCIIEncoding.ASCII.GetBytes(
+                   $"{firstName}:{pass}")));
+
+                //la requête
+                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Users/Check/" + username+"/"+password).Result)
+                {
+                    response.EnsureSuccessStatusCode();
+                    using (HttpContent content = response.Content)
+                    {
+                        // la réponse, il ne resterai plus qu'à désérialiser
+                        string result = content.ReadAsStringAsync().Result;
+                        return JsonConvert.DeserializeObject<bool>(result);
+                    }
+                }
+            }
+        }
+
+
+        public bool CheckAdmin(string username, string password, string role)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Basic", Convert.ToBase64String(
+                ASCIIEncoding.ASCII.GetBytes(
+                   $"{firstName}:{pass}")));
+                //la requête
+                using (HttpResponseMessage response = client.GetAsync($"{BaseUri}Users/CheckAdmin/" + username + "/" + password + "/" + role).Result)
+                {
+                    response.EnsureSuccessStatusCode();
+                    using (HttpContent content = response.Content)
+                    {
+                        // la réponse, il ne resterai plus qu'à désérialiser
+                        string result = content.ReadAsStringAsync().Result;
+                        return JsonConvert.DeserializeObject<bool>(result);
+                    }
+                }
+            }
+        }
+
 
         IEnumerable<User> IRepository<int, User>.GetAll()
         {

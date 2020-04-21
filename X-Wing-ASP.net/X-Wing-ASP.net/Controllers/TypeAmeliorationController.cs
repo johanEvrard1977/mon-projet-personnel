@@ -48,7 +48,7 @@ namespace X_Wing_ASP.net.Controllers
                 if (ModelState.IsValid)
                 {
                     AR.Create(new TypeAmelioration() {
-                        Pil = int.Parse(collection["pilote"]),
+                        XIDPilote = int.Parse(collection["pilote"]),
                         Nom = collection["Nom"]
                     });
                 }

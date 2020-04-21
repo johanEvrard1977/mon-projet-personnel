@@ -11,5 +11,7 @@ namespace WebApi_Demo_01.Models
     {
         public IEnumerable<Pilote> Pilote { get; set; }
         public IEnumerable<Vaisseaux> Vaisseau { get; set; }
+        public IEnumerable<TypeAmelioration> Type { get; set; }
+        public IEnumerable<Amelioration> Amelioration { get; set; }
     }
 }

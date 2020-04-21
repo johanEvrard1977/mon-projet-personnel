@@ -78,7 +78,7 @@ namespace X_Wing_ASP.net.Controllers
                 ActionRepo AR = new ActionRepo();
                 if (ModelState.IsValid)
                 {
-                    AR.Update(id, new Actions() { Nom = collection["Nom"], XIDVaisseau = int.Parse(collection["vaisseaux"]) });
+                    AR.Update(id, new Actions() { Nom = collection["Nom"] });
                 }
                 return RedirectToAction("Index");
             }

@@ -18,9 +18,15 @@
             @Html.DisplayFor(model => model.Nom)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Vaisseau)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vaisseau)
+        </dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -17,9 +17,9 @@ namespace WebApi_Demo_01.Models
         public IEnumerable<Vaisseaux> Vaisseaux { get; set; }
         public IEnumerable<Camp> Camp { get; set; }
         public IEnumerable<TypeAmelioration> Type { get; set; }
-        public IEnumerable<Amelioration> Amelioration { get; set; }
-        public int camp { get; set; }
-        public int vaisseau { get; set; }
+        public int XIDCamp { get; set; }
+        public int XIDVaisseau { get; set; }
         public int XIDType { get; set; }
+        public int Quantite { get; set; }
     }
 }

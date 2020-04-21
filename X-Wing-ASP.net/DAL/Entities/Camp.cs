@@ -14,5 +14,7 @@ namespace DalXwing.Models
         public string Nom { get; set; }
         public IEnumerable<Pilote> Pilote { get; set; }
         public IEnumerable<Vaisseaux> Vaisseau { get; set; }
+        public IEnumerable<TypeAmelioration> Type { get; set; }
+        public IEnumerable<Amelioration> Amelioration { get; set; }
     }
 }
